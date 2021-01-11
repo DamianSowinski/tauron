@@ -1,10 +1,18 @@
 {
   "name": "tauron-api-client",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
+    "start": "ng serve -o",
+    "---": "",
     "ng": "ng",
-    "start": "ng serve",
     "build": "ng build",
+    "prod": "ng build --prod --extra-webpack-config webpack.partial.js",
+    "pwa": "ng build --prod && cd dist && http-server -p 8080 && cd ..",
+    "----": "",
+    "svgo": "svgo -f src/assets/svg -o src/assets/svg-o --config=svgo.json",
+    "svg-preview": "node src/app/shared/svg/preview.js",
+    "svg-preview-open": "src/app/shared/svg/preview.html",
+    "-----": "",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  padding: 0;
+  color: #ddd;
+  background-color: #333;
+}
+
+.u-d-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.o-title {
+  font-family: Helvatica, Arial, serif;
+  font-weight: 300;
+  margin: 0;
+}
