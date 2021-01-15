@@ -1,0 +1,31 @@
+@use '../core/variables' as *;
+
+@mixin font-face($name, $fileName, $weight: normal, $style: normal) {
+  @font-face {
+    font-family: $name;
+    font-display: swap;
+    src: url(#{$fontPath}#{$fileName}.woff2) format('woff2'),
+    url(#{$fontPath}#{$fileName}.woff) format('woff'),
+    url(#{$fontPath}#{$fileName}.ttf) format('truetype');
+    font-weight: $weight;
+    font-style: $style;
+  }
+}
+
+@include font-face($primaryFont, 'titilliumweb-light-webfont');
+@include font-face($secondaryFont, 'sourcesanspro-regular-webfont');
+.o-title {
+  font-family: $primaryFont, 'Helvetica', serif;
+  font-weight: 300;
+  margin: 0 0 32px 0;
+}
+
+.o-subtitle {
+  font-family: $primaryFont, 'Helvetica', serif;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}

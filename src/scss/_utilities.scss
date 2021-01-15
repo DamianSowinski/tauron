@@ -1,0 +1,26 @@
+@use 'core/variables' as *;
+// do ONE thing
+.u-ml-sm {
+  margin-left: $sm;
+}
+
+.u-mb-sm {
+  margin-bottom: $sm;
+}
+
+.u-mb-0 {
+  margin-bottom: 0;
+}
+
+.u-mb-md {
+  margin-bottom: $md;
+}
+
+.u-mb-lg {
+  margin-bottom: $lg;
+}
+
+.u-mb-xl {
+  margin-bottom: $lg;
+}
+

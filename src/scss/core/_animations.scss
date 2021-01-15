@@ -1,0 +1,52 @@
+@use 'variables' as *;
+
+@mixin transition($property: all, $time: 0.2s, $easing: ease-out, $delay: 0) {
+  transition: $time $property $easing;
+  transition-delay: $delay;
+}
+
+@mixin animate($name, $duration: 250ms, $delay: 0, $direction: normal ) {
+  animation: {
+    name: $name;
+    duration: $duration;
+    delay: $delay;
+    timing-function: ease-in-out;
+    iteration-count: 1;
+    direction: $direction;
+    fill-mode: forwards;
+    play-state: running;
+  }
+}
+
+@keyframes searchIcoAnim {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dayIcoAnimPart1 {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dayIcoAnimPart2 {
+  to {
+    stroke-dashoffset: -60;
+  }
+}
+
+@keyframes nightIcoAnim {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

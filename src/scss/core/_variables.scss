@@ -1,0 +1,88 @@
+// FONT
+$fontSize: 1rem;           // 16px
+
+$t2: $fontSize + 0.25rem;  // 18px
+$t1: $fontSize + 0.125rem;  // 18px
+$s1: $fontSize - 0.125rem; // 14px
+
+$primaryFont: 'Sourcesanspro';
+$secondaryFont: 'TitaniumWeb';
+
+$xs: 4px;
+$sm: 8px;
+$md: 16px;
+$lg: 24px;
+$xl: 32px;
+$xxl: 64px;
+
+// BREAKPOINTS
+$breakpoints: (
+  mobile-s: 320px,
+  mobile-m: 375px,
+  mobile-l: 420px,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1600px
+);
+
+$breakpoints-down: (
+  mobile-m: map-get($breakpoints, mobile-l) - 0.02px,
+  mobile-l: map-get($breakpoints, sm) - 0.02px,
+  sm: map-get($breakpoints, md) - 0.02px,
+  md: map-get($breakpoints, lg) - 0.02px,
+  lg: map-get($breakpoints, xl) - 0.02px,
+  xl: map-get($breakpoints, xxl) - 0.02px
+);
+
+// SIZING
+$headerHeight: 64px;
+$sideNavWidth: 260px;
+$sideNavWidthCollapsed: $headerHeight;
+
+// PATHS
+$imagePath: '/assets/images/';
+$fontPath: '/assets/fonts/';
+
+// COLOURS
+$bgrColor: #F0F0F7;
+$txtColor: #4D4F5C;
+$txtColorPurple: #43425D;
+$txtColorGray: #787A8D;
+$txtColorGray05: rgba(67, 66, 93, 0.5);
+
+$purpleDark: #43425D;
+$purple: #A3A0FB;
+$purpleLight: #EDECFE;
+$purpleGray: #A5A4BF;
+
+$purpleGrayLight: #BCBCCB;
+$purpleGrayVeryLight: #E9E9F0;
+
+$blue: #3B86FF;
+$blueLight: #55D8FE;
+
+$red: #FF6565;
+$redLight: #FF8373;
+
+$green: #4AD991;
+$greenLight: #5FE3A1;
+$greenDark: scale-color($green, $lightness: +10%);
+
+$orange: #FFCA83;
+$orangeLight: #FFDA83;
+
+$white: #FFFFFF;
+
+$dark--01: rgba(0, 0, 0, 0.1);
+$light--01: rgba(255, 255, 255, 0.1);
+
+// SHADOWS
+$shadow--l1: 0px 2px 6px rgba(0, 0, 0, 0.04);
+$shadow--l2: 0px 2px 3px rgba(0, 0, 0, 0.05);
+
+// BORDER RADIUS
+$radius--xs: $xs;
+$radius--sm: $sm;
+$radius--md: 12px;

@@ -1,0 +1,45 @@
+@use '../../../scss/core/variables' as *;
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 100px auto;
+
+  .spinner__item {
+    float: left;
+    width: 33%;
+    height: 33%;
+    animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+    background-color: $txtColor;
+
+    &:nth-child(1), &:nth-child(5), &:nth-child(9) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(2), &:nth-child(6) {
+      animation-delay: 0.3s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    &:nth-child(4), &:nth-child(8) {
+      animation-delay: 0.1s;
+    }
+
+    &:nth-child(7) {
+      animation-delay: 0s;
+    }
+  }
+}
+
+@keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    transform: scale3D(1, 1, 1);
+  }
+  35% {
+    transform: scale3D(0, 0, 1);
+  }
+}
+

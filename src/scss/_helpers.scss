@@ -1,0 +1,36 @@
+@use 'core/variables' as *;
+// single functionality
+// eg. change display / position
+.h-d-none {
+  display: none;
+}
+
+
+.u-d-center-x {
+  display: flex;
+  justify-content: center;
+}
+
+.u-d-center-xy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.h-spacer {
+  flex: 1 1 0;
+}
+
+.h-page-padding {
+  padding: $xl $lg;
+}
+
+.h-clear-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  li {
+    margin-bottom: 0;
+  }
+}

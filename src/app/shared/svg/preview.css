@@ -1,0 +1,49 @@
+.l-container {
+  padding: 32px;
+}
+
+.o-title {
+  margin: 0 0 24px 0;
+  padding: 0 0 24px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  font-weight: 300;
+  font-family: 'Helvetica', serif;
+
+}
+
+.l-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  grid-gap: 32px;
+}
+
+.l-grid__item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.l-grid__item:hover .o-ico {
+  transform: scale(1.25);
+}
+
+.l-grid__item:hover .o-ico-id {
+  margin-left: 16px;
+}
+
+.o-ico {
+  width: 48px;
+  height: 48px;
+  fill: #333333;
+  stroke: #333333;
+  transition: all 150ms ease-in-out;
+}
+
+.o-ico-id {
+  transition: all 150ms ease-in-out;
+  margin-left: 8px;
+}
+
+.u-hide {
+  display: none;
+}

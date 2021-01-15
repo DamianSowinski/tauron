@@ -1,0 +1,92 @@
+@use '../../../scss/core/variables' as *;
+@use '../../../scss/core/animations' as *;
+@use '../../../scss/core/mixins' as *;
+
+$size: 60px;
+.l-toast {
+  position: fixed;
+  z-index: 100;
+  right: $sm;
+  bottom: $sm;
+  left: $sm;
+
+  @include breakpoint-up(mobile-l) {
+    left: unset;
+    width: map-get($breakpoints, mobile-l) - ($sm * 4);
+  }
+}
+
+.toast {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  box-sizing: border-box;
+  height: $size;
+  margin-top: $xs;
+  cursor: pointer;
+  animation: toastEnter 250ms ease-out forwards, toastLeave 200ms 3s ease-in forwards;
+  color: $purpleLight;
+  border-radius: $radius--sm;
+  background-color: $dark--01;
+  box-shadow: $shadow--l1;
+  @include transition;
+
+  &__ico-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $size;
+    min-width: $size;
+    height: $size;
+    border-right: 1px solid $light--01;
+  }
+
+  &__content {
+    padding: $xs $sm;
+  }
+
+  &.is-hidden {
+    animation: toastHide 200ms ease-in forwards;
+  }
+
+  .o-ico {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+@keyframes toastEnter {
+  0% {
+    opacity: 0;
+    height: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 0.9;
+    height: $size;
+    margin-top: $xs;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastLeave {
+  0% {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-25px);
+  }
+}
+
+@keyframes toastHide {
+  0% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    margin-top: 0;
+    height: 0;
+  }
+}

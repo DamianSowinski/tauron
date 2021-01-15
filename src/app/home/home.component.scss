@@ -1,0 +1,21 @@
+.l-rows {
+  display: flex;
+  flex-flow: column;
+}
+
+.l-grid {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  grid-template-columns: 1fr;
+  grid-row-gap: 32px;
+}
+
+.l-grid--l2 {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 16px;
+  grid-row-gap: 16px;
+}

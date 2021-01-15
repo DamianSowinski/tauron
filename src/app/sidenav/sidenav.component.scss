@@ -1,0 +1,117 @@
+@use '../../scss/core/variables' as *;
+@use '../../scss/core/animations' as *;
+
+.sidenav {
+  overflow: hidden;
+  box-sizing: border-box;
+  width: $sideNavWidthCollapsed;
+  height: 100vh;
+  background-color: $purpleDark;
+  @include transition(width);
+
+  &__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: $headerHeight;
+    background-color: $dark--01;
+
+    .header {
+      &__ico {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $sideNavWidthCollapsed;
+        height: $headerHeight;
+        fill: $white;
+        @include transition(opacity);
+
+        ::ng-deep .o-ico {
+          width: 24px;
+          height: 24px;
+        }
+      }
+
+      &__title {
+        font-family: $primaryFont, 'Helvetica', serif;
+        font-size: $t1;
+        font-weight: 400;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      &__ico, &__title {
+        margin-left: -$sideNavWidth / 4;
+        opacity: 0;
+        color: $white;
+        @include transition();
+      }
+
+      &__btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+  }
+
+  &__menu {
+    margin: 8px 0;
+    padding: 0;
+    list-style-type: none;
+
+    .item {
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      height: 50px;
+      margin-bottom: 8px;
+      padding-right: $sm;
+      color: $white;
+      border: 0 transparent;
+      @include transition(all, 100ms);
+
+      &__ico {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: $sideNavWidthCollapsed;
+        height: 100%;
+        fill: $purpleGrayLight;
+
+        ::ng-deep .o-ico {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      &:hover {
+        background-color: $dark--01;
+      }
+
+      &.is-active {
+        border-left: 4px solid $purple;
+        background-color: $dark--01;
+
+        .item__ico {
+          fill: $purple;
+        }
+      }
+    }
+  }
+
+  &.is-open {
+    width: $sideNavWidth;
+
+    .header__ico, .header__title {
+      margin-left: 0;
+      opacity: 1;
+      @include transition();
+    }
+  }
+
+  &.no-animate {
+    transition: none;
+  }
+}

@@ -1,20 +1,12 @@
-body {
-  margin: 0;
-  padding: 0;
-  color: #ddd;
-  background-color: #333;
-}
+//base
+@use 'scss/reset';
 
-.u-d-flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-}
+@use 'scss/utilities';
+@use 'scss/helpers';
 
-.o-title {
-  font-family: Helvatica, Arial, serif;
-  font-weight: 300;
-  margin: 0;
-}
+@use 'scss/objects/typography';
+
+//objects
+@use 'scss/objects/buttons';
+@use 'scss/objects/icons';
+@use 'scss/objects/btnMenu';

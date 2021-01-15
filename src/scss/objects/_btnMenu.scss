@@ -1,0 +1,53 @@
+@use '../core/variables' as *;
+@use '../core/mixins' as *;
+
+.o-btn-menu {
+  @include btnIco();
+  @include outline(transparent);
+  width: $headerHeight;
+  height: $headerHeight;
+  padding: 12px;
+  transform: rotate(180deg);
+
+  svg {
+    .line--1,
+    .line--2,
+    .line--3 {
+      @include icoStroke();
+      transition: 250ms all ease-in-out;
+      stroke-dasharray: 32;
+      stroke-dashoffset: -8;
+    }
+  }
+
+  &:hover {
+    .line--2 {
+      stroke-dasharray: 24;
+      stroke-dashoffset: -8;
+    }
+
+    .line--3 {
+      stroke-dasharray: 28;
+      stroke-dashoffset: -8;
+    }
+  }
+
+  .is-open & {
+    svg {
+      path {
+        transform: translateX(-30px);
+      }
+
+      .line--1,
+      .line--3 {
+        stroke-dashoffset: -48;
+        stroke-dasharray: 16, 40;
+      }
+
+      .line--2 {
+        stroke-dasharray: 0, 100;
+        stroke-dashoffset: -60;
+      }
+    }
+  }
+}

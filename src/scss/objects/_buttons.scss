@@ -1,0 +1,34 @@
+@use '../core/variables' as *;
+@use '../core/mixins' as *;
+@use '../core/animations' as *;
+
+.o-btn {
+  &--primary {
+    $color: #78b5e6;
+    padding: 12px $md;
+    color: $txtColor;
+    border: 1px solid darken($color, 10%);
+    border-radius: $radius--sm;
+    background-color: $color;
+    @include transition();
+
+    &:hover {
+      background-color: lighten($color, 10%);
+    }
+  }
+
+  &--success {
+    padding: 12px $md;
+    color: $txtColor;
+    border: 1px solid $greenDark;
+    border-radius: $radius--sm;
+    background-color: $greenDark;
+    @include transition();
+
+    &:disabled {
+      color: #000;
+      border-color: $txtColorGray;
+      background-color: $txtColorGray05;
+    }
+  }
+}
