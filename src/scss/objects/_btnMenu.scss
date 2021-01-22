@@ -1,7 +1,7 @@
 @use '../core/variables' as *;
 @use '../core/mixins' as *;
 
-.o-btn-menu {
+@mixin btnMenu {
   @include btnIco();
   @include outline(transparent);
   width: $headerHeight;
@@ -50,4 +50,25 @@
       }
     }
   }
+}
+
+.o-btn-menu {
+  @include btnMenu();
+
+  &--black {
+    @include btnMenu();
+
+    svg {
+      .line--1,
+      .line--2,
+      .line--3 {
+        @include icoStroke($txtColor);
+
+      }
+    }
+  }
+}
+
+.o-btn-menu--align-left {
+  margin-left: -12px;
 }

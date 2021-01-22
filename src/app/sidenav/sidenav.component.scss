@@ -2,12 +2,16 @@
 @use '../../scss/core/animations' as *;
 
 .sidenav {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
   overflow: hidden;
   box-sizing: border-box;
-  width: $sideNavWidthCollapsed;
-  height: 100vh;
+  width: 0;
+  height: 100%;
+  min-height: 100vh;
   background-color: $purpleDark;
-  @include transition(width);
 
   &__header {
     position: relative;
@@ -101,6 +105,11 @@
     }
   }
 
+  &.is-desktop {
+    position: relative;
+    width: $sideNavWidthCollapsed;
+  }
+
   &.is-open {
     width: $sideNavWidth;
 
@@ -111,7 +120,25 @@
     }
   }
 
-  &.no-animate {
-    transition: none;
+  &.animate {
+    @include transition(width);;
+  }
+}
+
+.backdrop {
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  background-color: #000;
+  @include transition(opacity);
+
+  &.is-open {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.8;
   }
 }

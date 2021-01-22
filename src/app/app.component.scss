@@ -2,7 +2,8 @@
 
 :host {
   display: grid;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
   grid-gap: 0;
   grid-template-columns: auto 1fr;
   grid-template-rows: $headerHeight 1fr;
@@ -12,12 +13,12 @@
 }
 
 .l-top-bar {
-  background-color: $white;
-  grid-area: header;
-  box-shadow: $shadow--l1;
   display: flex;
   align-items: center;
   padding: $md;
+  background-color: $white;
+  box-shadow: $shadow--l1;
+  grid-area: header;
 }
 
 .l-sidenav {
@@ -25,7 +26,7 @@
 }
 
 .l-content {
-  grid-area: content;
   padding: $xl;
+  grid-area: content;
 }
 

@@ -1,0 +1,11 @@
+<section class="graph" [class.is-loading]="!isLoaded">
+  <h2 class="card__title">{{graph.title}}</h2>
+
+  <div class="graph__data-container" [class.is-horizontal]="orientation === 'horizontal'">
+    <div class="set" *ngFor="let sets of chart; index as i">
+      <div class="set__item" *ngFor="let item of sets; index as j" style="{{ chartStyle.length > 0 ? chartStyle[i][j] : '' }}" title="{{item}}"></div>
+    </div>
+  </div>
+
+  <app-loading-spinner size="sm" class="graph__loading" *ngIf="!isLoaded"></app-loading-spinner>
+</section>

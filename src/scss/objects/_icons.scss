@@ -1,6 +1,9 @@
 @use '../core/variables' as *;
 
 .o-ico {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: $fontSize;
   height: $fontSize;
 }

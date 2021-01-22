@@ -12,12 +12,15 @@
   }
 }
 
-@include font-face($primaryFont, 'titilliumweb-light-webfont');
-@include font-face($secondaryFont, 'sourcesanspro-regular-webfont');
+@include font-face($primaryFont, 'sourcesanspro-regular-webfont', 500);
+@include font-face($primaryFontSemiBold, 'sourcesanspro-semibold-webfont', 700);
+@include font-face($primaryFontBold, 'sourcesanspro-bold-webfont', 600);
+@include font-face($secondaryFont, 'titilliumweb-light-webfont');
+
+
 .o-title {
-  font-family: $primaryFont, 'Helvetica', serif;
+  font-family: $secondaryFont, 'Helvetica', serif;
   font-weight: 300;
-  margin: 0 0 32px 0;
 }
 
 .o-subtitle {

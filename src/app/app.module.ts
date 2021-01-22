@@ -25,4 +25,5 @@ import { DayComponent } from './day/day.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

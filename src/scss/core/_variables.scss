@@ -6,6 +6,8 @@ $t1: $fontSize + 0.125rem;  // 18px
 $s1: $fontSize - 0.125rem; // 14px
 
 $primaryFont: 'Sourcesanspro';
+$primaryFontSemiBold: 'Sourcesanspro--semibold';
+$primaryFontBold: 'Sourcesanspro--bold';
 $secondaryFont: 'TitaniumWeb';
 
 $xs: 4px;
@@ -76,6 +78,7 @@ $orangeLight: #FFDA83;
 $white: #FFFFFF;
 
 $dark--01: rgba(0, 0, 0, 0.1);
+$dark--09: rgba(0, 0, 0, 0.9);
 $light--01: rgba(255, 255, 255, 0.1);
 
 // SHADOWS

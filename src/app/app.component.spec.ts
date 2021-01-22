@@ -20,10 +20,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'tauron-api-client'`, () => {
+  it(`should have as title 'Energy'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('tauron-api-client');
+    expect(app.title).toEqual('Energy');
   });
 
   it('should render title', () => {

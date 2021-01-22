@@ -1,21 +1,44 @@
-.l-rows {
-  display: flex;
-  flex-flow: column;
-}
+@use '../../scss/core/variables' as *;
+@use '../../scss/core/mixins' as *;
 
 .l-grid {
   display: grid;
-  margin: 0;
-  padding: 0;
-  grid-template-columns: 1fr;
-  grid-row-gap: 32px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'title'
+    'intake'
+    'generate'
+    'month'
+    'graph';
+  grid-gap: 32px;
+
+  @include breakpoint-up(lg) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+    'title    title     title'
+    'intake   generate  month'
+    'graph    graph     graph';
+  }
 }
 
-.l-grid--l2 {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 16px;
-  grid-row-gap: 16px;
+.l-title {
+  grid-area: title;
+}
+
+.l-card {
+  &--yesterday-intake {
+    grid-area: intake;
+  }
+
+  &--yesterday-gen {
+    grid-area: generate;
+  }
+
+  &--month-sum {
+    grid-area: month;
+  }
+
+  &--month-graph {
+    grid-area: graph;
+  }
 }

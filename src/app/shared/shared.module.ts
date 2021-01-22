@@ -6,6 +6,8 @@ import { ToastService } from './toast/toast.service';
 import { HttpClientModule } from '@angular/common/http';
 import { SvgComponent } from './svg/svg.component';
 import { SvgDefinitionComponent } from './svg/svg-definition.component';
+import { CardComponent } from './card/card.component';
+import { GraphComponent } from './graph/graph.component';
 
 @NgModule({
   declarations: [
@@ -13,18 +15,22 @@ import { SvgDefinitionComponent } from './svg/svg-definition.component';
     LoadingSpinnerComponent,
     SvgComponent,
     SvgDefinitionComponent,
+    CardComponent,
+    GraphComponent,
   ],
   imports: [
     CommonModule,
     HttpClientModule,
   ],
-  exports: [
-    ToastComponent,
-    LoadingSpinnerComponent,
-    HttpClientModule,
-    SvgComponent,
-    SvgDefinitionComponent,
-  ],
+    exports: [
+        ToastComponent,
+        LoadingSpinnerComponent,
+        HttpClientModule,
+        SvgComponent,
+        SvgDefinitionComponent,
+        CardComponent,
+        GraphComponent,
+    ],
   providers: [
     ToastService
   ]

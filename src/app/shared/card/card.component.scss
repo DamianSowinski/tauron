@@ -1,0 +1,133 @@
+@use '../../../scss/core/variables' as *;
+@use '../../../scss/core/animations' as *;
+
+.card {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 16px;
+  background-color: $white;
+  box-shadow: $shadow--l1;
+
+  &__title {
+    font-family: $primaryFont, 'Helvetica', serif;
+    font-size: $t1;
+    color: $txtColorGray;
+  }
+
+  &__total {
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+
+    .total__value {
+      font-family: $primaryFontBold, 'Helvetica', serif;
+      font-size: 24px;
+      font-weight: bold;
+      min-width: 100px;
+      margin-right: $sm;
+      color: $txtColor;
+    }
+
+    .total__trend {
+      font-family: $primaryFontSemiBold, 'Helvetica', serif;
+      display: flex;
+      align-items: center;
+      color: $green;
+
+      ::ng-deep .o-ico {
+        width: 14px;
+        height: 14px;
+        margin-right: $xs;
+        fill: $green
+      }
+
+      &.is-negative {
+        color: $red;
+
+        ::ng-deep .o-ico {
+          transform: rotate(180deg);
+          fill: $red;
+        }
+      }
+    }
+  }
+
+  &__zone {
+    display: flex;
+    align-items: center;
+
+    ::ng-deep .o-ico {
+      width: 14px;
+      height: 14px;
+      margin-right: $sm;
+      fill: $txtColorGray;
+    }
+
+    .zone__value {
+      font-family: $primaryFontSemiBold, 'Helvetica', serif;
+      font-weight: bold;
+      min-width: 80px;
+      margin-right: $sm;
+      color: $txtColorGray;
+    }
+
+    .zone__trend {
+      font-family: $primaryFontSemiBold, 'Helvetica', serif;
+      font-size: $s1;
+      display: flex;
+      align-items: center;
+      color: $green;
+
+      ::ng-deep .o-ico {
+        width: 12px;
+        height: 12px;
+        margin-right: $xs;
+        fill: $green;
+      }
+
+      &.is-negative {
+        color: $red;
+
+        ::ng-deep .o-ico {
+          transform: rotate(180deg);
+          fill: $red;
+        }
+      }
+    }
+  }
+
+  &__graph {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    align-items: flex-end;
+
+    .bar--1, .bar--2 {
+      @include transition(height);
+      width: 22px;
+      height: 1px;
+      border-radius: $radius--xs;
+    }
+
+    .bar--1 {
+      margin-right: 8px;
+      background-color: $orange;
+    }
+
+    .bar--2 {
+      background-color: $blueLight;
+    }
+  }
+
+  &__loading {
+    position: absolute;
+    top: calc(50% - 12px);
+    left: calc(50% - 12px);
+  }
+
+  &.is-loading {
+    opacity: 0.5;
+  }
+}

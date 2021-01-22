@@ -1,0 +1,38 @@
+<section class="card" [class.is-loading]="!isLoaded">
+  <h2 class="card__title">{{data.title}}</h2>
+
+  <div class="card__total">
+    <span class="total__value">{{data.total.value }} kWh</span>
+    <div class="total__trend" [class.is-negative]="data.total.trend < 0" *ngIf="data.total.trend">
+      <svg-ico name="arrow-up"></svg-ico>
+      <span>{{data.total.trend}} %</span>
+    </div>
+  </div>
+
+  <div class="card__zone u-mb-sm">
+    <svg-ico name="{{ data.detail1.ico || 'sun' }}"></svg-ico>
+    <span class="zone__value">{{data.detail1.value || 0}} kWH</span>
+    <span class="zone__trend" [class.is-negative]="data.detail1.trend < 0" *ngIf="data.detail1.trend">
+      <svg-ico name="arrow-up"></svg-ico>
+      <span>{{data.detail1.trend}} %</span>
+    </span>
+  </div>
+
+  <div class="card__zone">
+    <svg-ico name="{{ data.detail2.ico || 'moon' }}"></svg-ico>
+    <span class="zone__value">{{data.detail2.value || 0}} kWH</span>
+    <span class="zone__trend" [class.is-negative]="data.detail2.trend < 0" *ngIf="data.detail2.trend">
+      <svg-ico name="arrow-up"></svg-ico>
+      <span>{{data.detail2.trend}} %</span>
+    </span>
+  </div>
+
+  <div class="card__graph">
+    <div class="bar--1" style="{{graphStyle[0]}}"></div>
+    <div class="bar--2" style="{{graphStyle[1]}}"></div>
+  </div>
+
+
+  <app-loading-spinner size="sm" class="card__loading" *ngIf="!isLoaded"></app-loading-spinner>
+
+</section>

@@ -8,7 +8,6 @@ body {
   padding: 0;
   color: $txtColor;
   background-color: $bgrColor;
-  background-image: radial-gradient(farthest-corner at 40px 40px, lighten($bgrColor, 10%) 0%, darken($bgrColor, 10%) 100%);
 }
 
 h1, h2, h3, h4 {
