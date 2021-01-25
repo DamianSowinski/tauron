@@ -1,10 +1,28 @@
 import { Component, ElementRef, HostListener, Input, OnInit } from '@angular/core';
 
+export interface GraphSetData {
+  title: string;
+  values: number[];
+  colour: string;
+}
+
 export interface GraphData {
   title: string;
-  data: number[][];
+  sets: GraphSetData[];
   xAxis: string[];
   yMax: number;
+  breakpoint?: number;
+}
+
+interface ItemData {
+  title: string;
+  value: number;
+  style: string;
+}
+
+interface Yaxis {
+  value: number;
+  style: string;
 }
 
 @Component({
@@ -15,21 +33,43 @@ export interface GraphData {
 export class GraphComponent implements OnInit {
   @Input() graph: GraphData;
 
-  chart: number[][] = [];
-  chartStyle: string[][] = [];
+  chartData: ItemData[][] = [];
+  yAxis: Yaxis[];
   isLoaded = false;
-  orientation: 'horizontal' | 'vertical' = null;
+  orientation: 'horizontal' | 'vertical';
 
-  private width = 0;
-  private charBreakpoint = 992;
+  private width: number;
+  private charBreakpoint: number;
 
   constructor(private el: ElementRef) {
   }
 
   ngOnInit(): void {
     this.width = this.el.nativeElement.clientWidth;
-    this.initChar();
+    this.charBreakpoint = this.graph.breakpoint || 990;
+
     this.setOrientation();
+    this.initChar();
+  }
+
+  initChar() {
+    const itemsCount = this.graph.xAxis.length;
+    const isEqualSets = !this.graph.sets.find((item) => item.values.length !== itemsCount);
+
+    if (!isEqualSets) {
+      console.log(`%c ⚠ Warning: graph sets are not equals`, `color: orange; font-weight: bold;`);
+      return;
+    }
+
+    this.graph.yMax = this.calculateMaxValue();
+    this.yAxis = this.calculateYaxis();
+    this.chartData = this.transformSets();
+  }
+
+  updateChar() {
+    this.initChar();
+    this.animateChar();
+    this.isLoaded = true;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -45,86 +85,103 @@ export class GraphComponent implements OnInit {
     }
   }
 
-  initChar() {
-    const setsCount = this.graph.data.length;
+  private transformSets(): [][] {
+    const transformedSets = [];
     const itemsCount = this.graph.xAxis.length;
-    const isEqualSets = !this.graph.data.find((item) => item.length !== itemsCount);
-
-    if (!isEqualSets) {
-      console.log(`%c ⚠ Warning: graph sets are not equals`, `color: orange; font-weight: bold;`);
-      return;
-    }
+    const setsCount = this.graph.sets.length;
 
     for (let i = 0; i < itemsCount; i++) {
-      const item = [];
+      const group = [];
 
       for (let j = 0; j < setsCount; j++) {
-        item.push(this.graph.data[j][i]);
+        const {title, values, colour} = this.graph.sets[j];
+        const style = this.calculateStyle(values, colour);
+
+        group.push({title, value: values[i], style});
       }
 
-      this.chart.push(item);
-    }
-  }
-
-  updateChar() {
-    const setsCount = this.graph.data.length;
-    const itemsCount = this.graph.xAxis.length;
-
-    for (let i = 0; i < itemsCount; i++) {
-      for (let j = 0; j < setsCount; j++) {
-        this.chart[i][j] = this.graph.data[j][i];
-      }
+      transformedSets.push(group);
     }
 
-    this.graph.yMax = this.calculateMaxValue();
-    this.calculateStyle();
-    this.isLoaded = true;
+    return transformedSets;
   }
 
-  private calculateStyle() {
-    const styles = [];
+  private calculateYaxis(): Yaxis[] {
+    const minScale = 5;
+    let step = 1;
+    const labels: Yaxis[] = [];
 
-    this.chart.forEach((sets) => {
-      const setsStyle = [];
+    if (this.graph.yMax > minScale) {
+      step = Math.ceil(this.graph.yMax / 4);
+    }
 
-      sets.forEach((item) => {
-        const size = 100 * item / this.graph.yMax;
-        const style = this.width < this.charBreakpoint ? `width:${size}%` : `height:${size}%`;
-        setsStyle.push(style);
-      });
+    for (let i = 0; i < 5; i++) {
 
-      styles.push(setsStyle);
+      const styleSteep = 25 * i;
+      const style = this.orientation === 'horizontal' ? `bottom:${styleSteep}%` : `left:${styleSteep}%`;
 
-      setTimeout(() => this.chartStyle = styles, 50);
-    });
+      labels.push({value: i * step, style});
+    }
+
+    return labels;
+  }
+
+  private calculateStyle(value, colour): string {
+    const size = 100 * value / this.yAxis[this.yAxis.length - 1].value;
+    let style = this.width < this.charBreakpoint ? `width:${size}%;` : `height:${size}%;`;
+    style += `background-color:${colour};`;
+
+    return style;
   }
 
   private calculateMaxValue(): number {
     const yMax = this.graph.yMax;
 
-    const maxValue = this.chart.reduce((max, item) => {
-      item.forEach((value) => max = value > max ? value : max);
+    const maxValue = this.graph.sets.reduce((max, set) => {
+      set.values.forEach((value) => max = value > max ? value : max);
       return max;
     }, 0);
 
-    return yMax > maxValue ? yMax : 5 * (Math.trunc(maxValue / 5) + 1);
+    return yMax > maxValue ? yMax : maxValue + 1;
+  }
+
+  private animateChar() {
+    setTimeout(() => {
+      this.chartData.forEach((group) => {
+        group.forEach((item) => {
+          const colour = this.getColourFromStyle(item.style);
+          item.style = this.calculateStyle(item.value, colour);
+        });
+      });
+    }, 100);
   }
 
   private rotateChar(position: 'horizontal' | 'vertical') {
-    this.chartStyle.forEach((item) => {
-      for (let i = 0; i < item.length; i++) {
-        if (position === 'vertical') {
-          item[i] = item[i].replace('height', 'width');
-        } else {
-          item[i] = item[i].replace('width', 'height');
-        }
-      }
+    this.chartData.forEach((group) => {
+      group.forEach((item) => {
+        item.style = position === 'vertical' ? item.style.replace('height', 'width') : item.style.replace('width', 'height');
+      });
     });
 
     this.setOrientation();
+    this.yAxis = this.calculateYaxis();
   }
 
   private setOrientation() {
     this.orientation = this.width < this.charBreakpoint ? 'vertical' : 'horizontal';
+  }
+
+  private getColourFromStyle(style: string): string {
+    let colour = '';
+
+    style.split(';').forEach((property) => {
+      if (-1 === property.indexOf('background-color')) {
+        return;
+      }
+
+      colour = property.split(':')[1];
+    });
+
+    return colour;
   }
 }

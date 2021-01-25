@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angu
 import { ApiService, EnergyDayUsage, EnergyMonthUsage } from '../api.service';
 import { CardComponent, CardData } from '../shared/card/card.component';
 import { GraphComponent, GraphData } from '../shared/graph/graph.component';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -55,12 +56,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
   };
   monthDetails: GraphData = {
     title: 'Month summary',
-    data: [
-      HomeComponent.generateDefaultValues(),
-      HomeComponent.generateDefaultValues(),
+    sets: [
+      {
+        title: 'Intake',
+        values: HomeComponent.generateDefaultValues(),
+        colour: '#55D8FE'
+      },
+      {
+        title: 'Generate',
+        values: HomeComponent.generateDefaultValues(),
+        colour: '#4AD991'
+      }
+
     ],
     xAxis: HomeComponent.generateLabel(),
-    yMax: 15
+    yMax: 15,
+    breakpoint: 1300
   };
 
   constructor(private apiService: ApiService) {
@@ -95,14 +106,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.apiService.getYesterdayUsage().subscribe((data) => {
-        this.fillYesterdayCards(data);
-      });
+      this.apiService.mockGetYesterdayUsage()
+        .pipe(
+          delay(500)
+        )
+        .subscribe((data) => {
+          this.fillYesterdayCards(data);
+        });
 
-      this.apiService.getMonthUsage().subscribe((data) => {
-        this.fillMonthCard(data);
-        this.fillMontGraph(data);
-      });
+      this.apiService.mockGetMontUsage()
+        .pipe(
+          delay(800)
+        )
+        .subscribe((data) => {
+          this.fillMonthCard(data);
+          this.fillMontGraph(data);
+        });
     });
   }
 
@@ -155,7 +174,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         generates.push(days[i] && days[i].generate ? days[i].generate : 0);
       }
 
-      this.monthDetails.data = [consumes, generates];
+      this.monthDetails.sets[0].values = consumes;
+      this.monthDetails.sets[1].values = generates;
       this.graph.first.updateChar();
     }
   }
