@@ -2,7 +2,11 @@
   <div class="graph__header">
     <h2 class="graph__title">{{graph.title}}</h2>
     <div class="h-spacer"></div>
-    <button>january</button>
+
+    <label class="u-d-center-xy" for="selectRange"><svg-ico name="sun"></svg-ico></label>
+    <select class="o-btn--d u-ml-sm" id="selectRange" name="selectRange" (change)="selectRange($event)">
+      <option *ngFor="let option of graph.selectRange" [defaultSelected]="option.isSelected" value="{{option.value}}" >{{option.title}}</option>
+    </select>
   </div>
 
   <div class="graph__chart" [class.is-horizontal]="orientation === 'horizontal'">
@@ -11,7 +15,7 @@
     </div>
 
     <div class="group" *ngFor="let group of chartData; index as i">
-      <div class="group__item" *ngFor="let item of group" style="{{ item.style ? item.style : '' }}" title="{{item.title + ': ' + item.value}}"></div>
+      <div class="group__item" *ngFor="let item of group" style="{{ item.style ? item.style : '' }}" title="{{item.title + ': ' + item.value}}" appTippy></div>
       <span class="group__label">{{graph.xAxis[i]}}</span>
     </div>
   </div>

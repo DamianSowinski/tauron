@@ -9,21 +9,22 @@ import { AppRoutingModule } from './app.routing';
 import { HomeComponent } from './home/home.component';
 import { DayComponent } from './day/day.component';
 
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    SidenavComponent,
-    HomeComponent,
-    DayComponent
-  ],
-  imports: [
-    SharedModule,
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        SidenavComponent,
+        HomeComponent,
+        DayComponent,
+    ],
+    imports: [
+        SharedModule,
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

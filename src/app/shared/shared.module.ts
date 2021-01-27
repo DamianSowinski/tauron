@@ -8,6 +8,7 @@ import { SvgComponent } from './svg/svg.component';
 import { SvgDefinitionComponent } from './svg/svg-definition.component';
 import { CardComponent } from './card/card.component';
 import { GraphComponent } from './graph/graph.component';
+import { TippyDirective } from './directives/tippy.directive';
 
 @NgModule({
   declarations: [
@@ -17,20 +18,22 @@ import { GraphComponent } from './graph/graph.component';
     SvgDefinitionComponent,
     CardComponent,
     GraphComponent,
+    TippyDirective
   ],
   imports: [
     CommonModule,
     HttpClientModule,
   ],
-    exports: [
-        ToastComponent,
-        LoadingSpinnerComponent,
-        HttpClientModule,
-        SvgComponent,
-        SvgDefinitionComponent,
-        CardComponent,
-        GraphComponent,
-    ],
+  exports: [
+    ToastComponent,
+    LoadingSpinnerComponent,
+    HttpClientModule,
+    SvgComponent,
+    SvgDefinitionComponent,
+    CardComponent,
+    GraphComponent,
+    TippyDirective
+  ],
   providers: [
     ToastService
   ]

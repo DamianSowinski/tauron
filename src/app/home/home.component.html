@@ -4,6 +4,6 @@
   <app-card class="l-card--yesterday-intake" [data]="yesterdayIntake"></app-card>
   <app-card class="l-card--yesterday-gen" [data]="yesterdayGenerate"></app-card>
   <app-card class="l-card--month-sum" [data]="monthSummary"></app-card>
-  <app-graph class="l-card--month-graph" [graph]="monthDetails"></app-graph>
+  <app-graph class="l-card--month-graph" [graph]="monthDetails" (changeSelectRange)="changeMonth($event)"></app-graph>
 </section>
 

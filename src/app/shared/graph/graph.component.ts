@@ -1,17 +1,22 @@
-import { Component, ElementRef, HostListener, Input, OnInit } from '@angular/core';
-
-export interface GraphSetData {
-  title: string;
-  values: number[];
-  colour: string;
-}
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 
 export interface GraphData {
   title: string;
-  sets: GraphSetData[];
+
   xAxis: string[];
   yMax: number;
   breakpoint?: number;
+  sets: {
+    title: string;
+    values: number[];
+    colour: string;
+  }[];
+  // todo: remove select range
+  selectRange: {
+    title: string;
+    value: number;
+    isSelected: boolean;
+  }[];
 }
 
 interface ItemData {
@@ -32,6 +37,7 @@ interface Yaxis {
 })
 export class GraphComponent implements OnInit {
   @Input() graph: GraphData;
+  @Output() changeSelectRange = new EventEmitter<number>();
 
   chartData: ItemData[][] = [];
   yAxis: Yaxis[];
@@ -45,6 +51,7 @@ export class GraphComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.width = this.el.nativeElement.clientWidth;
     this.charBreakpoint = this.graph.breakpoint || 990;
 
@@ -83,6 +90,11 @@ export class GraphComponent implements OnInit {
     if (this.width >= this.charBreakpoint && this.orientation !== 'horizontal') {
       this.rotateChar('horizontal');
     }
+  }
+
+  selectRange($event: Event) {
+    const target = $event.target as HTMLSelectElement;
+    this.changeSelectRange.emit(+target.value);
   }
 
   private transformSets(): [][] {
