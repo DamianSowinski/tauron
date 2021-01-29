@@ -402,7 +402,6 @@ export class ApiService {
   // }
 
   private checkCache(type: TimeRange, date: Date): any {
-
     const cache = this.cache
       .filter((item) => item.range === type)
       .find((item) => HelperService.isTheSameDate(item.date, date, type));

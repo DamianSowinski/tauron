@@ -1,27 +1,19 @@
 <section class="graph" [class.is-loading]="!isLoaded">
-  <div class="graph__header">
-    <h2 class="graph__title">{{graph.title}}</h2>
-    <div class="h-spacer"></div>
-
-    <label class="u-d-center-xy" for="selectRange"><svg-ico name="sun"></svg-ico></label>
-    <select class="o-btn--d u-ml-sm" id="selectRange" name="selectRange" (change)="selectRange($event)">
-      <option *ngFor="let option of graph.selectRange" [defaultSelected]="option.isSelected" value="{{option.value}}" >{{option.title}}</option>
-    </select>
-  </div>
+  <h2 class="graph__title">{{graphData.title}}</h2>
 
   <div class="graph__chart" [class.is-horizontal]="orientation === 'horizontal'">
-    <div class="y-label" *ngFor="let item of yAxis" style="{{ item.style }}">
+    <div class="y-label" *ngFor="let item of graphData.yAxis" style="{{ yAxisOrientation(item.position) }}">
       <div class="y-label__value">{{item.value}}</div>
     </div>
 
     <div class="group" *ngFor="let group of chartData; index as i">
-      <div class="group__item" *ngFor="let item of group" style="{{ item.style ? item.style : '' }}" title="{{item.title + ': ' + item.value}}" appTippy></div>
-      <span class="group__label">{{graph.xAxis[i]}}</span>
+      <div class="group__item" *ngFor="let item of group" style="{{ item.style || ''  }}" title="{{item.title + ': ' + item.value}}" appTippy></div>
+      <span class="group__label">{{graphData.xAxis[i]}}</span>
     </div>
   </div>
 
   <div class="graph__legend">
-    <div class="item" *ngFor="let set of graph.sets">
+    <div class="item" *ngFor="let set of graphData.sets">
       <div class="item__mark" style="{{ 'background-color:'+set.colour}}"></div>
       <div class="item__title">{{set.title}}</div>
     </div>

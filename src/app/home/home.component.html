@@ -1,9 +1,9 @@
 <section class="l-grid">
-  <h2 class="o-title l-title">Short information</h2>
+  <h2 class="o-title l-grid__title">Short information</h2>
 
-  <app-card class="l-card--yesterday-intake" [data]="yesterdayIntake"></app-card>
-  <app-card class="l-card--yesterday-gen" [data]="yesterdayGenerate"></app-card>
-  <app-card class="l-card--month-sum" [data]="monthSummary"></app-card>
-  <app-graph class="l-card--month-graph" [graph]="monthDetails" (changeSelectRange)="changeMonth($event)"></app-graph>
+  <app-card class="l-grid__intake" [cardData]="intakeData"></app-card>
+  <app-card class="l-grid__generate" [cardData]="generateData"></app-card>
+  <app-card class="l-grid__month-total" [cardData]="monthData"></app-card>
+  <app-graph class="l-grid__graph" [graphData]="graphData"></app-graph>
 </section>
 

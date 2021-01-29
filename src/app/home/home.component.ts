@@ -1,92 +1,45 @@
-import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, QueryList, ViewChildren } from '@angular/core';
 import { ApiService, EnergyDayUsage, EnergyMonthUsage } from '../api.service';
-import { CardComponent, CardData } from '../shared/card/card.component';
-import { GraphComponent, GraphData } from '../shared/graph/graph.component';
+import { CardComponent } from '../shared/card/card.component';
+import { GraphComponent } from '../shared/graph/graph.component';
 import { HelperService } from '../helper.service';
+import { Card } from '../shared/card/Card';
+import { Graph } from '../shared/graph/Graph';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements AfterViewInit {
   @ViewChildren(CardComponent) cards: QueryList<CardComponent>;
   @ViewChildren(GraphComponent) graph: QueryList<GraphComponent>;
 
-  yesterdayIntake: CardData = {
-    title: 'Yesterday intake',
-    total: {
-      value: 0
-    },
-    detail1: {
-      title: 'Day',
-      value: 0
-    },
-    detail2: {
-      title: 'Night',
-      value: 0
-    }
-  };
-  yesterdayGenerate: CardData = {
-    title: 'Yesterday generates',
-    total: {
-      value: 0
-    },
-    detail1: {
-      title: 'Day',
-      value: 0
-    },
-    detail2: {
-      title: 'Night',
-      value: 0
-    }
-  };
-  monthSummary: CardData = {
-    title: 'This month',
-    total: {
-      value: 0
-    },
-    detail1: {
-      ico: 'download',
-      title: 'Intake',
-      value: 0,
-      colour: '#FF6565'
-
-    },
-    detail2: {
-      ico: 'upload',
-      title: 'Generate',
-      value: 0,
-      colour: '#4AD991'
-    }
-  };
-  monthDetails: GraphData = {
-    title: 'Month summary',
-    sets: [
-      {
-        title: 'Intake',
-        values: HelperService.generateDefaultValues(),
-        colour: '#55D8FE'
-      },
-      {
-        title: 'Generate',
-        values: HelperService.generateDefaultValues(),
-        colour: '#4AD991'
-      }
-
-    ],
-    xAxis: HelperService.generateLabel(),
-    yMax: 15,
-    breakpoint: 1300,
-    selectRange: HelperService.generateMonthsRange()
-  };
-
+  intakeData: Card;
+  generateData: Card;
+  monthData: Card;
+  graphData: Graph;
 
   constructor(private apiService: ApiService) {
-  }
+    this.intakeData = new Card('Yesterday intake', 'Day', 'Night');
+    this.generateData = new Card('Yesterday generates', 'Day', 'Night');
 
+    this.monthData = new Card('This month', 'Intake', 'Generate');
+    this.monthData.setColours('#FF6565', '#4AD991');
+    this.monthData.setIcons('download', 'upload');
 
-  ngOnInit(): void {
+    this.graphData = new Graph('Month summary');
+    this.graphData.setXAxis(HelperService.generateDaysLabel());
+    this.graphData.addSets([{
+      title: 'Intake',
+      values: HelperService.generateDefaultValues(HelperService.daysInMonth(new Date())),
+      colour: '#55D8FE'
+    }, {
+      title: 'Generate',
+      values: HelperService.generateDefaultValues(HelperService.daysInMonth(new Date())),
+      colour: '#4AD991'
+    }
+    ]);
   }
 
   ngAfterViewInit() {
@@ -105,35 +58,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  changeMonth(select: number) {
-    const date = new Date();
-    date.setMonth(select - 1);
-    date.setFullYear(2020);
-
-    this.graph.first.isLoaded = false;
-
-    this.apiService.getMonthUsage(date).then((data) => {
-      this.fillMontGraph(data);
-      this.graph.first.isLoaded = true;
-    });
-  }
-
   private fillYesterdayCards(data: EnergyDayUsage) {
     if (data) {
       const {total, day, night} = data.consume;
       const {total: totalG, day: dayG, night: nightG} = data.generate;
 
-      this.yesterdayIntake.total.value = total;
-      this.yesterdayIntake.detail1.value = day;
-      this.yesterdayIntake.detail2.value = night;
-
-      this.yesterdayGenerate.total.value = totalG;
-      this.yesterdayGenerate.detail1.value = dayG;
-      this.yesterdayGenerate.detail2.value = nightG;
-
-      this.yesterdayGenerate.total.trend = HelperService.calculateTrend(total, totalG);
-      this.yesterdayGenerate.detail1.trend = HelperService.calculateTrend(day, dayG);
-      this.yesterdayGenerate.detail2.trend = HelperService.calculateTrend(night, nightG);
+      this.intakeData.updateValues(total, day, night);
+      this.generateData.updateValues(totalG, dayG, nightG);
+      this.generateData.calculateTrends(total, day, night);
 
       const cards = this.cards.toArray();
       cards[0].refresh();
@@ -146,10 +78,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       const {total} = data.consume;
       const {total: totalG} = data.generate;
 
-      this.monthSummary.total.value = +(total - totalG).toFixed(2);
-      this.monthSummary.detail1.value = total;
-      this.monthSummary.detail2.value = totalG;
-      this.monthSummary.detail2.trend = HelperService.calculateTrend(total, totalG);
+      this.monthData.updateValues(total - totalG, total, totalG);
+      this.monthData.calculateMainTrends(total, totalG);
 
       const cards = this.cards.toArray();
       cards[2].refresh();
@@ -173,9 +103,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
         generates.push(days[i] && days[i].generate ? +days[i].generate.toFixed(2) : 0);
       }
 
-      this.monthDetails.sets[0].values = consumes;
-      this.monthDetails.sets[1].values = generates;
-      this.monthDetails.xAxis = HelperService.generateLabel(date);
+      this.graphData.updateSetValues(0, consumes);
+      this.graphData.updateSetValues(1, generates);
+      this.graphData.setXAxis(HelperService.generateDaysLabel(date));
 
       this.graph.first.updateChar();
     }

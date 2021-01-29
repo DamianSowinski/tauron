@@ -1,26 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-
-export interface CardData {
-  title: string;
-  total?: {
-    value?: number;
-    trend?: number;
-  };
-  detail1?: {
-    ico?: string;
-    title?: string;
-    value?: number;
-    trend?: number;
-    colour?: string;
-  };
-  detail2?: {
-    ico?: string;
-    title?: string;
-    value?: number;
-    trend?: number;
-    colour?: string;
-  };
-}
+import { Card } from './Card';
 
 @Component({
   selector: 'app-card',
@@ -28,9 +7,9 @@ export interface CardData {
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent implements OnInit {
-  @Input() data: CardData;
-  graphValue = [1, 1];
-  graphStyle = [null, null];
+  @Input() cardData: Card;
+  barsWidth = [1, 1];
+  barsStyle = [null, null];
   isLoaded = false;
 
   constructor() {
@@ -39,32 +18,33 @@ export class CardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  refresh() {
-    const value1 = this.data.detail1.value;
-    const value2 = this.data.detail2.value;
-
-
-    if (value1 === 0 && value2 === 0) {
-      this.graphValue[0] = 0;
-      this.graphValue[1] = 0;
-    } else if (value1 > value2) {
-      this.graphValue[0] = 100;
-      this.graphValue[1] = Math.floor(100 * value2 / value1);
-
-    } else {
-      this.graphValue[0] = Math.floor(100 * value1 / value2);
-      this.graphValue[1] = 100;
-    }
-
+  refresh(): void {
+    this.calculateSize();
     this.setGraphStyle();
     this.isLoaded = true;
   }
 
-  private setGraphStyle() {
-    const colour1 = this.data.detail1.colour || '#FFCA83';
-    const colour2 = this.data.detail2.colour || '#55D8FE';
+  private calculateSize() {
+    const value1 = this.cardData.detail1.value;
+    const value2 = this.cardData.detail2.value;
 
-    this.graphStyle[0] = `height:${this.graphValue[0]}px; background-color:${colour1};`;
-    this.graphStyle[1] = `height:${this.graphValue[1]}px; background-color:${colour2};`;
+    if (value1 === 0 && value2 === 0) {
+      this.barsWidth[0] = 0;
+      this.barsWidth[1] = 0;
+    } else if (value1 > value2) {
+      this.barsWidth[0] = 100;
+      this.barsWidth[1] = Math.floor(100 * value2 / value1);
+    } else {
+      this.barsWidth[0] = Math.floor(100 * value1 / value2);
+      this.barsWidth[1] = 100;
+    }
+  }
+
+  private setGraphStyle() {
+    const colour1 = this.cardData.detail1.colour;
+    const colour2 = this.cardData.detail2.colour;
+
+    this.barsStyle[0] = `height:${this.barsWidth[0]}px; background-color:${colour1};`;
+    this.barsStyle[1] = `height:${this.barsWidth[1]}px; background-color:${colour2};`;
   }
 }

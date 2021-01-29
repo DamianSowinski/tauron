@@ -12,42 +12,47 @@ export class HelperService {
 
   static isTheSameDate(date1: Date, date2: Date, range: TimeRange): boolean {
     let isEqual = false;
-    const date1String = date1.toISOString();
-    const date2String = date2.toISOString();
+    const date1String = this.getStringDate(date1);
+    const date2String = this.getStringDate(date2);
 
     switch (range) {
       case 'day':
-        isEqual = date1String.split('T')[0] === date2String.split('T')[0];
+        isEqual = date1String === date2String;
         break;
       case 'month':
-        isEqual = date1String.split('T')[0].substr(0, 7) === date2String.split('T')[0].substr(0, 7);
+        isEqual = date1String.substr(0, 7) === date2String.substr(0, 7);
         break;
       case 'year':
         break;
     }
-
     return isEqual;
   }
 
-  static calculateTrend(a: number, b: number): number {
-    return +(100 * (b - a) / a).toFixed(2);
-  }
 
   static daysInMonth(date: Date): number { // Use 1 for January, 2 for February, etc.
 
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   }
 
-  static generateDefaultValues(date = new Date()): number[] {
-    const size = HelperService.daysInMonth(date);
-    const defaultVal = new Array(size);
+  static generateDefaultValues(count: number = null): number[] {
 
-    return defaultVal.fill(0, 0, size);
+    const defaultVal = new Array(count);
+
+    return defaultVal.fill(0, 0, count);
   }
 
-  static generateLabel(date = new Date()): string[] {
+  static generateDaysLabel(date = new Date()): string[] {
     const label = [];
     for (let i = 0; i < HelperService.daysInMonth(date); i++) {
+      label.push((i + 1).toString());
+    }
+
+    return label;
+  }
+
+  static generateHoursLabel(): string[] {
+    const label = [];
+    for (let i = 0; i < 24; i++) {
       label.push((i + 1).toString());
     }
 
@@ -69,5 +74,14 @@ export class HelperService {
       {title: 'November', value: 11, isSelected: false},
       {title: 'December', value: 12, isSelected: false},
     ];
+  }
+
+  static getStringDate(date: Date): string {
+    return date.toJSON().split('T')[0];
+  }
+
+  static getDateFromString(date: string): Date {
+    const dateParts = date.split('-');
+    return new Date(+dateParts[0], +dateParts[1] - 1, +dateParts[2], 12);
   }
 }

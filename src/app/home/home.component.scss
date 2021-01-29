@@ -11,7 +11,6 @@
     'month'
     'graph';
   grid-gap: 32px;
-
   @include breakpoint-up(lg) {
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
@@ -19,26 +18,25 @@
     'intake   generate  month'
     'graph    graph     graph';
   }
-}
 
-.l-title {
-  grid-area: title;
-}
+  &__title {
+    grid-area: title;
+  }
 
-.l-card {
-  &--yesterday-intake {
+  &__intake {
     grid-area: intake;
   }
 
-  &--yesterday-gen {
+  &__generate {
     grid-area: generate;
   }
 
-  &--month-sum {
+  &__month-total {
     grid-area: month;
   }
 
-  &--month-graph {
+  &__graph {
     grid-area: graph;
   }
 }
+
