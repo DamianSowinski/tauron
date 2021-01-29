@@ -31,6 +31,8 @@ export class HelperService {
 
   static daysInMonth(date: Date): number { // Use 1 for January, 2 for February, etc.
 
+    // date.setMonth( date.getMonth() + 1 );
+
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   }
 
@@ -76,12 +78,27 @@ export class HelperService {
     ];
   }
 
-  static getStringDate(date: Date): string {
-    return date.toJSON().split('T')[0];
+  static getStringDate(date: Date, format: 'full' | 'month' | 'year' = 'full'): string {
+    const dateString = date.toJSON().split('T')[0];
+
+    switch (format) {
+      case 'full':
+        return dateString;
+
+      case 'month':
+        return dateString.substr(0, dateString.length - 3);
+
+      case 'year':
+        return dateString.substr(0, dateString.length - 6);
+    }
   }
 
   static getDateFromString(date: string): Date {
     const dateParts = date.split('-');
-    return new Date(+dateParts[0], +dateParts[1] - 1, +dateParts[2], 12);
+    const year = +dateParts[0];
+    const month = +dateParts[1] ? +dateParts[1] - 1 : 0;
+    const day = +dateParts[2] ? +dateParts[2] : 1;
+
+    return new Date(year, month, day, 12);
   }
 }

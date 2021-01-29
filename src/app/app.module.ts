@@ -8,6 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app.routing';
 import { HomeComponent } from './home/home.component';
 import { DayComponent } from './day/day.component';
+import { MonthComponent } from './month/month.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { DayComponent } from './day/day.component';
         SidenavComponent,
         HomeComponent,
         DayComponent,
+        MonthComponent,
     ],
     imports: [
         SharedModule,

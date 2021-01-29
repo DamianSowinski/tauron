@@ -88,15 +88,10 @@ export class HomeComponent implements AfterViewInit {
 
   private fillMontGraph(data: EnergyMonthUsage) {
     if (data) {
-      const dateParts = data.date.split('.');
-      const date = new Date();
+      const date = HelperService.getDateFromString(data.date);
       const {days} = data;
       const consumes = [];
       const generates = [];
-
-      date.setDate(1);
-      date.setMonth(+dateParts[1] - 1);
-      date.setFullYear(+dateParts[0]);
 
       for (let i = 0; i < HelperService.daysInMonth(date); i++) {
         consumes.push(days[i] && days[i].consume ? +days[i].consume.toFixed(2) : 0);
