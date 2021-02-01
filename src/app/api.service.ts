@@ -94,8 +94,8 @@ export interface EnergyAllUsage {
 
 
 interface EnergyCache {
-  range: TimeRange;
   date: Date;
+  range: TimeRange;
   cache: EnergyDayUsage | EnergyMonthUsage | EnergyYearUsage | EnergyAllUsage;
 }
 
@@ -112,7 +112,7 @@ export class ApiService {
   getDayUsage(date: Date = new Date()): Promise<EnergyDayUsage> {
 
     return new Promise((resolve) => {
-      const cache = this.checkCache('day', date);
+      const cache = this.checkCache(date, 'day');
 
       if (cache) {
         return resolve(cache);
@@ -133,7 +133,7 @@ export class ApiService {
 
   getMonthUsage(date: Date = new Date()): Promise<EnergyMonthUsage> {
     return new Promise<EnergyMonthUsage>((resolve) => {
-      const cache = this.checkCache('month', date);
+      const cache = this.checkCache(date, 'month');
 
       if (cache) {
         return resolve(cache);
@@ -144,7 +144,7 @@ export class ApiService {
       this.http.get<EnergyMonthUsage>(url, {})
         .subscribe(
           (data) => {
-            this.cache.push({range: 'month', date, cache: data});
+            this.cache.push({date, cache: data, range: 'month'});
             return resolve(data);
           },
           errors => console.log(errors.error.title)
@@ -154,7 +154,7 @@ export class ApiService {
 
   getYearUsage(date: Date = new Date()): Promise<EnergyYearUsage> {
     return new Promise<EnergyYearUsage>((resolve) => {
-      const cache = this.checkCache('year', date);
+      const cache = this.checkCache(date, 'year');
 
       if (cache) {
         console.log('load from cache');
@@ -167,7 +167,7 @@ export class ApiService {
       this.http.get<EnergyYearUsage>(url, {})
         .subscribe(
           (data) => {
-            this.cache.push({range: 'year', date, cache: data});
+            this.cache.push({date, cache: data, range: 'year'});
             return resolve(data);
           },
           errors => console.log(errors.error.title)
@@ -177,7 +177,7 @@ export class ApiService {
 
   getAllUsage(date: Date = new Date()): Promise<EnergyAllUsage> {
     return new Promise<EnergyAllUsage>((resolve) => {
-      const cache = this.checkCache('all', date);
+      const cache = this.checkCache(date, 'range');
 
       if (cache) {
         return resolve(cache);
@@ -186,7 +186,7 @@ export class ApiService {
       this.http.get<EnergyAllUsage>(ENERGY_API_URL, {})
         .subscribe(
           (data) => {
-            this.cache.push({range: 'all', date, cache: data});
+            this.cache.push({date, cache: data, range: 'range'});
             return resolve(data);
           },
           errors => console.log(errors.error.title)
@@ -481,7 +481,8 @@ export class ApiService {
   //   return this.monthUsage;
   // }
 
-  private checkCache(type: TimeRange, date: Date): any {
+  private checkCache(date: Date, type: TimeRange): any {
+
     const cache = this.cache
       .filter((item) => item.range === type)
       .find((item) => HelperService.isTheSameDate(item.date, date, type));

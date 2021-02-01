@@ -20,7 +20,7 @@ export class AllYearsComponent implements OnInit, AfterViewInit {
   totalData: Card;
   graphData: Graph;
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private helperService: HelperService) {
     this.intakeData = new Card('Intake', 'Day', 'Night');
     this.generateData = new Card('Generate', 'Day', 'Night');
     this.totalData = new Card('Total', 'Intake', 'Generate');
@@ -45,11 +45,13 @@ export class AllYearsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.apiService.getAllUsage(new Date()).then((data) => {
+      const date = this.helperService.getSelectedDate('range');
+
+      this.apiService.getAllUsage(date).then((data) => {
         this.fillCards(data);
         this.fillGraph(data);
       });
-    });
+    }); 
   }
 
   private fillCards(data: EnergyAllUsage) {

@@ -22,7 +22,7 @@ export class MonthComponent implements OnInit, AfterViewInit {
 
   selectedDate: string;
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private helperService: HelperService) {
     this.intakeData = new Card('Intake', 'Day', 'Night');
     this.generateData = new Card('Generate', 'Day', 'Night');
     this.totalData = new Card('Total', 'Intake', 'Generate');
@@ -43,12 +43,15 @@ export class MonthComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.selectedDate = HelperService.getStringDate(new Date(), 'month');
+    const date = this.helperService.getSelectedDate('month');
+    this.selectedDate = HelperService.getStringDate(date, 'month');
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.apiService.getMonthUsage(new Date()).then((data) => {
+      const date = this.helperService.getSelectedDate('day');
+
+      this.apiService.getMonthUsage(date).then((data) => {
         this.fillCards(data);
         this.fillGraph(data);
       });
@@ -59,6 +62,7 @@ export class MonthComponent implements OnInit, AfterViewInit {
     const input = evt.target as HTMLInputElement;
     const date = HelperService.getDateFromString(input.value);
 
+    this.helperService.setSelectedDate(date, 'month');
     this.cards.forEach((card) => card.isLoaded = false);
     this.graph.first.isLoaded = false;
 

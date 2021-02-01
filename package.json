@@ -9,7 +9,7 @@
     "prod": "ng build --prod",
     "pwa": "ng build --prod && cd dist && http-server -p 8080 && cd ..",
     "----": "",
-    "svgo": "svgo -f src/assets/svg -o src/assets/svg-o --config=svgo.json",
+    "svgo": "svgo -f src/app/shared/svg/files -o src/app/shared/svg/optimized --config=svgo.json",
     "svg-preview": "node src/app/shared/svg/preview.js",
     "svg-preview-open": "src/app/shared/svg/preview.html",
     "-----": "",

@@ -1,19 +1,31 @@
 import { Injectable } from '@angular/core';
 
-export type TimeRange = 'day' | 'month' | 'year' | 'all';
+export type TimeRange = 'day' | 'month' | 'year' | 'range';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HelperService {
 
+  private selectedDate: {
+    day: Date;
+    month: Date;
+    year: Date;
+    range: {
+      start: Date;
+      end?: Date;
+    }
+  };
+
+
   constructor() {
+    this.setDefaultSelectedDate();
   }
 
   static isTheSameDate(date1: Date, date2: Date, range: TimeRange): boolean {
     let isEqual = false;
-    const date1String = this.getStringDate(date1);
-    const date2String = this.getStringDate(date2);
+    const date1String = this.getStringDate(date1, 'day');
+    const date2String = this.getStringDate(date2, 'day');
 
     switch (range) {
       case 'day':
@@ -27,7 +39,6 @@ export class HelperService {
     }
     return isEqual;
   }
-
 
   static daysInMonth(date: Date): number { // Use 1 for January, 2 for February, etc.
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -85,12 +96,12 @@ export class HelperService {
     ];
   }
 
-  static getStringDate(date: Date, format: TimeRange = 'year'): string {
+  static getStringDate(date: Date, format: TimeRange): string {
     const dateString = date.toJSON().split('T')[0];
 
     switch (format) {
       case 'day':
-      case 'all':
+      case 'range':
         return dateString;
 
       case 'month':
@@ -108,5 +119,68 @@ export class HelperService {
     const day = +dateParts[2] ? +dateParts[2] : 1;
 
     return new Date(year, month, day, 12);
+  }
+
+  public getSelectedDate(mode: TimeRange, isEndDate = false): Date {
+    switch (mode) {
+      case 'day':
+        return this.selectedDate.day;
+      case 'month':
+        return this.selectedDate.month;
+      case 'year':
+        return this.selectedDate.year;
+      case 'range':
+
+        return isEndDate ? this.selectedDate.range.end : this.selectedDate.range.start;
+    }
+  }
+
+  public setSelectedDate(date: Date, mode: TimeRange, isEndDate = false): void {
+    switch (mode) {
+      case 'day':
+        this.selectedDate.day = date;
+        break;
+      case 'month':
+        this.selectedDate.month = date;
+        break;
+
+      case 'year':
+        this.selectedDate.year = date;
+        break;
+
+      case 'range':
+        if (isEndDate) {
+          this.selectedDate.range.end = date;
+        } else {
+          this.selectedDate.range.start = date;
+        }
+        break;
+    }
+  }
+
+  private setDefaultSelectedDate() {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const thisMonth = new Date();
+    thisMonth.setDate(1);
+
+    const thisYear = new Date();
+    thisYear.setMonth(0);
+    thisYear.setDate(1);
+
+
+    const yearAgo = new Date();
+    yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+
+    this.selectedDate = {
+      day: yesterday,
+      month: thisMonth,
+      year: thisYear,
+      range: {
+        start: yearAgo,
+        end: yesterday
+      }
+    };
   }
 }

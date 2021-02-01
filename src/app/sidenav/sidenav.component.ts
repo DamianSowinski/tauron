@@ -19,7 +19,6 @@ export class SidenavComponent implements OnInit {
   @Input() appTitle;
   @Output() closeSidebar = new EventEmitter();
 
-
   isDesktop: boolean;
   isOpen = false;
   animate = false;

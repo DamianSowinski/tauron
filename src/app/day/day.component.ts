@@ -22,7 +22,7 @@ export class DayComponent implements OnInit, AfterViewInit {
 
   selectedDate: string;
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private helperService: HelperService) {
     this.intakeData = new Card('Intake', 'Day', 'Night');
     this.generateData = new Card('Generate', 'Day', 'Night');
     this.totalData = new Card('Total', 'Intake', 'Generate');
@@ -43,17 +43,15 @@ export class DayComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    this.selectedDate = HelperService.getStringDate(yesterday);
+    const date = this.helperService.getSelectedDate('day');
+    this.selectedDate = HelperService.getStringDate(date, 'day');
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
+      const date = this.helperService.getSelectedDate('day');
 
-      this.apiService.getDayUsage(yesterday).then((data) => {
+      this.apiService.getDayUsage(date).then((data) => {
         this.fillCards(data);
         this.fillGraph(data);
       });
@@ -64,6 +62,7 @@ export class DayComponent implements OnInit, AfterViewInit {
     const input = evt.target as HTMLInputElement;
     const date = HelperService.getDateFromString(input.value);
 
+    this.helperService.setSelectedDate(date, 'day');
     this.cards.forEach((card) => card.isLoaded = false);
     this.graph.first.isLoaded = false;
 

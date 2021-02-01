@@ -3,9 +3,9 @@
 
 .sidenav {
   position: fixed;
+  z-index: 10;
   top: 0;
   bottom: 0;
-  z-index: 10;
   overflow: hidden;
   box-sizing: border-box;
   width: 0;
