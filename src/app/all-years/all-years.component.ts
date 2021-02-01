@@ -3,15 +3,15 @@ import { CardComponent } from '../shared/card/card.component';
 import { GraphComponent } from '../shared/graph/graph.component';
 import { Card } from '../shared/card/Card';
 import { Graph } from '../shared/graph/Graph';
-import { ApiService, EnergyMonthUsage } from '../api.service';
+import { ApiService, EnergyAllUsage } from '../api.service';
 import { HelperService } from '../helper.service';
 
 @Component({
-  selector: 'app-month',
-  templateUrl: './month.component.html',
-  styleUrls: ['./month.component.scss']
+  selector: 'app-all-years',
+  templateUrl: './all-years.component.html',
+  styleUrls: ['./all-years.component.scss']
 })
-export class MonthComponent implements OnInit, AfterViewInit {
+export class AllYearsComponent implements OnInit, AfterViewInit {
   @ViewChildren(CardComponent) cards: QueryList<CardComponent>;
   @ViewChildren(GraphComponent) graph: QueryList<GraphComponent>;
 
@@ -20,55 +20,39 @@ export class MonthComponent implements OnInit, AfterViewInit {
   totalData: Card;
   graphData: Graph;
 
-  selectedDate: string;
-
   constructor(private apiService: ApiService) {
     this.intakeData = new Card('Intake', 'Day', 'Night');
     this.generateData = new Card('Generate', 'Day', 'Night');
     this.totalData = new Card('Total', 'Intake', 'Generate');
     this.totalData.setColours('#FF6565', '#4AD991');
     this.totalData.setIcons('download', 'upload');
-    this.graphData = new Graph('Month summary');
-    this.graphData.setXAxis(HelperService.generateDaysLabel());
+    this.graphData = new Graph('All years summary');
+    this.graphData.setXAxis(HelperService.generateLastNYears(2).map((item) => item.toString()));
     this.graphData.addSets([{
       title: 'Intake',
-      values: HelperService.generateDefaultValues(HelperService.daysInMonth(new Date())),
+      values: HelperService.generateDefaultValues(2),
       colour: '#55D8FE'
     }, {
       title: 'Generate',
-      values: HelperService.generateDefaultValues(HelperService.daysInMonth(new Date())),
+      values: HelperService.generateDefaultValues(2),
       colour: '#4AD991'
     }
     ]);
   }
 
   ngOnInit(): void {
-    this.selectedDate = HelperService.getStringDate(new Date(), 'month');
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.apiService.getMonthUsage(new Date()).then((data) => {
+      this.apiService.getAllUsage(new Date()).then((data) => {
         this.fillCards(data);
         this.fillGraph(data);
       });
     });
   }
 
-  changeMonth(evt: Event) {
-    const input = evt.target as HTMLInputElement;
-    const date = HelperService.getDateFromString(input.value);
-
-    this.cards.forEach((card) => card.isLoaded = false);
-    this.graph.first.isLoaded = false;
-
-    this.apiService.getMonthUsage(date).then((data) => {
-      this.fillCards(data);
-      this.fillGraph(data);
-    });
-  }
-
-  private fillCards(data: EnergyMonthUsage) {
+  private fillCards(data: EnergyAllUsage) {
     if (data) {
       const {total, day, night} = data.consume;
       const {total: totalG, day: dayG, night: nightG} = data.generate;
@@ -83,24 +67,23 @@ export class MonthComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private fillGraph(data: EnergyMonthUsage) {
+  private fillGraph(data: EnergyAllUsage) {
     if (data) {
-      const date = HelperService.getDateFromString(data.date);
-      const {days} = data;
+      const {years} = data;
       const consume = [];
       const generate = [];
+      const xAxisLabels = years.map((item) => item.year.toString());
 
-      for (let i = 0; i < HelperService.daysInMonth(date); i++) {
-        consume.push(days[i] && days[i].consume ? +days[i].consume.toFixed(2) : 0);
-        generate.push(days[i] && days[i].generate ? +days[i].generate.toFixed(2) : 0);
+      for (const item of years) {
+        consume.push(+item.consume.toFixed(2));
+        generate.push(+item.generate.toFixed(2));
       }
 
       this.graphData.updateSetValues(0, consume);
       this.graphData.updateSetValues(1, generate);
-      this.graphData.setXAxis(HelperService.generateDaysLabel());
+      this.graphData.setXAxis(xAxisLabels);
 
       this.graph.first.updateChar();
     }
   }
-
 }

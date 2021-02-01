@@ -83,20 +83,20 @@ export class Graph {
     let step = 0.25;
     this.yAxis = [];
 
-    if (max <= 1 ) {
-      step = 0.25;
-    }
-
-    if (max > 1 && max <= 2) {
+    if (max > 1) {
       step = 0.5;
     }
 
-    if (max > 2 && max <= 3) {
+    if (max > 2) {
       step = 0.75;
     }
 
-    if (this.yMax > 3) {
-      step = Math.ceil(this.yMax / 4);
+    if (max > 3 ) {
+      step = Math.ceil(max / 4);
+    }
+
+    if (max > 25 ) {
+      step = Math.ceil(max / 4 / 5 ) * 5;
     }
 
     for (let i = 0; i < 5; i++) {

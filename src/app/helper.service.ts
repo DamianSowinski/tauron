@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-export type TimeRange = 'day' | 'month' | 'year';
+export type TimeRange = 'day' | 'month' | 'year' | 'all';
 
 @Injectable({
   providedIn: 'root'
@@ -30,17 +30,24 @@ export class HelperService {
 
 
   static daysInMonth(date: Date): number { // Use 1 for January, 2 for February, etc.
-
-    // date.setMonth( date.getMonth() + 1 );
-
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   }
 
   static generateDefaultValues(count: number = null): number[] {
-
     const defaultVal = new Array(count);
 
     return defaultVal.fill(0, 0, count);
+  }
+
+  static generateLastNYears(count: number): number[] {
+    const $year = new Date().getFullYear();
+    const result = [];
+
+    for (let i = $year - count + 1; i <= $year; i++) {
+      result.push(i);
+    }
+
+    return result;
   }
 
   static generateDaysLabel(date = new Date()): string[] {
@@ -61,28 +68,29 @@ export class HelperService {
     return label;
   }
 
-  static generateMonthsRange() {
+  static generateMonthsLabel() {
     return [
-      {title: 'January', value: 1, isSelected: true},
-      {title: 'February', value: 2, isSelected: false},
-      {title: 'March', value: 3, isSelected: false},
-      {title: 'April', value: 4, isSelected: false},
-      {title: 'May', value: 5, isSelected: false},
-      {title: 'June', value: 6, isSelected: false},
-      {title: 'July', value: 7, isSelected: false},
-      {title: 'August', value: 8, isSelected: false},
-      {title: 'September', value: 9, isSelected: false},
-      {title: 'October', value: 10, isSelected: false},
-      {title: 'November', value: 11, isSelected: false},
-      {title: 'December', value: 12, isSelected: false},
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
   }
 
-  static getStringDate(date: Date, format: 'full' | 'month' | 'year' = 'full'): string {
+  static getStringDate(date: Date, format: TimeRange = 'year'): string {
     const dateString = date.toJSON().split('T')[0];
 
     switch (format) {
-      case 'full':
+      case 'day':
+      case 'all':
         return dateString;
 
       case 'month':

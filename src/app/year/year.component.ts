@@ -1,17 +1,17 @@
 import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { HelperService } from '../helper.service';
 import { CardComponent } from '../shared/card/card.component';
 import { GraphComponent } from '../shared/graph/graph.component';
 import { Card } from '../shared/card/Card';
 import { Graph } from '../shared/graph/Graph';
-import { ApiService, EnergyMonthUsage } from '../api.service';
-import { HelperService } from '../helper.service';
+import { ApiService, EnergyYearUsage } from '../api.service';
 
 @Component({
-  selector: 'app-month',
-  templateUrl: './month.component.html',
-  styleUrls: ['./month.component.scss']
+  selector: 'app-year',
+  templateUrl: './year.component.html',
+  styleUrls: ['./year.component.scss']
 })
-export class MonthComponent implements OnInit, AfterViewInit {
+export class YearComponent implements OnInit, AfterViewInit {
   @ViewChildren(CardComponent) cards: QueryList<CardComponent>;
   @ViewChildren(GraphComponent) graph: QueryList<GraphComponent>;
 
@@ -28,15 +28,15 @@ export class MonthComponent implements OnInit, AfterViewInit {
     this.totalData = new Card('Total', 'Intake', 'Generate');
     this.totalData.setColours('#FF6565', '#4AD991');
     this.totalData.setIcons('download', 'upload');
-    this.graphData = new Graph('Month summary');
+    this.graphData = new Graph('Year summary');
     this.graphData.setXAxis(HelperService.generateDaysLabel());
     this.graphData.addSets([{
       title: 'Intake',
-      values: HelperService.generateDefaultValues(HelperService.daysInMonth(new Date())),
+      values: HelperService.generateDefaultValues(12),
       colour: '#55D8FE'
     }, {
       title: 'Generate',
-      values: HelperService.generateDefaultValues(HelperService.daysInMonth(new Date())),
+      values: HelperService.generateDefaultValues(12),
       colour: '#4AD991'
     }
     ]);
@@ -48,27 +48,27 @@ export class MonthComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.apiService.getMonthUsage(new Date()).then((data) => {
+      this.apiService.getYearUsage(new Date()).then((data) => {
         this.fillCards(data);
         this.fillGraph(data);
       });
     });
   }
 
-  changeMonth(evt: Event) {
+  changeYear(evt: Event) {
     const input = evt.target as HTMLInputElement;
     const date = HelperService.getDateFromString(input.value);
 
     this.cards.forEach((card) => card.isLoaded = false);
     this.graph.first.isLoaded = false;
 
-    this.apiService.getMonthUsage(date).then((data) => {
+    this.apiService.getYearUsage(date).then((data) => {
       this.fillCards(data);
       this.fillGraph(data);
     });
   }
 
-  private fillCards(data: EnergyMonthUsage) {
+  private fillCards(data: EnergyYearUsage) {
     if (data) {
       const {total, day, night} = data.consume;
       const {total: totalG, day: dayG, night: nightG} = data.generate;
@@ -83,24 +83,22 @@ export class MonthComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private fillGraph(data: EnergyMonthUsage) {
+  private fillGraph(data: EnergyYearUsage) {
     if (data) {
-      const date = HelperService.getDateFromString(data.date);
-      const {days} = data;
+      const {months} = data;
       const consume = [];
       const generate = [];
 
-      for (let i = 0; i < HelperService.daysInMonth(date); i++) {
-        consume.push(days[i] && days[i].consume ? +days[i].consume.toFixed(2) : 0);
-        generate.push(days[i] && days[i].generate ? +days[i].generate.toFixed(2) : 0);
+      for (let i = 0; i < 12; i++) {
+        consume.push(months[i] && months[i].consume ? +months[i].consume.toFixed(2) : 0);
+        generate.push(months[i] && months[i].generate ? +months[i].generate.toFixed(2) : 0);
       }
 
       this.graphData.updateSetValues(0, consume);
       this.graphData.updateSetValues(1, generate);
-      this.graphData.setXAxis(HelperService.generateDaysLabel());
+      this.graphData.setXAxis(HelperService.generateMonthsLabel());
 
       this.graph.first.updateChar();
     }
   }
-
 }

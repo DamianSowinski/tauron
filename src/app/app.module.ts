@@ -9,6 +9,8 @@ import { AppRoutingModule } from './app.routing';
 import { HomeComponent } from './home/home.component';
 import { DayComponent } from './day/day.component';
 import { MonthComponent } from './month/month.component';
+import { YearComponent } from './year/year.component';
+import { AllYearsComponent } from './all-years/all-years.component';
 
 
 @NgModule({
@@ -18,6 +20,8 @@ import { MonthComponent } from './month/month.component';
         HomeComponent,
         DayComponent,
         MonthComponent,
+        YearComponent,
+        AllYearsComponent,
     ],
     imports: [
         SharedModule,

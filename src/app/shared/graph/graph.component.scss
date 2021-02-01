@@ -31,6 +31,7 @@ $height: 300px;
       display: flex;
       flex-flow: column;
       width: 100%;
+      max-width: 144px;
       border-bottom: 1px dotted $purpleGrayVeryLight;
 
       &__item {

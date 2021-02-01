@@ -1,0 +1,44 @@
+@use '../../scss/core/variables' as *;
+@use '../../scss/core/mixins' as *;
+
+.l-grid {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'header'
+    'intake'
+    'generate'
+    'total'
+    'graph';
+  grid-gap: 32px;
+
+  @include breakpoint-up(lg) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+    'header   header    header'
+    'intake   generate  total'
+    'graph    graph     graph';
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    grid-area: header;
+  }
+
+  &__intake {
+    grid-area: intake;
+  }
+
+  &__generate {
+    grid-area: generate;
+  }
+
+  &__total {
+    grid-area: total;
+  }
+
+  &__graph {
+    grid-area: graph;
+  }
+}

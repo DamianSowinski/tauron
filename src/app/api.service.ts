@@ -55,10 +55,48 @@ export interface EnergyMonthUsage {
   }[];
 }
 
+export interface EnergyYearUsage {
+  year: number;
+  consume: {
+    total: number;
+    day: number;
+    night: number;
+  };
+  generate: {
+    total: number;
+    day: number;
+    night: number;
+  };
+  months: {
+    month: string;
+    consume: number;
+    generate: number;
+  }[];
+}
+
+export interface EnergyAllUsage {
+  consume: {
+    total: number;
+    day: number;
+    night: number;
+  };
+  generate: {
+    total: number;
+    day: number;
+    night: number;
+  };
+  years: {
+    year: number;
+    consume: number;
+    generate: number;
+  }[];
+}
+
+
 interface EnergyCache {
   range: TimeRange;
   date: Date;
-  cache: EnergyDayUsage | EnergyMonthUsage;
+  cache: EnergyDayUsage | EnergyMonthUsage | EnergyYearUsage | EnergyAllUsage;
 }
 
 @Injectable({
@@ -107,6 +145,48 @@ export class ApiService {
         .subscribe(
           (data) => {
             this.cache.push({range: 'month', date, cache: data});
+            return resolve(data);
+          },
+          errors => console.log(errors.error.title)
+        );
+    });
+  }
+
+  getYearUsage(date: Date = new Date()): Promise<EnergyYearUsage> {
+    return new Promise<EnergyYearUsage>((resolve) => {
+      const cache = this.checkCache('year', date);
+
+      if (cache) {
+        console.log('load from cache');
+
+        return resolve(cache);
+      }
+
+      const url = `${ENERGY_API_URL}?year=${date.getFullYear()}`;
+
+      this.http.get<EnergyYearUsage>(url, {})
+        .subscribe(
+          (data) => {
+            this.cache.push({range: 'year', date, cache: data});
+            return resolve(data);
+          },
+          errors => console.log(errors.error.title)
+        );
+    });
+  }
+
+  getAllUsage(date: Date = new Date()): Promise<EnergyAllUsage> {
+    return new Promise<EnergyAllUsage>((resolve) => {
+      const cache = this.checkCache('all', date);
+
+      if (cache) {
+        return resolve(cache);
+      }
+
+      this.http.get<EnergyAllUsage>(ENERGY_API_URL, {})
+        .subscribe(
+          (data) => {
+            this.cache.push({range: 'all', date, cache: data});
             return resolve(data);
           },
           errors => console.log(errors.error.title)
