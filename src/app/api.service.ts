@@ -74,7 +74,7 @@ export interface EnergyYearUsage {
   }[];
 }
 
-export interface EnergyAllUsage {
+export interface EnergyRangeUsage {
   consume: {
     total: number;
     day: number;
@@ -85,8 +85,8 @@ export interface EnergyAllUsage {
     day: number;
     night: number;
   };
-  years: {
-    year: number;
+  months: {
+    month: string;
     consume: number;
     generate: number;
   }[];
@@ -95,8 +95,9 @@ export interface EnergyAllUsage {
 
 interface EnergyCache {
   date: Date;
+  dateEnd?: Date;
   range: TimeRange;
-  cache: EnergyDayUsage | EnergyMonthUsage | EnergyYearUsage | EnergyAllUsage;
+  cache: EnergyDayUsage | EnergyMonthUsage | EnergyYearUsage | EnergyRangeUsage;
 }
 
 @Injectable({
@@ -157,8 +158,6 @@ export class ApiService {
       const cache = this.checkCache(date, 'year');
 
       if (cache) {
-        console.log('load from cache');
-
         return resolve(cache);
       }
 
@@ -175,18 +174,23 @@ export class ApiService {
     });
   }
 
-  getAllUsage(date: Date = new Date()): Promise<EnergyAllUsage> {
-    return new Promise<EnergyAllUsage>((resolve) => {
-      const cache = this.checkCache(date, 'range');
+  getRangeUsage(startDate: Date, endDate: Date): Promise<EnergyRangeUsage> {
+    return new Promise<EnergyRangeUsage>((resolve) => {
+      const cache = this.checkCache(startDate, 'range', endDate);
 
       if (cache) {
         return resolve(cache);
       }
 
-      this.http.get<EnergyAllUsage>(ENERGY_API_URL, {})
+      const startDateStr = HelperService.getStringDate(startDate, 'month');
+      const endDateStr = HelperService.getStringDate(endDate, 'month');
+
+      const url = `${ENERGY_API_URL}?range[]=${startDateStr}&range[]=${endDateStr}`;
+
+      this.http.get<EnergyRangeUsage>(url, {})
         .subscribe(
           (data) => {
-            this.cache.push({date, cache: data, range: 'range'});
+            this.cache.push({date: startDate, dateEnd: endDate, cache: data, range: 'range'});
             return resolve(data);
           },
           errors => console.log(errors.error.title)
@@ -481,11 +485,17 @@ export class ApiService {
   //   return this.monthUsage;
   // }
 
-  private checkCache(date: Date, type: TimeRange): any {
+  private checkCache(date: Date, type: TimeRange, dateEnd: Date = null): any {
+    let cache;
+    const filteredCache = this.cache.filter((item) => item.range === type);
 
-    const cache = this.cache
-      .filter((item) => item.range === type)
-      .find((item) => HelperService.isTheSameDate(item.date, date, type));
+    if (type === 'range') {
+      cache = filteredCache.find((item) =>
+        HelperService.isTheSameDate(item.date, date, type)
+        && HelperService.isTheSameDate(item.dateEnd, dateEnd, type));
+    } else {
+      cache = filteredCache.find((item) => HelperService.isTheSameDate(item.date, date, type));
+    }
 
     return cache ? cache.cache : null;
   }

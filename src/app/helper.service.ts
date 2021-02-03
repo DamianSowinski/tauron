@@ -71,12 +71,12 @@ export class HelperService {
   }
 
   static generateHoursLabel(): string[] {
-    const label = [];
+    const labels = [];
     for (let i = 0; i < 24; i++) {
-      label.push((i + 1).toString());
+      labels.push((i + 1).toString());
     }
 
-    return label;
+    return labels;
   }
 
   static generateMonthsLabel() {
@@ -96,21 +96,34 @@ export class HelperService {
     ];
   }
 
+  static generateRangeLabels(dateStart: Date, dateEnd: Date): string[] {
+    const labels = [];
+    const currentDate = {...dateStart};
+
+    while (currentDate < dateEnd) {
+      labels.push(`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}`);
+      currentDate.setMonth(currentDate.getMonth() + 1);
+    }
+
+    return labels;
+  }
+
   static getStringDate(date: Date, format: TimeRange): string {
     const dateString = date.toJSON().split('T')[0];
 
     switch (format) {
       case 'day':
-      case 'range':
         return dateString;
 
       case 'month':
+      case 'range':
         return dateString.substr(0, dateString.length - 3);
 
       case 'year':
         return dateString.substr(0, dateString.length - 6);
     }
   }
+
 
   static getDateFromString(date: string): Date {
     const dateParts = date.split('-');
@@ -130,7 +143,6 @@ export class HelperService {
       case 'year':
         return this.selectedDate.year;
       case 'range':
-
         return isEndDate ? this.selectedDate.range.end : this.selectedDate.range.start;
     }
   }
@@ -143,11 +155,9 @@ export class HelperService {
       case 'month':
         this.selectedDate.month = date;
         break;
-
       case 'year':
         this.selectedDate.year = date;
         break;
-
       case 'range':
         if (isEndDate) {
           this.selectedDate.range.end = date;
@@ -159,28 +169,20 @@ export class HelperService {
   }
 
   private setDefaultSelectedDate() {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    const thisMonth = new Date();
-    thisMonth.setDate(1);
-
-    const thisYear = new Date();
-    thisYear.setMonth(0);
-    thisYear.setDate(1);
-
-
-    const yearAgo = new Date();
-    yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+    const now = new Date();
+    const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 12);
+    const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1, 12);
+    const thisYear = new Date(now.getFullYear(), 0, 1, 12);
 
     this.selectedDate = {
       day: yesterday,
       month: thisMonth,
       year: thisYear,
       range: {
-        start: yearAgo,
-        end: yesterday
+        start: thisYear,
+        end: thisMonth
       }
     };
+
   }
 }

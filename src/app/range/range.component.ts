@@ -3,15 +3,15 @@ import { CardComponent } from '../shared/card/card.component';
 import { GraphComponent } from '../shared/graph/graph.component';
 import { Card } from '../shared/card/Card';
 import { Graph } from '../shared/graph/Graph';
-import { ApiService, EnergyAllUsage } from '../api.service';
+import { ApiService, EnergyRangeUsage } from '../api.service';
 import { HelperService } from '../helper.service';
 
 @Component({
-  selector: 'app-all-years',
-  templateUrl: './all-years.component.html',
-  styleUrls: ['./all-years.component.scss']
+  selector: 'app-range',
+  templateUrl: './range.component.html',
+  styleUrls: ['./range.component.scss']
 })
-export class AllYearsComponent implements OnInit, AfterViewInit {
+export class RangeComponent implements OnInit, AfterViewInit {
   @ViewChildren(CardComponent) cards: QueryList<CardComponent>;
   @ViewChildren(GraphComponent) graph: QueryList<GraphComponent>;
 
@@ -20,6 +20,9 @@ export class AllYearsComponent implements OnInit, AfterViewInit {
   totalData: Card;
   graphData: Graph;
 
+  startDate: string;
+  endDate: string;
+
   constructor(private apiService: ApiService, private helperService: HelperService) {
     this.intakeData = new Card('Intake', 'Day', 'Night');
     this.generateData = new Card('Generate', 'Day', 'Night');
@@ -27,7 +30,10 @@ export class AllYearsComponent implements OnInit, AfterViewInit {
     this.totalData.setColours('#FF6565', '#4AD991');
     this.totalData.setIcons('download', 'upload');
     this.graphData = new Graph('All years summary');
-    this.graphData.setXAxis(HelperService.generateLastNYears(2).map((item) => item.toString()));
+    this.graphData.setXAxis(HelperService.generateRangeLabels(
+      this.helperService.getSelectedDate('range'),
+      this.helperService.getSelectedDate('range', true))
+    );
     this.graphData.addSets([{
       title: 'Intake',
       values: HelperService.generateDefaultValues(2),
@@ -41,20 +47,44 @@ export class AllYearsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    const startDate = this.helperService.getSelectedDate('range');
+    const endDate = this.helperService.getSelectedDate('range', true);
+
+    this.startDate = HelperService.getStringDate(startDate, 'month');
+    this.endDate = HelperService.getStringDate(endDate, 'month');
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
-      const date = this.helperService.getSelectedDate('range');
+      const startDate = this.helperService.getSelectedDate('range');
+      const endDate = this.helperService.getSelectedDate('range', true);
 
-      this.apiService.getAllUsage(date).then((data) => {
+      this.apiService.getRangeUsage(startDate, endDate).then((data) => {
         this.fillCards(data);
         this.fillGraph(data);
       });
-    }); 
+    });
   }
 
-  private fillCards(data: EnergyAllUsage) {
+  changeRange(evt: Event, isEndDate: boolean = false) {
+    const input = evt.target as HTMLInputElement;
+    const date = HelperService.getDateFromString(input.value);
+
+    this.helperService.setSelectedDate(date, 'range', isEndDate);
+    this.cards.forEach((card) => card.isLoaded = false);
+
+    this.graph.first.isLoaded = false;
+
+    const startDate = this.helperService.getSelectedDate('range');
+    const endDate = this.helperService.getSelectedDate('range', true);
+
+    this.apiService.getRangeUsage(startDate, endDate).then((data) => {
+      this.fillCards(data);
+      this.fillGraph(data);
+    });
+  }
+
+  private fillCards(data: EnergyRangeUsage) {
     if (data) {
       const {total, day, night} = data.consume;
       const {total: totalG, day: dayG, night: nightG} = data.generate;
@@ -69,14 +99,14 @@ export class AllYearsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private fillGraph(data: EnergyAllUsage) {
+  private fillGraph(data: EnergyRangeUsage) {
     if (data) {
-      const {years} = data;
+      const {months} = data;
       const consume = [];
       const generate = [];
-      const xAxisLabels = years.map((item) => item.year.toString());
+      const xAxisLabels = months.map((item) => item.month);
 
-      for (const item of years) {
+      for (const item of months) {
         consume.push(+item.consume.toFixed(2));
         generate.push(+item.generate.toFixed(2));
       }

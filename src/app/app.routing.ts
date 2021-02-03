@@ -3,7 +3,7 @@ import { HomeComponent } from './home/home.component';
 import { DayComponent } from './day/day.component';
 import { MonthComponent } from './month/month.component';
 import { YearComponent } from './year/year.component';
-import { AllYearsComponent } from './all-years/all-years.component';
+import { RangeComponent } from './range/range.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: 'day', component: DayComponent},
   {path: 'month', component: MonthComponent},
   {path: 'year', component: YearComponent},
-  {path: 'all-years', component: AllYearsComponent},
+  {path: 'all-years', component: RangeComponent},
 
   // {path: 'login', component: LoginComponent, data: {animation: 'login'}},
   // {path: '**', component: PageNotFoundComponent},
