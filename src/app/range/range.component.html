@@ -2,10 +2,14 @@
   <div class="l-grid__header">
     <h2 class="o-title ">All years</h2>
     <div class="h-spacer"></div>
-    <label for="inputDateStart">From</label>
-    <input class="u-ml-sm" id="inputDateStart" type="month" name="inputDateStart" (change)="changeRange($event)" value="{{startDate}}">
-    <label for="inputDateEnd">To</label>
-    <input class="u-ml-sm" id="inputDateEnd" type="month" name="inputDateEnd" (change)="changeRange($event, true)" value="{{endDate}}">
+    <div>
+      <label class="h-wr-50 u-mb-sm" for="inputDateStart">From</label>
+      <input class="u-ml-sm" id="inputDateStart" type="month" name="inputDateStart" (change)="changeRange($event)" value="{{startDate}}">
+      <br>
+      <label class="h-wr-50" for="inputDateEnd">To</label>
+      <input class="u-ml-sm" id="inputDateEnd" type="month" name="inputDateEnd" (change)="changeRange($event, true)" value="{{endDate}}">
+
+    </div>
   </div>
 
   <app-card class="l-grid__intake" [cardData]="intakeData"></app-card>

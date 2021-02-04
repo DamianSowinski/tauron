@@ -3,13 +3,11 @@
 
 //base
 @use 'scss/reset';
-
 @use 'scss/utilities';
 @use 'scss/helpers';
 
-@use 'scss/objects/typography';
-
 //objects
+@use 'scss/objects/typography';
 @use 'scss/objects/buttons';
 @use 'scss/objects/icons';
 @use 'scss/objects/btnMenu';

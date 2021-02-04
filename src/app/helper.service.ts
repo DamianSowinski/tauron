@@ -17,7 +17,6 @@ export class HelperService {
     }
   };
 
-
   constructor() {
     this.setDefaultSelectedDate();
   }
@@ -35,6 +34,7 @@ export class HelperService {
         isEqual = date1String.substr(0, 7) === date2String.substr(0, 7);
         break;
       case 'year':
+        isEqual = date1String.substr(0, 10) === date2String.substr(0, 10);
         break;
     }
     return isEqual;
@@ -123,7 +123,6 @@ export class HelperService {
         return dateString.substr(0, dateString.length - 6);
     }
   }
-
 
   static getDateFromString(date: string): Date {
     const dateParts = date.split('-');

@@ -31,11 +31,11 @@ export class DayComponent implements OnInit, AfterViewInit {
     this.graphData = new Graph('Day summary');
     this.graphData.setXAxis(HelperService.generateHoursLabel());
     this.graphData.addSets([{
-      title: 'Day',
+      title: 'Intake',
       values: HelperService.generateDefaultValues(24),
       colour: '#55D8FE'
     }, {
-      title: 'Night',
+      title: 'Generate',
       values: HelperService.generateDefaultValues(24),
       colour: '#4AD991'
     }

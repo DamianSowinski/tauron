@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ENERGY_API_URL } from '../global';
+import { ENERGY_API_URL, ENERGY_API_URL_PRELOAD } from '../global';
 import { HelperService, TimeRange } from './helper.service';
 
 export interface Energy {
@@ -92,6 +92,11 @@ export interface EnergyRangeUsage {
   }[];
 }
 
+export interface EnergyPreloadData {
+  days: EnergyDayUsage[];
+  months: EnergyMonthUsage[];
+  years: EnergyYearUsage[];
+}
 
 interface EnergyCache {
   date: Date;
@@ -108,6 +113,7 @@ export class ApiService {
   private cache: EnergyCache[] = [];
 
   constructor(private http: HttpClient) {
+    // this.getPreloadData();
   }
 
   getDayUsage(date: Date = new Date()): Promise<EnergyDayUsage> {
@@ -196,6 +202,49 @@ export class ApiService {
           errors => console.log(errors.error.title)
         );
     });
+  }
+
+  getPreloadData(): void {
+    const url = `${ENERGY_API_URL_PRELOAD}`;
+
+    this.http.get<EnergyPreloadData>(url, {})
+      .subscribe(
+        (data) => {
+          data.days.forEach((item) => this.cache.push({
+            range: 'day',
+            date: HelperService.getDateFromString(item.date),
+            cache: item
+          }));
+
+          data.months.forEach((item) => this.cache.push({
+            range: 'month',
+            date: HelperService.getDateFromString(item.date),
+            cache: item
+          }));
+
+          data.years.forEach((item) => this.cache.push({
+            range: 'year',
+            date: new Date(item.year, 0, 1, 12),
+            cache: item
+          }));
+        },
+        errors => console.log(errors.error.title)
+      );
+  }
+
+  private checkCache(date: Date, type: TimeRange, dateEnd: Date = null): any {
+    let cache;
+    const filteredCache = this.cache.filter((item) => item.range === type);
+
+    if (type === 'range') {
+      cache = filteredCache.find((item) =>
+        HelperService.isTheSameDate(item.date, date, type)
+        && HelperService.isTheSameDate(item.dateEnd, dateEnd, type));
+    } else {
+      cache = filteredCache.find((item) => HelperService.isTheSameDate(item.date, date, type));
+    }
+
+    return cache ? cache.cache : null;
   }
 
   // mockGetYesterdayUsage(): BehaviorSubject<EnergyDayUsage> {
@@ -484,19 +533,4 @@ export class ApiService {
   //
   //   return this.monthUsage;
   // }
-
-  private checkCache(date: Date, type: TimeRange, dateEnd: Date = null): any {
-    let cache;
-    const filteredCache = this.cache.filter((item) => item.range === type);
-
-    if (type === 'range') {
-      cache = filteredCache.find((item) =>
-        HelperService.isTheSameDate(item.date, date, type)
-        && HelperService.isTheSameDate(item.dateEnd, dateEnd, type));
-    } else {
-      cache = filteredCache.find((item) => HelperService.isTheSameDate(item.date, date, type));
-    }
-
-    return cache ? cache.cache : null;
-  }
 }
