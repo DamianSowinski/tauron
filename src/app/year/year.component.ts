@@ -44,7 +44,7 @@ export class YearComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     const date = this.helperService.getSelectedDate('year');
-    this.selectedDate = HelperService.getStringDate(date, 'month');
+    this.selectedDate = HelperService.getStringFromDate(date, 'month');
   }
 
   ngAfterViewInit() {

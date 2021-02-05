@@ -50,8 +50,8 @@ export class RangeComponent implements OnInit, AfterViewInit {
     const startDate = this.helperService.getSelectedDate('range');
     const endDate = this.helperService.getSelectedDate('range', true);
 
-    this.startDate = HelperService.getStringDate(startDate, 'month');
-    this.endDate = HelperService.getStringDate(endDate, 'month');
+    this.startDate = HelperService.getStringFromDate(startDate, 'month');
+    this.endDate = HelperService.getStringFromDate(endDate, 'month');
   }
 
   ngAfterViewInit() {

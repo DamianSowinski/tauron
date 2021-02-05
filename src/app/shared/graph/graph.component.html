@@ -19,5 +19,10 @@
     </div>
   </div>
 
+  <div class="h-error" *ngIf="isError">
+    <span class="u-mb-md">Download data unsuccessfully</span>
+    <span>Refresh to try again</span>
+  </div>
+
   <app-loading-spinner size="sm" class="graph__loading" *ngIf="!isLoaded"></app-loading-spinner>
 </section>

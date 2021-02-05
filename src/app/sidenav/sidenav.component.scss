@@ -121,24 +121,6 @@
   }
 
   &.animate {
-    @include transition(width);;
-  }
-}
-
-.backdrop {
-  position: fixed;
-  z-index: 5;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  background-color: #000;
-  @include transition(opacity);
-
-  &.is-open {
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    opacity: 0.8;
+    @include transition(width);
   }
 }

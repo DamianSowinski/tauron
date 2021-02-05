@@ -32,7 +32,11 @@
     <div class="bar--2" style="{{barsStyle[1]}}" title="{{cardData.detail2.title + ': ' + cardData.detail2.value}}" appTippy></div>
   </div>
 
+  <div class="h-error" *ngIf="isError">
+    <span class="u-mb-md">Download data unsuccessfully</span>
+    <span>Refresh to try again</span>
+  </div>
 
-  <app-loading-spinner size="sm" class="card__loading" *ngIf="!isLoaded"></app-loading-spinner>
+  <app-loading-spinner class="card__loading" size="sm" *ngIf="!isLoaded"></app-loading-spinner>
 
 </section>

@@ -44,7 +44,7 @@ export class DayComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     const date = this.helperService.getSelectedDate('day');
-    this.selectedDate = HelperService.getStringDate(date, 'day');
+    this.selectedDate = HelperService.getStringFromDate(date, 'day');
   }
 
   ngAfterViewInit() {

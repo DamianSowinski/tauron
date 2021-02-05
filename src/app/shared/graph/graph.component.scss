@@ -2,8 +2,9 @@
 @use '../../../scss/core/animations' as *;
 @use '../../../scss/core/mixins' as *;
 
-$height: 300px;
+
 .graph {
+  $height: 300px;
   position: relative;
   box-sizing: border-box;
   width: 100%;

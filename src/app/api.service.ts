@@ -113,7 +113,31 @@ export class ApiService {
   private cache: EnergyCache[] = [];
 
   constructor(private http: HttpClient) {
-    // this.getPreloadData();
+  }
+
+  getHomeData(): Promise<EnergyPreloadData> {
+
+    return new Promise<EnergyPreloadData>((resolve, reject) => {
+
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      const yesterdayCache = this.checkCache(yesterday, 'day');
+      const thisMonthCache = this.checkCache(yesterday, 'month');
+
+      if (yesterdayCache && thisMonthCache) {
+        resolve({
+          days: [yesterdayCache],
+          months: [thisMonthCache],
+          years: []
+        });
+      }
+
+      this.getPreloadData([yesterday], [yesterday]).then(
+        (data) => resolve(data),
+        () => reject()
+      );
+    });
   }
 
   getDayUsage(date: Date = new Date()): Promise<EnergyDayUsage> {
@@ -188,8 +212,8 @@ export class ApiService {
         return resolve(cache);
       }
 
-      const startDateStr = HelperService.getStringDate(startDate, 'month');
-      const endDateStr = HelperService.getStringDate(endDate, 'month');
+      const startDateStr = HelperService.getStringFromDate(startDate, 'month');
+      const endDateStr = HelperService.getStringFromDate(endDate, 'month');
 
       const url = `${ENERGY_API_URL}?range[]=${startDateStr}&range[]=${endDateStr}`;
 
@@ -204,32 +228,47 @@ export class ApiService {
     });
   }
 
-  getPreloadData(): void {
-    const url = `${ENERGY_API_URL_PRELOAD}`;
 
-    this.http.get<EnergyPreloadData>(url, {})
-      .subscribe(
-        (data) => {
-          data.days.forEach((item) => this.cache.push({
-            range: 'day',
-            date: HelperService.getDateFromString(item.date),
-            cache: item
-          }));
+  getPreloadData(days: Date[] = [], months: Date[] = [], years: Date[] = []): Promise<EnergyPreloadData> {
+    return new Promise<EnergyPreloadData>((resolve, reject) => {
 
-          data.months.forEach((item) => this.cache.push({
-            range: 'month',
-            date: HelperService.getDateFromString(item.date),
-            cache: item
-          }));
+      days = days.filter((day) => !this.checkCache(day, 'day'));
+      months = months.filter((month) => !this.checkCache(month, 'month'));
+      years = years.filter((year) => !this.checkCache(year, 'year'));
 
-          data.years.forEach((item) => this.cache.push({
-            range: 'year',
-            date: new Date(item.year, 0, 1, 12),
-            cache: item
-          }));
-        },
-        errors => console.log(errors.error.title)
-      );
+      const requestContent = {
+        days: days.map((item) => HelperService.getStringFromDate(item, 'day')),
+        months: months.map((item) => HelperService.getStringFromDate(item, 'month')),
+        years,
+      };
+
+      this.http.post<EnergyPreloadData>(ENERGY_API_URL_PRELOAD, requestContent, {})
+        .subscribe(
+          (data) => {
+            data.days.forEach((item) => this.cache.push({
+              range: 'day',
+              date: HelperService.getDateFromString(item.date),
+              cache: item
+            }));
+
+            data.months.forEach((item) => this.cache.push({
+              range: 'month',
+              date: HelperService.getDateFromString(item.date),
+              cache: item
+            }));
+
+            data.years.forEach((item) => this.cache.push({
+              range: 'year',
+              date: new Date(item.year, 0, 1, 12),
+              cache: item
+            }));
+
+            return resolve(data);
+          },
+          () => reject()
+        );
+
+    });
   }
 
   private checkCache(date: Date, type: TimeRange, dateEnd: Date = null): any {

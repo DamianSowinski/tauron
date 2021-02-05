@@ -11,6 +11,7 @@ export class CardComponent implements OnInit {
   barsWidth = [1, 1];
   barsStyle = [null, null];
   isLoaded = false;
+  isError = false;
 
   constructor() {
   }
@@ -22,6 +23,11 @@ export class CardComponent implements OnInit {
     this.calculateSize();
     this.setGraphStyle();
     this.isLoaded = true;
+  }
+
+  error(): void {
+    this.isLoaded = true;
+    this.isError = true;
   }
 
   private calculateSize() {

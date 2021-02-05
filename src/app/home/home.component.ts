@@ -47,14 +47,17 @@ export class HomeComponent implements AfterViewInit {
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
 
-      this.apiService.getDayUsage(yesterday).then((data) => {
-        this.fillYesterdayCards(data);
-      });
-
-      this.apiService.getMonthUsage().then((data) => {
-        this.fillMonthCard(data);
-        this.fillMontGraph(data);
-      });
+      this.apiService.getHomeData().then(
+        (data) => {
+          this.fillYesterdayCards(data.days[0]);
+          this.fillMonthCard(data.months[0]);
+          this.fillMontGraph(data.months[0]);
+        },
+        () => {
+          this.cards.forEach((card) => card.error());
+          this.graph.forEach((graph) => graph.error());
+        }
+      );
     });
   }
 

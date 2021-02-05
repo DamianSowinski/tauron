@@ -23,8 +23,8 @@ export class HelperService {
 
   static isTheSameDate(date1: Date, date2: Date, range: TimeRange): boolean {
     let isEqual = false;
-    const date1String = this.getStringDate(date1, 'day');
-    const date2String = this.getStringDate(date2, 'day');
+    const date1String = this.getStringFromDate(date1, 'day');
+    const date2String = this.getStringFromDate(date2, 'day');
 
     switch (range) {
       case 'day':
@@ -108,17 +108,15 @@ export class HelperService {
     return labels;
   }
 
-  static getStringDate(date: Date, format: TimeRange): string {
+  static getStringFromDate(date: Date, format: TimeRange): string {
     const dateString = date.toJSON().split('T')[0];
 
     switch (format) {
       case 'day':
         return dateString;
-
       case 'month':
       case 'range':
         return dateString.substr(0, dateString.length - 3);
-
       case 'year':
         return dateString.substr(0, dateString.length - 6);
     }

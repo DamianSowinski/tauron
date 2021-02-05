@@ -19,6 +19,7 @@ export class GraphComponent implements OnInit {
 
   chartData: ChartItem[][] = [];
   isLoaded = false;
+  isError = false;
   orientation: 'horizontal' | 'vertical' = 'horizontal';
 
   private charBreakpoint = 1000;
@@ -31,14 +32,19 @@ export class GraphComponent implements OnInit {
     this.initChar();
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkOrientation();
+  }
+
   updateChar() {
     this.initChar();
     this.isLoaded = true;
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.checkOrientation();
+  error(): void {
+    this.isLoaded = true;
+    this.isError = true;
   }
 
   draw() {

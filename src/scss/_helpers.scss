@@ -1,4 +1,5 @@
 @use 'core/variables' as *;
+@use 'core/animations' as *;
 // single functionality
 // eg. change display / position
 .h-d-none {
@@ -39,4 +40,35 @@
   display: inline-block;
   width: 40px;
   text-align: right;
+}
+
+.h-backdrop {
+    position: fixed;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    background-color: #000;
+    @include transition(opacity);
+
+    &.is-open {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      opacity: 0.8;
+    }
+}
+
+.h-error {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba($white, 0.9);
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
 }
