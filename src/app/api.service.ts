@@ -133,7 +133,7 @@ export class ApiService {
         });
       }
 
-      this.getPreloadData([yesterday], [yesterday]).then(
+      this.getPreloadData([yesterday], [yesterday], [yesterday]).then(
         (data) => resolve(data),
         () => reject()
       );
@@ -245,6 +245,8 @@ export class ApiService {
       this.http.post<EnergyPreloadData>(ENERGY_API_URL_PRELOAD, requestContent, {})
         .subscribe(
           (data) => {
+
+
             data.days.forEach((item) => this.cache.push({
               range: 'day',
               date: HelperService.getDateFromString(item.date),

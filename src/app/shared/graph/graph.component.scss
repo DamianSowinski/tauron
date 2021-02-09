@@ -2,7 +2,6 @@
 @use '../../../scss/core/animations' as *;
 @use '../../../scss/core/mixins' as *;
 
-
 .graph {
   $height: 300px;
   position: relative;
@@ -32,7 +31,6 @@
       display: flex;
       flex-flow: column;
       width: 100%;
-      max-width: 144px;
       border-bottom: 1px dotted $purpleGrayVeryLight;
 
       &__item {
@@ -93,6 +91,7 @@
       .group {
         align-items: flex-end;
         flex-flow: row;
+        max-width: 144px;
         border-right: 1px dotted $purpleGrayVeryLight;
 
         &__item {
