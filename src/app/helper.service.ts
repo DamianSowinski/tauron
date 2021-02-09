@@ -109,6 +109,7 @@ export class HelperService {
   }
 
   static getStringFromDate(date: Date, format: TimeRange): string {
+    date.setHours(12);
     const dateString = date.toJSON().split('T')[0];
 
     switch (format) {

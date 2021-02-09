@@ -2,8 +2,13 @@
   <div class="l-grid__header">
     <h2 class="o-title ">Day usage</h2>
     <div class="h-spacer"></div>
-    <label for="inputDate">Day</label>
-    <input class="u-ml-sm" id="inputDate" type="date" name="inputDate" (change)="changeDay($event)" value="{{selectedDate}}">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Selected day</mat-label>
+      <input matInput [matDatepicker]="picker" [formControl]="selectedDate" (dateChange)="changeDay()">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
   </div>
 
   <app-card class="l-grid__intake" [cardData]="intakeData"></app-card>

@@ -75,11 +75,12 @@ export class Graph {
       return acc;
     }, 0);
 
-    this.yMax = this.yMax > maxValue ? this.yMax : Math.ceil(maxValue);
+    this.yMax = Math.ceil(maxValue);
   }
 
   private calculateYaxis(): void {
     const max = this.yMax;
+
     let step = 0.25;
     this.yAxis = [];
 

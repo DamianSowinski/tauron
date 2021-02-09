@@ -5,11 +5,38 @@ import { GraphComponent } from '../shared/graph/graph.component';
 import { Card } from '../shared/card/Card';
 import { HelperService } from '../helper.service';
 import { Graph } from '../shared/graph/Graph';
+import { FormControl } from '@angular/forms';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import * as _moment from 'moment';
+import { Moment } from 'moment';
+
+const moment = _moment;
 
 @Component({
   selector: 'app-day',
   templateUrl: './day.component.html',
-  styleUrls: ['./day.component.scss']
+  styleUrls: ['./day.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    {
+      provide: MAT_DATE_FORMATS, useValue: {
+        parse: {
+          dateInput: 'DD.MM.YYYY',
+        },
+        display: {
+          dateInput: 'DD.MM.YYYY',
+          dateA11yLabel: 'LL',
+          monthYearLabel: 'MMM YYYY',
+          monthYearA11yLabel: 'MMMM YYYY'
+        }
+      }
+    },
+  ],
 })
 export class DayComponent implements OnInit, AfterViewInit {
   @ViewChildren(CardComponent) cards: QueryList<CardComponent>;
@@ -19,10 +46,28 @@ export class DayComponent implements OnInit, AfterViewInit {
   generateData: Card;
   totalData: Card;
   graphData: Graph;
-
-  selectedDate: string;
+  selectedDate: FormControl;
 
   constructor(private apiService: ApiService, private helperService: HelperService) {
+  }
+
+  ngOnInit(): void {
+    this.selectedDate = new FormControl(moment(this.helperService.getSelectedDate('day')));
+    this.graphSettings();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => this.reloadData());
+  }
+
+  changeDay() {
+    const momentDate = this.selectedDate.value as Moment;
+
+    this.helperService.setSelectedDate(momentDate.toDate(), 'day');
+    this.reloadData();
+  }
+
+  private graphSettings() {
     this.intakeData = new Card('Intake', 'Day', 'Night');
     this.generateData = new Card('Generate', 'Day', 'Night');
     this.totalData = new Card('Total', 'Intake', 'Generate');
@@ -42,27 +87,9 @@ export class DayComponent implements OnInit, AfterViewInit {
     ]);
   }
 
-  ngOnInit(): void {
+  private reloadData() {
     const date = this.helperService.getSelectedDate('day');
-    this.selectedDate = HelperService.getStringFromDate(date, 'day');
-  }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      const date = this.helperService.getSelectedDate('day');
-
-      this.apiService.getDayUsage(date).then((data) => {
-        this.fillCards(data);
-        this.fillGraph(data);
-      });
-    });
-  }
-
-  changeDay(evt: Event) {
-    const input = evt.target as HTMLInputElement;
-    const date = HelperService.getDateFromString(input.value);
-
-    this.helperService.setSelectedDate(date, 'day');
     this.cards.forEach((card) => card.isLoaded = false);
     this.graph.first.isLoaded = false;
 
@@ -98,9 +125,9 @@ export class DayComponent implements OnInit, AfterViewInit {
         generate.push(hours[i] && hours[i].generate ? +hours[i].generate.toFixed(2) : 0);
       }
 
+      this.graphData.setXAxis(HelperService.generateHoursLabel());
       this.graphData.updateSetValues(0, consume);
       this.graphData.updateSetValues(1, generate);
-      this.graphData.setXAxis(HelperService.generateHoursLabel());
 
       this.graph.first.updateChar();
     }

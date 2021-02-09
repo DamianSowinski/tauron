@@ -2,8 +2,14 @@
   <div class="l-grid__header">
     <h2 class="o-title ">Month usage</h2>
     <div class="h-spacer"></div>
-    <label for="inputDate">Month</label>
-    <input class="u-ml-sm" id="inputDate" type="month" name="inputDate" (change)="changeMonth($event)" value="{{selectedDate}}">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Selected month</mat-label>
+      <input matInput [matDatepicker]="datepicker" [formControl]="selectedDate">
+      <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+      <mat-datepicker #datepicker startView="year" (monthSelected)="changeMonth($event, datepicker)" panelClass="example-month-picker"></mat-datepicker>
+    </mat-form-field>
+
   </div>
 
   <app-card class="l-grid__intake" [cardData]="intakeData"></app-card>

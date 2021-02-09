@@ -5,11 +5,39 @@ import { Card } from '../shared/card/Card';
 import { Graph } from '../shared/graph/Graph';
 import { ApiService, EnergyMonthUsage } from '../api.service';
 import { HelperService } from '../helper.service';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { FormControl } from '@angular/forms';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import * as _moment from 'moment';
+import { Moment } from 'moment';
+
+const moment = _moment;
 
 @Component({
   selector: 'app-month',
   templateUrl: './month.component.html',
-  styleUrls: ['./month.component.scss']
+  styleUrls: ['./month.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    {
+      provide: MAT_DATE_FORMATS, useValue: {
+        parse: {
+          dateInput: 'MM.YYYY',
+        },
+        display: {
+          dateInput: 'MM.YYYY',
+          dateA11yLabel: 'LL',
+          monthYearLabel: 'MMM YYYY',
+          monthYearA11yLabel: 'MMMM YYYY'
+        }
+      }
+    },
+  ],
 })
 export class MonthComponent implements OnInit, AfterViewInit {
   @ViewChildren(CardComponent) cards: QueryList<CardComponent>;
@@ -19,10 +47,31 @@ export class MonthComponent implements OnInit, AfterViewInit {
   generateData: Card;
   totalData: Card;
   graphData: Graph;
-
-  selectedDate: string;
+  selectedDate: FormControl;
 
   constructor(private apiService: ApiService, private helperService: HelperService) {
+  }
+
+  ngOnInit(): void {
+    this.selectedDate = new FormControl(moment(this.helperService.getSelectedDate('month')));
+    this.graphSettings();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => this.reloadData());
+  }
+
+  changeMonth(normalizedMonth: Moment, datepicker: MatDatepicker<any>) {
+    const momentDate = this.selectedDate.value;
+    momentDate.month(normalizedMonth.month());
+
+    this.helperService.setSelectedDate(momentDate.toDate(), 'month');
+    this.selectedDate.setValue(momentDate);
+    this.reloadData();
+    datepicker.close();
+  }
+
+  private graphSettings() {
     this.intakeData = new Card('Intake', 'Day', 'Night');
     this.generateData = new Card('Generate', 'Day', 'Night');
     this.totalData = new Card('Total', 'Intake', 'Generate');
@@ -42,27 +91,9 @@ export class MonthComponent implements OnInit, AfterViewInit {
     ]);
   }
 
-  ngOnInit(): void {
+  private reloadData() {
     const date = this.helperService.getSelectedDate('month');
-    this.selectedDate = HelperService.getStringFromDate(date, 'month');
-  }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      const date = this.helperService.getSelectedDate('day');
-
-      this.apiService.getMonthUsage(date).then((data) => {
-        this.fillCards(data);
-        this.fillGraph(data);
-      });
-    });
-  }
-
-  changeMonth(evt: Event) {
-    const input = evt.target as HTMLInputElement;
-    const date = HelperService.getDateFromString(input.value);
-
-    this.helperService.setSelectedDate(date, 'month');
     this.cards.forEach((card) => card.isLoaded = false);
     this.graph.first.isLoaded = false;
 

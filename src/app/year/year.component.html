@@ -2,8 +2,17 @@
   <div class="l-grid__header">
     <h2 class="o-title ">Year usage</h2>
     <div class="h-spacer"></div>
-    <label for="inputDate">Year</label>
-    <input class="u-ml-sm" id="inputDate" type="month" name="inputDate" (change)="changeYear($event)" value="{{selectedDate}}">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Selected year</mat-label>
+      <input matInput [matDatepicker]="datepicker" [formControl]="selectedDate">
+      <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+      <mat-datepicker #datepicker
+                      startView="multi-year"
+                      (yearSelected)="changeYear($event, datepicker)"
+                      panelClass="example-month-picker">
+      </mat-datepicker>
+    </mat-form-field>
   </div>
 
   <app-card class="l-grid__intake" [cardData]="intakeData"></app-card>

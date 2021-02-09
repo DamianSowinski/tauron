@@ -5,11 +5,37 @@ import { Card } from '../shared/card/Card';
 import { Graph } from '../shared/graph/Graph';
 import { ApiService, EnergyRangeUsage } from '../api.service';
 import { HelperService } from '../helper.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import * as _moment from 'moment';
+
+const moment = _moment;
 
 @Component({
   selector: 'app-range',
   templateUrl: './range.component.html',
-  styleUrls: ['./range.component.scss']
+  styleUrls: ['./range.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    {
+      provide: MAT_DATE_FORMATS, useValue: {
+        parse: {
+          dateInput: 'MM.YYYY',
+        },
+        display: {
+          dateInput: 'MM.YYYY',
+          dateA11yLabel: 'LL',
+          monthYearLabel: 'MMM YYYY',
+          monthYearA11yLabel: 'MMMM YYYY'
+        }
+      }
+    },
+  ],
 })
 export class RangeComponent implements OnInit, AfterViewInit {
   @ViewChildren(CardComponent) cards: QueryList<CardComponent>;
@@ -20,10 +46,38 @@ export class RangeComponent implements OnInit, AfterViewInit {
   totalData: Card;
   graphData: Graph;
 
-  startDate: string;
-  endDate: string;
+  range = new FormGroup({
+    start: new FormControl(moment(this.helperService.getSelectedDate('range'))),
+    end: new FormControl(moment(this.helperService.getSelectedDate('range', true)))
+  });
+
 
   constructor(private apiService: ApiService, private helperService: HelperService) {
+  }
+
+  ngOnInit(): void {
+    this.graphSettings();
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.reloadData());
+
+  }
+
+  changeRange(): void {
+    const {start, end} = this.range.value;
+
+    if (!start || !end) {
+      return;
+    }
+
+    this.helperService.setSelectedDate(start.toDate(), 'range');
+    this.helperService.setSelectedDate(end.toDate(), 'range', true);
+
+    this.reloadData();
+  }
+
+  private graphSettings() {
     this.intakeData = new Card('Intake', 'Day', 'Night');
     this.generateData = new Card('Generate', 'Day', 'Night');
     this.totalData = new Card('Total', 'Intake', 'Generate');
@@ -46,37 +100,12 @@ export class RangeComponent implements OnInit, AfterViewInit {
     ]);
   }
 
-  ngOnInit(): void {
+  private reloadData() {
     const startDate = this.helperService.getSelectedDate('range');
     const endDate = this.helperService.getSelectedDate('range', true);
 
-    this.startDate = HelperService.getStringFromDate(startDate, 'month');
-    this.endDate = HelperService.getStringFromDate(endDate, 'month');
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      const startDate = this.helperService.getSelectedDate('range');
-      const endDate = this.helperService.getSelectedDate('range', true);
-
-      this.apiService.getRangeUsage(startDate, endDate).then((data) => {
-        this.fillCards(data);
-        this.fillGraph(data);
-      });
-    });
-  }
-
-  changeRange(evt: Event, isEndDate: boolean = false) {
-    const input = evt.target as HTMLInputElement;
-    const date = HelperService.getDateFromString(input.value);
-
-    this.helperService.setSelectedDate(date, 'range', isEndDate);
     this.cards.forEach((card) => card.isLoaded = false);
-
     this.graph.first.isLoaded = false;
-
-    const startDate = this.helperService.getSelectedDate('range');
-    const endDate = this.helperService.getSelectedDate('range', true);
 
     this.apiService.getRangeUsage(startDate, endDate).then((data) => {
       this.fillCards(data);

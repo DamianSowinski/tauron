@@ -46,7 +46,6 @@
       }
 
       &__ico, &__title {
-        margin-left: -$sideNavWidth / 4;
         opacity: 0;
         color: $white;
         @include transition();
@@ -114,7 +113,6 @@
     width: $sideNavWidth;
 
     .header__ico, .header__title {
-      margin-left: 0;
       opacity: 1;
       @include transition();
     }
