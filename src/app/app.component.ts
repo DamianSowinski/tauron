@@ -18,11 +18,20 @@ export class AppComponent {
       map(result => result.matches)
     );
 
+  isOpenLoginModal = false;
+
   constructor(private breakpointObserver: BreakpointObserver) {
   }
 
   openMenu(): void {
     this.sidenav.first.sideNavToggle();
+  }
 
+  handleLoginClick() {
+    this.isOpenLoginModal = !this.isOpenLoginModal;
+  }
+
+  closeLoginModal() {
+    this.isOpenLoginModal = false;
   }
 }

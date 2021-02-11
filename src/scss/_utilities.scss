@@ -1,5 +1,10 @@
 @use 'core/variables' as *;
 // do ONE thing
+.u-ml-xs {
+  margin-left: $xs;
+}
+
+
 .u-ml-sm {
   margin-left: $sm;
 }

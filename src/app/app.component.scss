@@ -15,7 +15,7 @@
 .l-top-bar {
   display: flex;
   align-items: center;
-  padding: $md;
+  padding: $sm $md;
   background-color: $white;
   box-shadow: $shadow--l1;
   grid-area: header;
@@ -30,3 +30,31 @@
   grid-area: content;
 }
 
+.top-bar {
+  &__title {
+    display: flex;
+    align-items: center;
+
+
+    .title__ico {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: $xs;
+      margin-bottom: -2px;
+      width: 24px;
+      fill: $txtColor;
+
+      ::ng-deep .o-ico {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .title__txt {
+      color: $txtColor;
+      font-family: $secondaryFont, 'Helvetica', serif;
+      font-size: $t3;
+    }
+  }
+}

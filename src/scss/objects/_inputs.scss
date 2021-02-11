@@ -1,0 +1,16 @@
+@use '../core/variables' as *;
+@use '../core/mixins' as *;
+
+.o-input {
+  width: 204px;
+
+  &:hover {
+    border-color: $blue;
+  }
+
+  &.mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0;
+    padding: 0;
+  }
+
+}

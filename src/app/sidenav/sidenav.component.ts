@@ -79,7 +79,7 @@ export class SidenavComponent implements OnInit {
       {route: 'day', ico: 'sn-day', title: 'Day'},
       {route: 'month', ico: 'sn-month', title: 'Month'},
       {route: 'year', ico: 'sn-year', title: 'Year'},
-      {route: 'all-years', ico: 'sn-all', title: 'All'},
+      {route: 'range', ico: 'sn-range', title: 'Range'},
     ];
   }
 }

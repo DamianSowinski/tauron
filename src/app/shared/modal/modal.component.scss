@@ -1,0 +1,36 @@
+@use '../../../scss/core/variables' as *;
+@use '../../../scss/core/animations' as *;
+
+.modal {
+  position: fixed;
+  z-index: 15;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $xl;
+
+
+  &__body {
+    width: 100%;
+    min-width: 300px;
+    max-width: 800px;
+    min-height: 300px;
+    border-radius: $radius--sm;
+    background-color: $bgrColor;
+    box-shadow: $shadow--l1;
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+}

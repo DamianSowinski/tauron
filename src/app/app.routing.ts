@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: 'day', component: DayComponent},
   {path: 'month', component: MonthComponent},
   {path: 'year', component: YearComponent},
-  {path: 'all-years', component: RangeComponent},
+  {path: 'range', component: RangeComponent},
 
   // {path: 'login', component: LoginComponent, data: {animation: 'login'}},
   // {path: '**', component: PageNotFoundComponent},

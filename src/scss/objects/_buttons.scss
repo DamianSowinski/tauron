@@ -3,6 +3,34 @@
 @use '../core/animations' as *;
 
 .o-btn {
+  &--outline {
+    padding: $sm;
+    color: $txtColor;
+    border: 1px solid $purpleGray;
+    border-radius: $radius--xs;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    @include transition();
+
+    &:hover {
+      cursor: pointer;
+      background-color: $purpleGrayVeryLight;
+      border-color: scale-color($purpleGray, $lightness: -20%);
+    }
+
+    &:focus {
+      outline: unset;
+      box-shadow: 0 0 2px 2px rgba($blue, 0.5);
+    }
+
+    ::ng-deep .o-ico {
+      //width: 16px;
+      //height: 16px;
+    }
+  }
+
+
   &--primary {
     $color: #78b5e6;
     padding: 12px $md;
