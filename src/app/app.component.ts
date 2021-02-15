@@ -3,6 +3,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
+import { LoginService } from './login/login.service';
 
 @Component({
   selector: 'app-root',
@@ -13,14 +14,14 @@ export class AppComponent {
   @ViewChildren(SidenavComponent) sidenav: QueryList<SidenavComponent>;
 
   title = 'Energy';
+  isOpenLoginModal: Observable<boolean>;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
 
-  isOpenLoginModal = false;
-
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private loginService: LoginService) {
+    this.isOpenLoginModal = loginService.getModalState();
   }
 
   openMenu(): void {
@@ -28,10 +29,6 @@ export class AppComponent {
   }
 
   handleLoginClick() {
-    this.isOpenLoginModal = !this.isOpenLoginModal;
-  }
-
-  closeLoginModal() {
-    this.isOpenLoginModal = false;
+    this.loginService.setModalState(true);
   }
 }

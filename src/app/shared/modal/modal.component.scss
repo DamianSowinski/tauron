@@ -13,12 +13,11 @@
   justify-content: center;
   padding: $xl;
 
-
   &__body {
     width: 100%;
-    min-width: 300px;
+    min-width: 260px;
     max-width: 800px;
-    min-height: 300px;
+    min-height: 180px;
     border-radius: $radius--sm;
     background-color: $bgrColor;
     box-shadow: $shadow--l1;

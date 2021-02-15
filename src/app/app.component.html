@@ -14,22 +14,20 @@
     <h1 class="title__txt">{{title}}</h1>
   </div>
 
-
   <div class="l-top-bar__left" *ngIf="!(isHandset$ | async)">
     <span>Tauron user:</span>
   </div>
   <div class="h-spacer"></div>
-  <button class="o-btn--outline" (click)="handleLoginClick()">
+  <button class="o-btn--outline" (click)="handleLoginClick()" [disabled]="isOpenLoginModal | async">
     <svg-ico name="user"></svg-ico>
     <span class="u-ml-xs">Login</span>
   </button>
-
 </header>
 
 <app-sidenav class="l-sidenav" appTitle="{{title}}"></app-sidenav>
 
 <main class="l-content">
   <router-outlet></router-outlet>
+  <app-login></app-login>
+  <app-toast></app-toast>
 </main>
-
-<app-modal [isOpen]="isOpenLoginModal" (closeEvent)="closeLoginModal()"></app-modal>

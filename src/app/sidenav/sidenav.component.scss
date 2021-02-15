@@ -27,6 +27,7 @@
         align-items: center;
         justify-content: center;
         width: $sideNavWidthCollapsed;
+        min-width: $headerHeight;
         height: $headerHeight;
         fill: $white;
         @include transition(opacity);

@@ -1,5 +1,11 @@
 @use 'core/variables' as *;
 
+:root {
+  --green: #4AD991;
+  --red: #FF6565;
+}
+
+
 body {
   font-family: $primaryFont, 'Helvetica', serif;
   font-size: $fontSize;
@@ -9,6 +15,7 @@ body {
   color: $txtColor;
   background-color: $bgrColor;
 }
+
 
 h1, h2, h3, h4 {
   font-weight: normal;

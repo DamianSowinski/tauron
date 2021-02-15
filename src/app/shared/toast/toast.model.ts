@@ -27,6 +27,6 @@ export class ToastList extends Set {
     super.add(item);
     setTimeout(() => {
       super.delete(item);
-    }, 4000);
+    }, 8000);
   }
 }

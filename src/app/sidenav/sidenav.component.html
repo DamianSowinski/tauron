@@ -8,7 +8,7 @@
     <h1 class="header__title">{{appTitle}}</h1>
     <div class="h-spacer"></div>
 
-    <button class="header__btn o-btn-menu" (click)="sideNavToggle()">
+    <button class="header__btn o-btn-menu" (click)="sideNavToggle()" *ngIf="isDesktop">
       <svg viewBox="0 0 48 48">
         <path class="line--1" d="M0 12h46.61c.9 0 1.74.35 2.37.98L72 36"/>
         <path class="line--2" d="M0 24h72"/>

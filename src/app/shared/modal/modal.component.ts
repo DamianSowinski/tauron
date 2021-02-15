@@ -29,7 +29,6 @@ export class ModalComponent implements OnInit {
     if (this.isOpen) {
       const target = event.target as HTMLElement;
       const isBackdropClick = target.classList.contains('js-backdrop');
-      console.log('test');
 
       if (isBackdropClick) {
         this.closeModal();
@@ -37,10 +36,8 @@ export class ModalComponent implements OnInit {
     }
   }
 
-
   private closeModal() {
     this.isOpen = false;
     this.closeEvent.emit();
   }
-
 }

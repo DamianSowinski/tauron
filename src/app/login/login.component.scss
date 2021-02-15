@@ -1,0 +1,23 @@
+@use '../../scss/core/variables' as *;
+
+.login {
+  padding: $xl;
+
+  &__title {
+    font-family: $secondaryFont, 'Helvetica', serif;
+    text-align: center;
+    padding-bottom: $md;
+    margin-bottom: $lg;
+    border-bottom: 1px solid $purpleGrayLight;
+  }
+
+  &__form {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: $sm;
+  }
+
+  &__buttons {
+    display: flex;
+  }
+}
