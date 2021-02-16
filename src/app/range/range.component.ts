@@ -9,6 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
+import { LoginService } from '../login/login.service';
 
 const moment = _moment;
 
@@ -60,8 +61,9 @@ export class RangeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => this.reloadData());
-
+    if (LoginService.isLogin()) {
+      setTimeout(() => this.reloadData());
+    }
   }
 
   changeRange(): void {

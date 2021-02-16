@@ -114,14 +114,14 @@ interface EnergyCache {
 export class ApiService {
   private cache: EnergyCache[] = [];
 
-  constructor(private http: HttpClient, private toast: ToastService, private loginService: LoginService) {
+  constructor(private http: HttpClient, private toast: ToastService) {
   }
 
   private static createHeader(): object {
     return {
       headers: {
         authorization: LoginService.getSessionId(),
-        pointId: LoginService.getTauronId()
+        pointId: LoginService.getPointId()
       },
     };
   }
@@ -282,13 +282,16 @@ export class ApiService {
             return resolve(data);
           },
           (errors) => {
-            this.loginService.setModalState(true);
             this.toast.error(errors.error.detail);
             reject(errors);
           }
         );
 
     });
+  }
+
+  clearCache() {
+    this.cache = [];
   }
 
   private checkCache(date: Date, type: TimeRange, dateEnd: Date = null): any {

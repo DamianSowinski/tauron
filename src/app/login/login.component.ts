@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   }
 
   closeLoginModal() {
-    this.loginService.setModalState(false);
+    this.loginService.closeLoginModal();
   }
 
   handleSubmit(formDirective: FormGroupDirective) {
@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
     const loginData = {id, username, password} as TauronLogin;
 
     this.loginService.login(loginData).then(() => {
-      this.loginService.setModalState(false);
       this.form.reset();
       formDirective.resetForm();
       window.location.reload();
@@ -40,7 +39,7 @@ export class LoginComponent implements OnInit {
   }
 
   private createForm() {
-    const id = LoginService.getTauronId();
+    const id = LoginService.getPointId();
 
     this.form = new FormGroup({
       id: new FormControl(id, {validators: [Validators.required, Validators.minLength(1)]}),

@@ -10,7 +10,7 @@ export class CardComponent implements OnInit {
   @Input() cardData: Card;
   barsWidth = [1, 1];
   barsStyle = [null, null];
-  isLoaded = false;
+  isLoaded = true;
   isError = false;
 
   constructor() {

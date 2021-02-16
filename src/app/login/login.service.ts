@@ -23,12 +23,16 @@ export class LoginService {
     return localStorage.getItem('sessionId') || '';
   }
 
-  static getTauronId(): string {
+  static getPointId(): string {
     return localStorage.getItem('tauronId');
   }
 
+  static isLogin(): boolean {
+    return !!LoginService.getSessionId();
+  }
+
   private static setLocalStorage(id: string, sessionId: string) {
-    localStorage.setItem('tauronId', id);
+    localStorage.setItem('pointId', id);
     localStorage.setItem('sessionId', sessionId);
   }
 
@@ -36,23 +40,33 @@ export class LoginService {
     return this.loginModalState;
   }
 
-  setModalState(isOpen: boolean): void {
-    this.loginModalState.next(isOpen);
+  openLoginModal(): void {
+    this.loginModalState.next(true);
+  }
+
+  closeLoginModal(): void {
+    this.loginModalState.next(false);
   }
 
   login(loginData: TauronLogin): Promise<null> {
 
     return new Promise((resolve) => {
-
       const {username, password, id} = loginData;
       const requestContent = {username, password};
 
       this.http.post<any>(ENERGY_API_URL_LOGIN, requestContent).subscribe(
         (sessionId) => {
+          this.closeLoginModal();
           LoginService.setLocalStorage(id, sessionId);
           resolve();
         },
         (errors) => console.log(`%c ⚠ Warning: ${errors.details}`, `color: orange; font-weight: bold;`));
     });
+  }
+
+  logout() {
+    LoginService.setLocalStorage('', '');
+    window.location.reload();
+
   }
 }

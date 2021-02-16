@@ -18,7 +18,7 @@ export class GraphComponent implements OnInit {
   @Output() changeSelectRange = new EventEmitter<number>();
 
   chartData: ChartItem[][] = [];
-  isLoaded = false;
+  isLoaded = true;
   isError = false;
   orientation: 'horizontal' | 'vertical' = 'horizontal';
 

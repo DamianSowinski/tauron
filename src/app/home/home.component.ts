@@ -5,6 +5,7 @@ import { GraphComponent } from '../shared/graph/graph.component';
 import { HelperService } from '../helper.service';
 import { Card } from '../shared/card/Card';
 import { Graph } from '../shared/graph/Graph';
+import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,16 @@ export class HomeComponent implements AfterViewInit {
   graphData: Graph;
 
   constructor(private apiService: ApiService) {
+    this.graphSettings();
+  }
+
+  ngAfterViewInit() {
+    if (LoginService.isLogin()) {
+      setTimeout(() => this.loadData());
+    }
+  }
+
+  private graphSettings() {
     this.intakeData = new Card('Yesterday intake', 'Day', 'Night');
     this.generateData = new Card('Yesterday generates', 'Day', 'Night');
 
@@ -42,23 +53,23 @@ export class HomeComponent implements AfterViewInit {
     ]);
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
+  private loadData() {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    this.cards.forEach((card) => card.isLoaded = false);
+    this.graph.forEach((graph) => graph.isLoaded = false);
 
-      this.apiService.getHomeData().then(
-        (data) => {
-          this.fillYesterdayCards(data.days[0]);
-          this.fillMonthCard(data.months[0]);
-          this.fillMontGraph(data.months[0]);
-        },
-        () => {
-          this.cards.forEach((card) => card.error());
-          this.graph.forEach((graph) => graph.error());
-        }
-      );
-    });
+    this.apiService.getHomeData().then(
+      (data) => {
+        this.fillYesterdayCards(data.days[0]);
+        this.fillMonthCard(data.months[0]);
+        this.fillMontGraph(data.months[0]);
+      },
+      () => {
+        this.cards.forEach((card) => card.error());
+        this.graph.forEach((graph) => graph.error());
+      }
+    );
   }
 
   private fillYesterdayCards(data: EnergyDayUsage) {

@@ -1,4 +1,4 @@
-import { Component, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -10,7 +10,7 @@ import { LoginService } from './login/login.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   @ViewChildren(SidenavComponent) sidenav: QueryList<SidenavComponent>;
 
   title = 'Energy';
@@ -19,16 +19,29 @@ export class AppComponent {
     .pipe(
       map(result => result.matches)
     );
+  isLogged = LoginService.isLogin();
+  pointId = LoginService.getPointId();
 
   constructor(private breakpointObserver: BreakpointObserver, private loginService: LoginService) {
     this.isOpenLoginModal = loginService.getModalState();
+  }
+
+  ngOnInit() {
+    if (!this.isLogged) {
+      this.loginService.openLoginModal();
+    }
   }
 
   openMenu(): void {
     this.sidenav.first.sideNavToggle();
   }
 
-  handleLoginClick() {
-    this.loginService.setModalState(true);
+  handleLoginClick(): void {
+    if (this.isLogged) {
+      this.loginService.logout();
+      return;
+    }
+
+    this.loginService.openLoginModal();
   }
 }
