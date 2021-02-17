@@ -1,0 +1,34 @@
+:root {
+  --bgr-color: #f0f0f7;
+  --txt-color: #4d4f5c;
+
+  --green: #4ad991;
+  --red: #ff6565;
+  --orange: #FFCA83;
+  --blue-light: #55D8FE;
+
+  --top-bar-bgr: #f0f0f7;
+
+  --sidenav-txt: #f0f0f7;
+  --sidenav-ico: #bcbccb;
+
+  --card-bgr: #fff;
+  --card-primary-txt: #4d4f5c;
+  --card-txt: #787A8D;
+}
+
+.dark {
+  --bgr-color: #3c3c3c;
+  --txt-color: #d0d0d7;
+
+  --green: #4ad991;
+  --red: #ff6565;
+  --orange: #FFCA83;
+  --blue-light: #55D8FE;
+
+  --top-bar-bgr: #282828;
+
+  --card-bgr: #454545;
+  --card-primary-txt: #efefef;
+  --card-txt: #d0d0d0;
+}

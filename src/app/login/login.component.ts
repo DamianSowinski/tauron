@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LoginService, TauronLogin } from './login.service';
+import { LoginData, LoginService } from './login.service';
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 
@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   isOpenLoginModal: Observable<boolean>;
   form: FormGroup;
   hide = true;
+  isLogging = false;
 
   constructor(private loginService: LoginService) {
     this.isOpenLoginModal = loginService.getModalState();
@@ -29,13 +30,18 @@ export class LoginComponent implements OnInit {
 
   handleSubmit(formDirective: FormGroupDirective) {
     const {id, username, password} = this.form.value;
-    const loginData = {id, username, password} as TauronLogin;
+    const loginData = {id, username, password} as LoginData;
+    this.isLogging = true;
 
-    this.loginService.login(loginData).then(() => {
-      this.form.reset();
-      formDirective.resetForm();
-      window.location.reload();
-    });
+    this.loginService.login(loginData).then(
+      () => {
+        this.isLogging = false;
+        this.form.reset();
+        formDirective.resetForm();
+        window.location.reload();
+      },
+      (errors) => console.log(`%c ⚠ Warning: ${errors.errors}`, `color: orange; font-weight: bold;`)
+    );
   }
 
   private createForm() {

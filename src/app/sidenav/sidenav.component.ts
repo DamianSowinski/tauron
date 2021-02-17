@@ -2,6 +2,7 @@ import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@a
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
+import { HelperService } from '../helper.service';
 
 
 interface SidenavItem {
@@ -23,12 +24,14 @@ export class SidenavComponent implements OnInit {
   isOpen = false;
   animate = false;
   sidenavItems: SidenavItem[];
+  isDarkMode: Observable<boolean>;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private helperService: HelperService) {
+    this.isDarkMode = helperService.getDarkModeState();
   }
 
   ngOnInit(): void {
@@ -39,7 +42,7 @@ export class SidenavComponent implements OnInit {
   sideNavToggle() {
     this.animate = true;
     this.isOpen = !this.isOpen;
-    localStorage.setItem('SidenavIsOpen', this.isOpen ? 'true' : 'false');
+    localStorage.setItem('SidenavIsOpen', this.isOpen ? '1' : '0');
   }
 
   @HostListener('document:keydown.escape', ['$event'])
@@ -61,19 +64,24 @@ export class SidenavComponent implements OnInit {
     }
   }
 
-  private setDisplay() {
+  handleDarkModeClick() {
+    this.helperService.toggleDarkModeState();
+    this.helperService.setDarkModeBodyClass();
+  }
+
+  setDisplay() {
     this.isHandset$.subscribe(isMobile => {
       if (isMobile) {
         this.isDesktop = false;
         this.isOpen = false;
       } else {
         this.isDesktop = true;
-        this.isOpen = localStorage.getItem('SidenavIsOpen') === 'true';
+        this.isOpen = !!(+localStorage.getItem('SidenavIsOpen'));
       }
     });
   }
 
-  private createMenu() {
+  createMenu() {
     this.sidenavItems = [
       {route: 'home', ico: 'sn-home', title: 'Home'},
       {route: 'day', ico: 'sn-day', title: 'Day'},

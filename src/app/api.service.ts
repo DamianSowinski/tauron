@@ -145,7 +145,7 @@ export class ApiService {
 
       this.getPreloadData([yesterday], [yesterday], [yesterday]).then(
         (data) => resolve(data),
-        () => reject()
+        (errors) => reject(errors)
       );
     });
   }

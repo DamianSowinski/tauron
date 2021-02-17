@@ -1,4 +1,5 @@
 @use '../core/variables' as *;
+@use '../core/animations' as *;
 
 .o-ico {
   display: flex;
@@ -8,6 +9,14 @@
   height: $fontSize;
 }
 
+.o-ico-rotate {
+  animation: {
+    name: rotate;
+    duration: 800ms;
+    timing-function: linear;
+    iteration-count: infinite;
+  }
+}
 
 
 

@@ -6,7 +6,9 @@
   z-index: 10;
   top: 0;
   bottom: 0;
+  display: flex;
   overflow: hidden;
+  flex-flow: column;
   box-sizing: border-box;
   width: 0;
   height: 100%;
@@ -71,7 +73,7 @@
       height: 50px;
       margin-bottom: 8px;
       padding-right: $sm;
-      color: $white;
+      color: var(--sidenav-txt);
       border: 0 transparent;
       @include transition(all, 100ms);
 
@@ -81,7 +83,7 @@
         justify-content: center;
         min-width: $sideNavWidthCollapsed;
         height: 100%;
-        fill: $purpleGrayLight;
+        fill: var(--sidenav-ico);
 
         ::ng-deep .o-ico {
           width: 20px;
@@ -102,6 +104,12 @@
         }
       }
     }
+  }
+
+  &__dark-mode-btn {
+    display: flex;
+    //justify-content: flex-end;
+    margin: 16px;
   }
 
   &.is-desktop {

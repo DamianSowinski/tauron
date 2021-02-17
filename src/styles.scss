@@ -2,6 +2,7 @@
 @use '../node_modules/tippy.js/animations/shift-toward.css';
 
 //base
+@use 'scss/colours';
 @use 'scss/reset';
 @use 'scss/utilities';
 @use 'scss/helpers';
@@ -12,6 +13,5 @@
 @use 'scss/objects/icons';
 @use 'scss/objects/btnMenu';
 @use 'scss/objects/inputs';
+@use 'scss/objects/darkModeToggle';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

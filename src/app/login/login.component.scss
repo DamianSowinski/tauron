@@ -1,4 +1,5 @@
 @use '../../scss/core/variables' as *;
+@use '../../scss/core/animations' as *;
 
 .login {
   padding: $xl;
@@ -19,5 +20,16 @@
 
   &__buttons {
     display: flex;
+  }
+
+  &__submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+
+    .submit__title {
+      @include transition(margin);
+    }
   }
 }

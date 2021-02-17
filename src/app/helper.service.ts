@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 export type TimeRange = 'day' | 'month' | 'year' | 'range';
 
@@ -17,8 +18,12 @@ export class HelperService {
     }
   };
 
+  private isDarkMode = new BehaviorSubject<boolean>(false);
+
   constructor() {
     this.setDefaultSelectedDate();
+    this.isDarkMode.next( !!(+localStorage.getItem('darkMode')));
+    this.setDarkModeBodyClass();
   }
 
   static isTheSameDate(date1: Date, date2: Date, range: TimeRange): boolean {
@@ -132,6 +137,19 @@ export class HelperService {
     return new Date(year, month, day, 12);
   }
 
+  public getDarkModeState(): BehaviorSubject<boolean> {
+    return this.isDarkMode;
+  }
+
+  public toggleDarkModeState(): void {
+    const currentState =  this.isDarkMode.value;
+    this.isDarkMode.next(!currentState);
+    localStorage.setItem('darkMode', !currentState ? '1' : '0');
+
+  }
+
+
+
   public getSelectedDate(mode: TimeRange, isEndDate = false): Date {
     switch (mode) {
       case 'day':
@@ -182,5 +200,15 @@ export class HelperService {
       }
     };
 
+  }
+
+  public setDarkModeBodyClass() {
+    this.isDarkMode.subscribe((isDarkMode) => {
+      if (isDarkMode) {
+        window.document.body.classList.add('dark');
+      } else {
+        window.document.body.classList.remove('dark');
+      }
+    });
   }
 }

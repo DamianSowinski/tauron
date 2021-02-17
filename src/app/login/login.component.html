@@ -24,7 +24,10 @@
 
     <div class="login__buttons">
       <div class="h-spacer"></div>
-      <button class="o-btn--success u-w-150" form="loginForm" type="submit" [disabled]="!form.valid">Login</button>
+      <button class="o-btn--success login__submit" form="loginForm" type="submit" [disabled]="!form.valid || isLogging">
+        <svg-ico class="o-ico-rotate" *ngIf="isLogging" name="spinner"></svg-ico>
+        <span class="submit__title" [class.u-ml-sm]="isLogging">Login</span>
+      </button>
     </div>
   </section>
 </app-modal>

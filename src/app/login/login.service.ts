@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ENERGY_API_URL_LOGIN } from '../../global';
 import { HttpClient } from '@angular/common/http';
 
-export interface TauronLogin {
+export interface LoginData {
   id: string;
   username: string;
   password: string;
@@ -24,7 +24,7 @@ export class LoginService {
   }
 
   static getPointId(): string {
-    return localStorage.getItem('tauronId');
+    return localStorage.getItem('pointId');
   }
 
   static isLogin(): boolean {
@@ -48,7 +48,7 @@ export class LoginService {
     this.loginModalState.next(false);
   }
 
-  login(loginData: TauronLogin): Promise<null> {
+  login(loginData: LoginData): Promise<null> {
 
     return new Promise((resolve) => {
       const {username, password, id} = loginData;

@@ -19,7 +19,7 @@
     max-width: 800px;
     min-height: 180px;
     border-radius: $radius--sm;
-    background-color: $bgrColor;
+    background-color: var(--bgr-color);
     box-shadow: $shadow--l1;
   }
 }

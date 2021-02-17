@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   padding: $sm $md;
-  background-color: $white;
+  background-color: var(--top-bar-bgr);
   box-shadow: $shadow--l1;
   grid-area: header;
 }
@@ -43,7 +43,7 @@
       margin-right: $xs;
       margin-bottom: -2px;
       width: 24px;
-      fill: $txtColor;
+      fill: var(--txt-color);
 
       ::ng-deep .o-ico {
         width: 20px;
@@ -52,7 +52,7 @@
     }
 
     .title__txt {
-      color: $txtColor;
+      color: var(--txt-color);
       font-family: $secondaryFont, 'Helvetica', serif;
       font-size: $t3;
     }

@@ -6,12 +6,17 @@
   display: none;
 }
 
-.u-d-center-x {
+.h-d-center-x {
   display: flex;
   justify-content: center;
 }
 
-.u-d-center-xy {
+.h-d-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.h-d-center-xy {
   display: flex;
   justify-content: center;
   align-items: center;

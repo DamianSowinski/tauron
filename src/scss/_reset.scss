@@ -1,19 +1,13 @@
 @use 'core/variables' as *;
 
-:root {
-  --green: #4AD991;
-  --red: #FF6565;
-}
-
-
 body {
   font-family: $primaryFont, 'Helvetica', serif;
   font-size: $fontSize;
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  color: $txtColor;
-  background-color: $bgrColor;
+  color: var(--txt-color);
+  background-color: var(--bgr-color);
 }
 
 

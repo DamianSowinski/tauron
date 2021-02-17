@@ -5,7 +5,7 @@
 .o-btn {
   &--outline {
     padding: $sm;
-    color: $txtColor;
+    color: var(--txt-color);
     border: 1px solid $purpleGray;
     border-radius: $radius--xs;
     background-color: transparent;
@@ -24,7 +24,8 @@
       box-shadow: 0 0 2px 2px rgba($blue, 0.5);
     }
 
-    ::ng-deep .o-ico {
+    .o-ico {
+      fill: var(--txt-color);
       //width: 16px;
       //height: 16px;
     }
@@ -34,7 +35,7 @@
   &--primary {
     $color: #78b5e6;
     padding: 12px $md;
-    color: $txtColor;
+    color: var(--txt-color);
     border: 1px solid darken($color, 10%);
     border-radius: $radius--sm;
     background-color: $color;
@@ -47,7 +48,7 @@
 
   &--success {
     padding: 12px $md;
-    color: $txtColor;
+    color: var(--txt-color);
     border: 1px solid $greenDark;
     border-radius: $radius--sm;
     background-color: $greenDark;
