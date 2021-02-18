@@ -19,7 +19,7 @@
     max-width: 800px;
     min-height: 180px;
     border-radius: $radius--sm;
-    background-color: var(--bgr-color);
+    background-color: var(--modal-bgr);
     box-shadow: $shadow--l1;
   }
 }
@@ -31,5 +31,5 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: black;
+  background-color: var(--backdrop);
 }

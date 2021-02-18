@@ -21,14 +21,16 @@ export class HomeComponent implements AfterViewInit {
   monthData: Card;
   graphData: Graph;
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private loginService: LoginService) {
     this.graphSettings();
   }
 
   ngAfterViewInit() {
-    if (LoginService.isLogin()) {
-      setTimeout(() => this.loadData());
-    }
+    this.loginService.getLoginState().subscribe( (isLogged) => {
+      if (isLogged) {
+        setTimeout(() => this.loadData());
+      }
+    });
   }
 
   private graphSettings() {
@@ -67,7 +69,8 @@ export class HomeComponent implements AfterViewInit {
       },
       (errors) => {
         console.log(errors);
-        
+        this.loginService.reLogin();
+
         this.cards.forEach((card) => card.error());
         this.graph.forEach((graph) => graph.error());
       }

@@ -1,4 +1,5 @@
 @use '../core/variables' as *;
+@use '../core/mixins' as *;
 
 @mixin font-face($name, $fileName, $weight: normal, $style: normal) {
   @font-face {
@@ -20,7 +21,12 @@
 
 .o-title {
   font-family: $secondaryFont, 'Helvetica', serif;
+  font-size: $t2;
   font-weight: 300;
+
+  @include breakpoint-up(lg) {
+    font-size: $t3;
+  }
 }
 
 .o-subtitle {

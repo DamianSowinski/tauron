@@ -12,8 +12,8 @@
   box-sizing: border-box;
   width: 0;
   height: 100%;
-  min-height: 100vh;
-  background-color: $purpleDark;
+
+  background-color: var(--sidenav-bgr);
 
   &__header {
     position: relative;
@@ -21,7 +21,7 @@
     align-items: center;
     box-sizing: border-box;
     height: $headerHeight;
-    background-color: $dark--01;
+    background-color: var(--sidenav-header-bgr);
 
     .header {
       &__ico {
@@ -31,8 +31,7 @@
         width: $sideNavWidthCollapsed;
         min-width: $headerHeight;
         height: $headerHeight;
-        fill: $white;
-        @include transition(opacity);
+        fill: var(--sidenav-header-txt);
 
         ::ng-deep .o-ico {
           width: 20px;
@@ -45,12 +44,12 @@
         font-size: $t2;
         font-weight: 400;
         letter-spacing: 2px;
+        color: var(--sidenav-header-txt);
       }
 
       &__ico, &__title {
         opacity: 0;
-        color: $white;
-        @include transition();
+        @include transition(opacity);
       }
 
       &__btn {
@@ -64,6 +63,8 @@
   &__menu {
     margin: 8px 0;
     padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
     list-style-type: none;
 
     .item {
@@ -92,15 +93,15 @@
       }
 
       &:hover {
-        background-color: $dark--01;
+        background-color: var(--sidenav-hover-bgr);
       }
 
       &.is-active {
-        border-left: 4px solid $purple;
-        background-color: $dark--01;
+        border-left: 4px solid var(--sidenav-active-border);
+        background-color: var(--sidenav-active-bgr);
 
         .item__ico {
-          fill: $purple;
+          fill: var(--sidenav-active-ico);
         }
       }
     }
@@ -108,7 +109,6 @@
 
   &__dark-mode-btn {
     display: flex;
-    //justify-content: flex-end;
     margin: 16px;
   }
 
@@ -122,11 +122,28 @@
 
     .header__ico, .header__title {
       opacity: 1;
-      @include transition();
     }
   }
 
   &.animate {
     @include transition(width);
+  }
+}
+
+.sidenav-backdrop {
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  background-color: var(--backdrop);
+  @include transition(opacity);
+
+  &.is-open {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.8;
   }
 }

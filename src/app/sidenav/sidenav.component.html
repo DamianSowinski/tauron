@@ -26,7 +26,7 @@
     </li>
   </ul>
   <div class="h-spacer"></div>
-  <div class="sidenav__dark-mode-btn">
+  <div class="sidenav__dark-mode-btn" *ngIf="isOpen">
     <div class="o-dark-mode-toggle-container u-mb-sm">
       <label class="o-dark-mode-toggle js-dark-mode" for="nightToggle" aria-label="">
         <input class="o-dark-mode-toggle__input" id="nightToggle" type="checkbox"  [checked]="isDarkMode | async" aria-label="" (click)="handleDarkModeClick()">
@@ -42,6 +42,6 @@
 
 </nav>
 
-<div class="h-backdrop js-backdrop" [class.is-open]="isOpen" *ngIf="!isDesktop"></div>
+<div class="sidenav-backdrop js-backdrop" [class.is-open]="isOpen" *ngIf="!isDesktop"></div>
 
 

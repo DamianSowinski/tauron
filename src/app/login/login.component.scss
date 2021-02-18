@@ -6,16 +6,16 @@
 
   &__title {
     font-family: $secondaryFont, 'Helvetica', serif;
-    text-align: center;
-    padding-bottom: $md;
     margin-bottom: $lg;
-    border-bottom: 1px solid $purpleGrayLight;
+    padding-bottom: $md;
+    text-align: center;
+    border-bottom: 1px solid var(--separate-line);
   }
 
   &__form {
     display: grid;
     grid-template-columns: 1fr;
-    row-gap: $sm;
+    row-gap: $md;
   }
 
   &__buttons {
@@ -23,9 +23,6 @@
   }
 
   &__submit {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     min-width: 200px;
 
     .submit__title {

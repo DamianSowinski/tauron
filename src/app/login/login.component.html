@@ -2,18 +2,18 @@
   <section class="login">
     <h2 class="login__title">Login</h2>
 
-    <form class="login__form" id="loginForm" [formGroup]="form" (ngSubmit)="handleSubmit(formDirective)" #formDirective="ngForm">
-      <mat-form-field appearance="outline">
+    <form class="login__form u-mb-lg" id="loginForm" [formGroup]="form" (ngSubmit)="handleSubmit(formDirective)" #formDirective="ngForm">
+      <mat-form-field class="o-input" appearance="outline">
         <mat-label>Collection point id</mat-label>
         <input type="text" formControlName="id" matInput>
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field class="o-input" appearance="outline">
         <mat-label>Username</mat-label>
         <input type="text" formControlName="username" matInput autocomplete="username">
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field class="o-input" appearance="outline">
         <mat-label>Password</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" autocomplete="current-password">
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -24,7 +24,7 @@
 
     <div class="login__buttons">
       <div class="h-spacer"></div>
-      <button class="o-btn--success login__submit" form="loginForm" type="submit" [disabled]="!form.valid || isLogging">
+      <button class="o-btn-confirm login__submit" form="loginForm" type="submit" [disabled]="!form.valid || isLogging">
         <svg-ico class="o-ico-rotate" *ngIf="isLogging" name="spinner"></svg-ico>
         <span class="submit__title" [class.u-ml-sm]="isLogging">Login</span>
       </button>

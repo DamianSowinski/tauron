@@ -4,6 +4,8 @@
 .l-grid {
   display: grid;
   grid-template-rows: auto;
+  max-width: 1400px;
+  margin: 0 auto;
   grid-template-areas:
     'header'
     'intake'
@@ -11,7 +13,6 @@
     'total'
     'graph';
   grid-gap: 32px;
-
   @include breakpoint-up(lg) {
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:

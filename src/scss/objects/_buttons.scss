@@ -2,62 +2,64 @@
 @use '../core/mixins' as *;
 @use '../core/animations' as *;
 
-.o-btn {
+.o-btn-primary {
   &--outline {
-    padding: $sm;
-    color: var(--txt-color);
-    border: 1px solid $purpleGray;
-    border-radius: $radius--xs;
-    background-color: transparent;
     display: flex;
     align-items: center;
+    justify-content: center;
+    padding: $sm;
+    cursor: pointer;
+    color: var(--btn-primary-txt);
+    border: 1px solid var(--btn-primary);
+    border-radius: $radius--xs;
+    background-color: transparent;
     @include transition();
 
+    .o-ico {
+      @include transition(fill);
+      fill: var(--btn-primary-txt);
+    }
+
     &:hover {
-      cursor: pointer;
-      background-color: $purpleGrayVeryLight;
-      border-color: scale-color($purpleGray, $lightness: -20%);
+      color: var(--btn-primary-hover-txt);
+      border-color: transparent;
+      background-color: var(--btn-primary-hover);
+
+      .o-ico {
+        fill: var(--btn-primary-hover-txt);
+      }
     }
 
     &:focus {
       outline: unset;
-      box-shadow: 0 0 2px 2px rgba($blue, 0.5);
-    }
-
-    .o-ico {
-      fill: var(--txt-color);
-      //width: 16px;
-      //height: 16px;
+      box-shadow: 0 0 0 3px var(--btn-primary-focus);
     }
   }
+}
 
+.o-btn-confirm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $sm;
+  cursor: pointer;
+  color: var(--btn-confirm-txt);
+  border: 1px solid var(--btn-confirm-border);
+  border-radius: $radius--xs;
+  background-color: var(--btn-confirm);
+  @include transition();
 
-  &--primary {
-    $color: #78b5e6;
-    padding: 12px $md;
-    color: var(--txt-color);
-    border: 1px solid darken($color, 10%);
-    border-radius: $radius--sm;
-    background-color: $color;
-    @include transition();
-
-    &:hover {
-      background-color: lighten($color, 10%);
-    }
+  .o-ico {
+    @include transition(fill);
+    fill: var(--btn-confirm-txt);
   }
 
-  &--success {
-    padding: 12px $md;
-    color: var(--txt-color);
-    border: 1px solid $greenDark;
-    border-radius: $radius--sm;
-    background-color: $greenDark;
-    @include transition();
+  &:hover {
+    background-color: var(--btn-confirm-hover);;
+  }
 
-    &:disabled {
-      color: #000;
-      border-color: $txtColorGray;
-      background-color: $txtColorGray05;
-    }
+  &:focus {
+    outline: unset;
+    box-shadow: 0 0 0 3px var(--btn-confirm-focus);
   }
 }

@@ -18,9 +18,9 @@
     <span>Point id: {{pointId}}</span>
   </div>
   <div class="h-spacer"></div>
-  <button class="o-btn--outline" (click)="handleLoginClick()" [disabled]="isOpenLoginModal | async">
-    <svg-ico name="{{isLogged ? 'logout' : 'user'}}"></svg-ico>
-    <span class="u-ml-xs">{{isLogged ? 'Logout' : 'Login'}}</span>
+  <button class="o-btn-primary--outline" (click)="handleLoginClick()" [disabled]="isOpenLoginModal | async">
+    <svg-ico name="{{(isLogged | async) ? 'logout' : 'user'}}"></svg-ico>
+    <span class="u-ml-xs">{{ (isLogged | async) ? 'Logout' : 'Login'}}</span>
   </button>
 </header>
 

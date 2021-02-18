@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   title = 'Energy';
   isOpenLoginModal: Observable<boolean>;
   isDarkMode: Observable<boolean>;
-  isLogged = LoginService.isLogin();
+  isLogged: Observable<boolean>;
   pointId = LoginService.getPointId();
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver, private loginService: LoginService, private helperService: HelperService) {
     this.isOpenLoginModal = loginService.getModalState();
     this.isDarkMode = helperService.getDarkModeState();
+    this.isLogged = loginService.getLoginState();
   }
 
   ngOnInit() {
@@ -41,11 +42,15 @@ export class AppComponent implements OnInit {
   }
 
   handleLoginClick(): void {
-    if (this.isLogged) {
-      this.loginService.logout();
-      return;
-    }
+    this.isLogged.subscribe( (isLogged) => {
+      if (isLogged) {
+        this.loginService.logout();
+        return;
+      }
 
-    this.loginService.openLoginModal();
+      this.loginService.openLoginModal();
+    });
+
+
   }
 }

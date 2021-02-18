@@ -52,8 +52,7 @@ export class RangeComponent implements OnInit, AfterViewInit {
     end: new FormControl(moment(this.helperService.getSelectedDate('range', true)))
   });
 
-
-  constructor(private apiService: ApiService, private helperService: HelperService) {
+  constructor(private apiService: ApiService, private helperService: HelperService, private loginService: LoginService) {
   }
 
   ngOnInit(): void {
@@ -61,9 +60,11 @@ export class RangeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (LoginService.isLogin()) {
-      setTimeout(() => this.reloadData());
-    }
+    this.loginService.getLoginState().subscribe((isLogged) => {
+      if (isLogged) {
+        setTimeout(() => this.reloadData());
+      }
+    });
   }
 
   changeRange(): void {

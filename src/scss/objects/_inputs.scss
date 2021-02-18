@@ -2,8 +2,6 @@
 @use '../core/mixins' as *;
 
 .o-input {
-  width: 204px;
-
   &:hover {
     border-color: $blue;
   }
@@ -13,4 +11,16 @@
     padding: 0;
   }
 
+  .mat-form-field-outline,
+  .mat-datepicker-toggle-default-icon,
+  .mat-icon,
+  .mat-date-range-input-separator,
+  .mat-form-field-label {
+    color: var(--input-label);
+  }
+
+  &.mat-focused .mat-form-field-label,
+  &.mat-focused .mat-form-field-outline {
+    color: var(--input-label-focused);
+  }
 }

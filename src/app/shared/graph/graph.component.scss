@@ -3,18 +3,17 @@
 @use '../../../scss/core/mixins' as *;
 
 .graph {
-  $height: 300px;
   position: relative;
   box-sizing: border-box;
   width: 100%;
   padding: $md;
-  background-color: $white;
+  background-color: var(--graph-bgr);
   box-shadow: $shadow--l1;
 
   &__title {
     font-family: $primaryFont, 'Helvetica', serif;
     font-size: $t1;
-    color: $txtColorGray;
+    color: var(--graph-txt);
   }
 
   &__chart {
@@ -23,15 +22,15 @@
     flex-flow: column;
     box-sizing: border-box;
     margin: 48px 16px 32px 32px;
-    border-bottom: 1px solid $purpleGrayVeryLight;
-    border-left: 1px solid $purpleGrayVeryLight;
+    border-bottom: 1px solid var(--graph-axis);
+    border-left: 1px solid var(--graph-axis);
 
     .group {
       position: relative;
       display: flex;
       flex-flow: column;
       width: 100%;
-      border-bottom: 1px dotted $purpleGrayVeryLight;
+      border-bottom: 1px dotted var(--graph-scale-lines);
 
       &__item {
         width: 1px;
@@ -39,7 +38,7 @@
         margin: $xs 0;
         border-radius: 0 $radius--xs $radius--xs 0;
         @include transition(width);
-        background-color: #3b86ff;
+        background-color: var(--blue-light);
       }
 
       &__label {
@@ -50,7 +49,7 @@
         left: -40px;
         width: 32px;
         text-align: right;
-        color: $txtColorGray;
+        color: var(--graph-txt);
       }
 
       &:not(:last-child) {
@@ -66,7 +65,7 @@
       width: 1px;
       height: 100%;
       margin-left: -2px;
-      border-right: 1px dotted $purpleGrayVeryLight;
+      border-right: 1px dotted var(--graph-scale-lines);
 
       &:first-child {
         border-right: unset;
@@ -79,20 +78,24 @@
         left: -16px;
         width: 32px;
         text-align: center;
-        color: $txtColorGray;
+        color: var(--graph-txt);
       }
     }
 
     &.is-horizontal {
       flex-flow: row;
-      height: $height;
+      height: 300px;
       margin: 32px 16px 48px 32px;
+
+      @include breakpoint-up(xxl) {
+        height: 500px;
+      }
 
       .group {
         align-items: flex-end;
         flex-flow: row;
         max-width: 144px;
-        border-right: 1px dotted $purpleGrayVeryLight;
+        border-right: 1px dotted var(--graph-scale-lines);
 
         &__item {
           width: 100%;
@@ -127,7 +130,7 @@
         margin-bottom: -2px;
         margin-left: unset;
         border-right: unset;
-        border-bottom: 1px dotted $purpleGrayVeryLight;
+        border-bottom: 1px dotted var(--graph-scale-lines);
 
         &:first-child {
           border-bottom: unset;
@@ -161,7 +164,7 @@
 
       &__title {
         font-size: $s1;
-        color: $txtColorGray;
+        color: var(--graph-txt);
       }
     }
   }

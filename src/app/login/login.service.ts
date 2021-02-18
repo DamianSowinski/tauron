@@ -14,9 +14,11 @@ export interface LoginData {
 })
 export class LoginService {
   private loginModalState = new BehaviorSubject<boolean>(true);
+  private isLogged = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) {
     this.loginModalState.next(false);
+    this.isLogged.next(!!LoginService.getSessionId());
   }
 
   static getSessionId(): string {
@@ -25,10 +27,6 @@ export class LoginService {
 
   static getPointId(): string {
     return localStorage.getItem('pointId');
-  }
-
-  static isLogin(): boolean {
-    return !!LoginService.getSessionId();
   }
 
   private static setLocalStorage(id: string, sessionId: string) {
@@ -40,12 +38,22 @@ export class LoginService {
     return this.loginModalState;
   }
 
+  getLoginState(): BehaviorSubject<boolean> {
+    return this.isLogged;
+  }
+
   openLoginModal(): void {
     this.loginModalState.next(true);
   }
 
   closeLoginModal(): void {
     this.loginModalState.next(false);
+  }
+
+
+  reLogin() {
+    this.isLogged.next(false);
+    // this.loginModalState.next(true);
   }
 
   login(loginData: LoginData): Promise<null> {

@@ -49,7 +49,7 @@ export class DayComponent implements OnInit, AfterViewInit {
   graphData: Graph;
   selectedDate: FormControl;
 
-  constructor(private apiService: ApiService, private helperService: HelperService) {
+  constructor(private apiService: ApiService, private helperService: HelperService, private loginService: LoginService) {
   }
 
   ngOnInit(): void {
@@ -58,9 +58,11 @@ export class DayComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (LoginService.isLogin()) {
-      setTimeout(() => this.reloadData());
-    }
+    this.loginService.getLoginState().subscribe( (isLogged) => {
+      if (isLogged) {
+        setTimeout(() => this.reloadData());
+      }
+    });
   }
 
   changeDay() {

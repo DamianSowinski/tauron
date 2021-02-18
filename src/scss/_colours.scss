@@ -1,34 +1,95 @@
+@use './core/variables' as *;
+
 :root {
-  --bgr-color: #f0f0f7;
-  --txt-color: #4d4f5c;
+  --bgr-color: #{$bgrColor};
+  --txt-color: #{$black--70};
+  --backdrop: #{$black};
 
-  --green: #4ad991;
-  --red: #ff6565;
-  --orange: #FFCA83;
-  --blue-light: #55D8FE;
+  --bgr-error: #{$light--02};
+  --separate-line: #{$dark--05};
 
-  --top-bar-bgr: #f0f0f7;
+  --green: #{$green};
+  --red: #{$red};
+  --orange: #{$orange};
+  --blue-light: #{$blueLight};
+
+  --top-bar-bgr: #{$white};
 
   --sidenav-txt: #f0f0f7;
+  --sidenav-bgr: #43425D;
+  --sidenav-header-bgr: #{$dark--01};
+  --sidenav-hover-bgr: #{$dark--01};
+  --sidenav-active-bgr: #{$dark--01};
+  --sidenav-active-border: #A3A0FB;
+  --sidenav-active-ico: #A3A0FB;
+  --sidenav-header-txt: #fff;
   --sidenav-ico: #bcbccb;
 
-  --card-bgr: #fff;
+  --card-bgr: #{$white};
   --card-primary-txt: #4d4f5c;
   --card-txt: #787A8D;
+
+  --graph-bgr: #{$white};
+  --graph-primary-txt: #4d4f5c;
+  --graph-txt: #787A8D;
+  --graph-axis: #E9E9F0;
+  --graph-scale-lines: #E9E9F0;
+
+  --modal-bgr: #f0f0f7;
+
+  --input-label: #{$gray};
+  --input-label-focused: #{$purple};
+
+  --btn-primary: #{$purpleDark};
+  --btn-primary-txt: #{$purpleDark};
+  --btn-primary-hover: #{$purpleDark};
+  --btn-primary-focus: #{rgba($purpleDark, 0.5)};
+  --btn-primary-hover-txt: #{ $white};
+
+  --btn-confirm: #69b553;
+  --btn-confirm-border: #589946;
+  --btn-confirm-txt: #{$white};
+  --btn-confirm-hover: #76cc5e;
+  --btn-confirm-focus: #{rgba(#589946, 0.9)};
+  --btn-confirm-hover-txt: #{ $white};
 }
 
 .dark {
-  --bgr-color: #3c3c3c;
-  --txt-color: #d0d0d7;
+  --bgr-color: #{$black--80};
+  --txt-color: #{$white--80};
 
-  --green: #4ad991;
-  --red: #ff6565;
-  --orange: #FFCA83;
-  --blue-light: #55D8FE;
+  --bgr-error: #{$dark--08};
+  --separate-line: #{$light--02};
 
-  --top-bar-bgr: #282828;
+  --top-bar-bgr: #{$black--90};
+
+  --sidenav-txt: #d2d2d9;
+  --sidenav-bgr: #2b2a3c;
+  --sidenav-header-bgr: #{$dark--05};
+  --sidenav-hover-bgr: #{$dark--05};
+  --sidenav-active-bgr: #{$dark--05};
+
 
   --card-bgr: #454545;
   --card-primary-txt: #efefef;
   --card-txt: #d0d0d0;
+
+  --graph-bgr: #454545;
+  --graph-primary-txt: #efefef;
+  --graph-txt: #d0d0d0;
+
+  --modal-bgr: #000;
+
+  --btn-primary: #{$purple};
+  --btn-primary-txt: #{$purple};
+  --btn-primary-hover: #{$purple};
+  --btn-primary-focus: #{rgba($purple, 0.5)};
+  --btn-primary-hover-txt: #{ $white};
+
+  --btn-confirm: #2b4f22;
+  --btn-confirm-border: #305926;
+  --btn-confirm-txt: #{$white--80};
+  --btn-confirm-hover: #37662c;
+  --btn-confirm-focus: #{rgba(#589946, 0.9)};
+  --btn-confirm-hover-txt: #{ $white--90};
 }
