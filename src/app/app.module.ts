@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SidenavComponent } from './sidenav/sidenav.component';
-import { SharedModule } from './login/shared.module';
+import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app.routing';
 import { HomeComponent } from './home/home.component';
 import { DayComponent } from './day/day.component';

@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToastComponent } from '../shared/toast/toast.component';
-import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinner.component';
-import { ToastService } from '../shared/toast/toast.service';
+import { ToastComponent } from './toast/toast.component';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { ToastService } from './toast/toast.service';
 import { HttpClientModule } from '@angular/common/http';
-import { SvgComponent } from '../shared/svg/svg.component';
-import { SvgDefinitionComponent } from '../shared/svg/svg-definition.component';
-import { CardComponent } from '../shared/card/card.component';
-import { GraphComponent } from '../shared/graph/graph.component';
-import { TippyDirective } from '../shared/directives/tippy.directive';
-import { ModalComponent } from '../shared/modal/modal.component';
+import { SvgComponent } from './svg/svg.component';
+import { SvgDefinitionComponent } from './svg/svg-definition.component';
+import { CardComponent } from './card/card.component';
+import { GraphComponent } from './graph/graph.component';
+import { TippyDirective } from './directives/tippy.directive';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [

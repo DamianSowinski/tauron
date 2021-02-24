@@ -145,14 +145,17 @@ export class ApiService {
 
       this.getPreloadData([yesterday], [yesterday], [yesterday]).then(
         (data) => resolve(data),
-        (errors) => reject(errors)
+        (errors) => {
+          this.toast.error(`${errors.error.title} - ${errors.error.detail}`);
+          reject(errors);
+        }
       );
     });
   }
 
   getDayUsage(date: Date = new Date()): Promise<EnergyDayUsage> {
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const cache = this.checkCache(date, 'day');
 
       if (cache) {
@@ -168,13 +171,16 @@ export class ApiService {
             this.cache.push({range: 'day', date, cache: data});
             return resolve(data);
           },
-          errors => console.log(errors.error.title)
+          errors => {
+            this.toast.error(`${errors.error.title} - ${errors.error.detail}`);
+            reject(errors);
+          }
         );
     });
   }
 
   getMonthUsage(date: Date = new Date()): Promise<EnergyMonthUsage> {
-    return new Promise<EnergyMonthUsage>((resolve) => {
+    return new Promise<EnergyMonthUsage>((resolve, reject) => {
       const cache = this.checkCache(date, 'month');
 
       if (cache) {
@@ -190,13 +196,16 @@ export class ApiService {
             this.cache.push({date, cache: data, range: 'month'});
             return resolve(data);
           },
-          errors => console.log(errors.error.title)
+          errors => {
+            this.toast.error(`${errors.error.title} - ${errors.error.detail}`);
+            reject(errors);
+          }
         );
     });
   }
 
   getYearUsage(date: Date = new Date()): Promise<EnergyYearUsage> {
-    return new Promise<EnergyYearUsage>((resolve) => {
+    return new Promise<EnergyYearUsage>((resolve, reject) => {
       const cache = this.checkCache(date, 'year');
 
       if (cache) {
@@ -212,13 +221,16 @@ export class ApiService {
             this.cache.push({date, cache: data, range: 'year'});
             return resolve(data);
           },
-          errors => console.log(errors.error.title)
+          errors => {
+            this.toast.error(`${errors.error.title} - ${errors.error.detail}`);
+            reject(errors);
+          }
         );
     });
   }
 
   getRangeUsage(startDate: Date, endDate: Date): Promise<EnergyRangeUsage> {
-    return new Promise<EnergyRangeUsage>((resolve) => {
+    return new Promise<EnergyRangeUsage>((resolve, reject) => {
       const cache = this.checkCache(startDate, 'range', endDate);
 
       if (cache) {
@@ -237,7 +249,10 @@ export class ApiService {
             this.cache.push({date: startDate, dateEnd: endDate, cache: data, range: 'range'});
             return resolve(data);
           },
-          errors => console.log(errors.error.title)
+          errors => {
+            this.toast.error(`${errors.error.title} - ${errors.error.detail}`);
+            reject(errors);
+          }
         );
     });
   }
@@ -282,7 +297,7 @@ export class ApiService {
             return resolve(data);
           },
           (errors) => {
-            this.toast.error(errors.error.detail);
+            this.toast.error(`${errors.error.title} - ${errors.error.detail}`);
             reject(errors);
           }
         );

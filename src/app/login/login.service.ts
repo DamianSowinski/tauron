@@ -53,7 +53,7 @@ export class LoginService {
 
   reLogin() {
     this.isLogged.next(false);
-    // this.loginModalState.next(true);
+    this.loginModalState.next(true);
   }
 
   login(loginData: LoginData): Promise<null> {

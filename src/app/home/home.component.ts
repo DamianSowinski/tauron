@@ -67,8 +67,7 @@ export class HomeComponent implements AfterViewInit {
         this.fillMonthCard(data.months[0]);
         this.fillMontGraph(data.months[0]);
       },
-      (errors) => {
-        console.log(errors);
+      () => {
         this.loginService.reLogin();
 
         this.cards.forEach((card) => card.error());

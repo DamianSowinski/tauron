@@ -58,7 +58,7 @@ export class DayComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.loginService.getLoginState().subscribe( (isLogged) => {
+    this.loginService.getLoginState().subscribe((isLogged) => {
       if (isLogged) {
         setTimeout(() => this.reloadData());
       }
@@ -98,10 +98,17 @@ export class DayComponent implements OnInit, AfterViewInit {
     this.cards.forEach((card) => card.isLoaded = false);
     this.graph.first.isLoaded = false;
 
-    this.apiService.getDayUsage(date).then((data) => {
-      this.fillCards(data);
-      this.fillGraph(data);
-    });
+    this.apiService.getDayUsage(date).then(
+      (data) => {
+        this.fillCards(data);
+        this.fillGraph(data);
+      },
+      () => {
+        this.loginService.reLogin();
+
+        this.cards.forEach((card) => card.error());
+        this.graph.forEach((graph) => graph.error());
+      });
   }
 
   private fillCards(data: EnergyDayUsage) {
