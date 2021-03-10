@@ -1,7 +1,8 @@
 @use 'core/variables' as *;
 
 body {
-  font-family: $primaryFont, 'Helvetica', serif;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 400;
   font-size: $fontSize;
   min-height: 100vh;
   margin: 0;

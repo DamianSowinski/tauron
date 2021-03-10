@@ -40,9 +40,9 @@
       }
 
       &__title {
-        font-family: $secondaryFont, 'Helvetica', serif;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-weight: 300;
         font-size: $t2;
-        font-weight: 400;
         letter-spacing: 2px;
         color: var(--sidenav-header-txt);
       }

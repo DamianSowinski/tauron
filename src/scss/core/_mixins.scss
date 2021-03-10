@@ -38,6 +38,87 @@
   }
 }
 
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
+}
+
+@mixin font-face($name, $fileName, $weight: normal, $style: normal) {
+  @font-face {
+    font-family: $name;
+    font-display: swap;
+    src: url(#{$fontPath}#{$fileName}.woff2) format('woff2'),
+    url(#{$fontPath}#{$fileName}.woff) format('woff'),
+    url(#{$fontPath}#{$fileName}.ttf) format('truetype');
+    font-weight: $weight;
+    font-style: $style;
+  }
+}
+
+@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+  $u1: unit($min-vw);
+  $u2: unit($max-vw);
+  $u3: unit($min-font-size);
+  $u4: unit($max-font-size);
+  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+    & {
+      font-size: $min-font-size;
+      @media screen and (min-width: $min-vw) {
+        font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
+      }
+      @media screen and (min-width: $max-vw) {
+        font-size: $max-font-size;
+      }
+    }
+  }
+}
+
+@mixin fluid-ico($min-width: 420px, $max-width: 1400px, $min-size: 16px, $max-size: 24px) {
+  $u1: unit($min-width);
+  $u2: unit($max-width);
+  $u3: unit($min-size);
+  $u4: unit($max-size);
+  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+    & {
+      width: $min-size;
+      height: $min-size;
+      @media screen and (min-width: $min-width) {
+        width: calc(#{$min-size} + #{strip-unit($max-size - $min-size)} * ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)}));
+        height: calc(#{$min-size} + #{strip-unit($max-size - $min-size)} * ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)}));
+      }
+      @media screen and (min-width: $max-width) {
+        width: $max-size;
+        height: $max-size;
+      }
+    }
+  }
+}
+
+@mixin fluid-min-height($min-vw, $max-vw, $min-font-size, $max-font-size) {
+  $u1: unit($min-vw);
+  $u2: unit($max-vw);
+  $u3: unit($min-font-size);
+  $u4: unit($max-font-size);
+  $lineHeight: 1.5;
+  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+    & {
+      min-height: $min-font-size * $lineHeight;
+      @media screen and (min-width: $min-vw) {
+        min-height: calc((#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})) * #{$lineHeight});
+      }
+      @media screen and (min-width: $max-vw) {
+        min-height: $max-font-size * $lineHeight;
+      }
+    }
+  }
+}
+
+@mixin fluid-txt($min-width: 420px, $max-width: 1400px, $min-font: 16px, $max-font: 22px) {
+  letter-spacing: 0.2px;
+  line-height: 1.5;
+  @include fluid-type($min-width, $max-width, $min-font, $max-font);
+}
+
+
 @mixin breakpoint-up($size) {
   @if map-has-key($breakpoints, $size) {
     $value: map-get($breakpoints, $size);

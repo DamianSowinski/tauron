@@ -11,7 +11,8 @@
   box-shadow: $shadow--l1;
 
   &__title {
-    font-family: $primaryFont, 'Helvetica', serif;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
     font-size: $t1;
     color: var(--card-txt);
   }
@@ -22,16 +23,17 @@
     margin: 16px 0;
 
     .total__value {
-      font-family: $primaryFontBold, 'Helvetica', serif;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-weight: 700;
       font-size: 24px;
-      font-weight: bold;
       min-width: 100px;
       margin-right: $sm;
       color: var(--card-primary-txt);
     }
 
     .total__trend {
-      font-family: $primaryFontSemiBold, 'Helvetica', serif;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-weight: 600;
       display: flex;
       align-items: center;
       color: var(--green);
@@ -66,15 +68,16 @@
     }
 
     .zone__value {
-      font-family: $primaryFontSemiBold, 'Helvetica', serif;
-      font-weight: bold;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-weight: 600;
       min-width: 80px;
       margin-right: $sm;
       color: var(--card-txt);
     }
 
     .zone__trend {
-      font-family: $primaryFontSemiBold, 'Helvetica', serif;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-weight: 600;
       font-size: $s1;
       display: flex;
       align-items: center;

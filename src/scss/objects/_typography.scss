@@ -1,37 +1,18 @@
 @use '../core/variables' as *;
 @use '../core/mixins' as *;
 
-@mixin font-face($name, $fileName, $weight: normal, $style: normal) {
-  @font-face {
-    font-family: $name;
-    font-display: swap;
-    src: url(#{$fontPath}#{$fileName}.woff2) format('woff2'),
-    url(#{$fontPath}#{$fileName}.woff) format('woff'),
-    url(#{$fontPath}#{$fileName}.ttf) format('truetype');
-    font-weight: $weight;
-    font-style: $style;
-  }
-}
-
-@include font-face($primaryFont, 'sourcesanspro-regular-webfont', 500);
-@include font-face($primaryFontSemiBold, 'sourcesanspro-semibold-webfont', 700);
-@include font-face($primaryFontBold, 'sourcesanspro-bold-webfont', 600);
-@include font-face($secondaryFont, 'titilliumweb-light-webfont');
-
-
 .o-title {
-  font-family: $secondaryFont, 'Helvetica', serif;
-  font-size: $t2;
+  font-family: 'Source Sans Pro', sans-serif;
   font-weight: 300;
-
+  font-size: $t2;
   @include breakpoint-up(lg) {
     font-size: $t3;
   }
 }
 
 .o-subtitle {
-  font-family: $primaryFont, 'Helvetica', serif;
-  font-weight: 300;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 400;
   display: flex;
   align-items: center;
   justify-content: center;
