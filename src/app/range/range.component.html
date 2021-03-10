@@ -3,19 +3,11 @@
     <h2 class="o-title ">Range usage</h2>
     <div class="h-spacer"></div>
 
-    <mat-form-field class="o-input u-w-210" appearance="outline">
-      <mat-label>Selected range</mat-label>
-      <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-        <input matStartDate formControlName="start" placeholder="Start date">
-        <input matEndDate formControlName="end" placeholder="End date" (dateChange)="changeRange()">
-      </mat-date-range-input>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker startView="year"></mat-date-range-picker>
+    <label for="inputStartDate">Start</label>
+    <input class="u-ml-sm" id="inputStartDate" type="month" name="inputStartDate" [formControl]="inputStartDate" (change)="changeStartDate()" max="{{ endDate | date:'YYYY-MM'}}">
 
-      <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-      <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
-    </mat-form-field>
-
+    <label for="inputEndDate">End</label>
+    <input class="u-ml-sm" id="inputEndDate" type="month" name="inputEndDate" [formControl]="inputEndDate" (change)="changeEndDate()" min="{{ startDate | date:'YYYY-MM'}}" max="{{ today | date:'YYYY-MM'}}">
   </div>
 
   <app-card class="l-grid__intake" [cardData]="intakeData"></app-card>

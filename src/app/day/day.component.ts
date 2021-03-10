@@ -5,39 +5,13 @@ import { GraphComponent } from '../shared/graph/graph.component';
 import { Card } from '../shared/card/Card';
 import { HelperService } from '../helper.service';
 import { Graph } from '../shared/graph/Graph';
-import { FormControl } from '@angular/forms';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
-import * as _moment from 'moment';
-import { Moment } from 'moment';
 import { LoginService } from '../login/login.service';
-
-const moment = _moment;
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-day',
   templateUrl: './day.component.html',
-  styleUrls: ['./day.component.scss'],
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-    {
-      provide: MAT_DATE_FORMATS, useValue: {
-        parse: {
-          dateInput: 'DD.MM.YYYY',
-        },
-        display: {
-          dateInput: 'DD.MM.YYYY',
-          dateA11yLabel: 'LL',
-          monthYearLabel: 'MMM YYYY',
-          monthYearA11yLabel: 'MMMM YYYY'
-        }
-      }
-    },
-  ],
+  styleUrls: ['./day.component.scss']
 })
 export class DayComponent implements OnInit, AfterViewInit {
   @ViewChildren(CardComponent) cards: QueryList<CardComponent>;
@@ -47,13 +21,18 @@ export class DayComponent implements OnInit, AfterViewInit {
   generateData: Card;
   totalData: Card;
   graphData: Graph;
-  selectedDate: FormControl;
+  inputDay: FormControl;
+  yesterday: Date;
 
   constructor(private apiService: ApiService, private helperService: HelperService, private loginService: LoginService) {
   }
 
   ngOnInit(): void {
-    this.selectedDate = new FormControl(moment(this.helperService.getSelectedDate('day')));
+    const date = this.helperService.getSelectedDate('day');
+
+    this.yesterday = HelperService.getYesterdayDate();
+
+    this.inputDay = new FormControl(HelperService.getStringFromDate(date, 'day'));
     this.graphSettings();
   }
 
@@ -66,9 +45,9 @@ export class DayComponent implements OnInit, AfterViewInit {
   }
 
   changeDay() {
-    const momentDate = this.selectedDate.value as Moment;
+    const date = HelperService.getDateFromString(this.inputDay.value);
 
-    this.helperService.setSelectedDate(momentDate.toDate(), 'day');
+    this.helperService.setSelectedDate(date, 'day');
     this.reloadData();
   }
 

@@ -1,44 +1,17 @@
 import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { HelperService } from '../helper.service';
+import { ApiService, EnergyYearUsage } from '../api.service';
 import { CardComponent } from '../shared/card/card.component';
 import { GraphComponent } from '../shared/graph/graph.component';
 import { Card } from '../shared/card/Card';
+import { HelperService } from '../helper.service';
 import { Graph } from '../shared/graph/Graph';
-import { ApiService, EnergyYearUsage } from '../api.service';
-import { MatDatepicker } from '@angular/material/datepicker';
-import { FormControl } from '@angular/forms';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
-import * as _moment from 'moment';
-import { Moment } from 'moment';
 import { LoginService } from '../login/login.service';
-
-const moment = _moment;
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-year',
   templateUrl: './year.component.html',
-  styleUrls: ['./year.component.scss'],
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-    {
-      provide: MAT_DATE_FORMATS, useValue: {
-        parse: {
-          dateInput: 'YYYY',
-        },
-        display: {
-          dateInput: 'YYYY',
-          dateA11yLabel: 'LL',
-          monthYearLabel: 'YYYY',
-          monthYearA11yLabel: 'YYYY'
-        }
-      }
-    },
-  ],
+  styleUrls: ['./year.component.scss']
 })
 export class YearComponent implements OnInit, AfterViewInit {
   @ViewChildren(CardComponent) cards: QueryList<CardComponent>;
@@ -49,33 +22,32 @@ export class YearComponent implements OnInit, AfterViewInit {
   totalData: Card;
   graphData: Graph;
   selectedDate: FormControl;
+  currentYear = new Date().getFullYear();
 
   constructor(private apiService: ApiService, private helperService: HelperService, private loginService: LoginService) {
   }
 
   ngOnInit(): void {
-    this.selectedDate = new FormControl(moment(this.helperService.getSelectedDate('year')));
+    const year = this.helperService.getSelectedDate('year').getFullYear();
+
+    this.selectedDate = new FormControl(year);
     this.graphSettings();
   }
 
   ngAfterViewInit() {
-    this.loginService.getLoginState().subscribe( (isLogged) => {
+    this.loginService.getLoginState().subscribe((isLogged) => {
       if (isLogged) {
         setTimeout(() => this.reloadData());
       }
     });
   }
 
-  changeYear(normalizedMonth: Moment, datepicker: MatDatepicker<any>) {
-    const momentDate = this.selectedDate.value;
-    momentDate.year(normalizedMonth.year());
+  changeYear() {
+    const date = HelperService.getDateFromString(this.selectedDate.value.toString());
 
-    this.helperService.setSelectedDate(momentDate.toDate(), 'year');
-    this.selectedDate.setValue(momentDate);
+    this.helperService.setSelectedDate(date, 'year');
     this.reloadData();
-    datepicker.close();
   }
-
 
   private graphSettings() {
     this.intakeData = new Card('Intake', 'Day', 'Night');

@@ -2,24 +2,21 @@
   <section class="login">
     <h2 class="login__title">Login</h2>
 
-    <form class="login__form u-mb-lg" id="loginForm" [formGroup]="form" (ngSubmit)="handleSubmit(formDirective)" #formDirective="ngForm">
-      <mat-form-field class="o-input" appearance="outline">
-        <mat-label>Collection point id</mat-label>
-        <input type="text" formControlName="id" matInput>
-      </mat-form-field>
+    <form class="login__form u-mb-lg" id="loginForm" [formGroup]="form" (ngSubmit)="handleSubmit()">
+      <div class="o-input">
+        <label for="formId">Collection point id</label>
+        <input id="formId" type="text" formControlName="id">
+      </div>
 
-      <mat-form-field class="o-input" appearance="outline">
-        <mat-label>Username</mat-label>
-        <input type="text" formControlName="username" matInput autocomplete="username">
-      </mat-form-field>
+      <div class="o-input">
+        <label for="formUsername">Username</label>
+        <input id="formUsername" type="text" formControlName="username" autocomplete="username">
+      </div>
 
-      <mat-form-field class="o-input" appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" autocomplete="current-password">
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-      </mat-form-field>
+      <div class="o-input">
+        <label for="formPassword">Password</label>
+        <input id="formPassword" type="password" formControlName="password" autocomplete="current-password">
+      </div>
     </form>
 
     <div class="login__buttons">

@@ -22,7 +22,7 @@ export class HelperService {
 
   constructor() {
     this.setDefaultSelectedDate();
-    this.isDarkMode.next( !!(+localStorage.getItem('darkMode')));
+    this.isDarkMode.next(!!(+localStorage.getItem('darkMode')));
     this.setDarkModeBodyClass();
   }
 
@@ -137,18 +137,21 @@ export class HelperService {
     return new Date(year, month, day, 12);
   }
 
+  static getYesterdayDate(): Date {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 12);
+  }
+
   public getDarkModeState(): BehaviorSubject<boolean> {
     return this.isDarkMode;
   }
 
   public toggleDarkModeState(): void {
-    const currentState =  this.isDarkMode.value;
+    const currentState = this.isDarkMode.value;
     this.isDarkMode.next(!currentState);
     localStorage.setItem('darkMode', !currentState ? '1' : '0');
 
   }
-
-
 
   public getSelectedDate(mode: TimeRange, isEndDate = false): Date {
     switch (mode) {
@@ -184,6 +187,16 @@ export class HelperService {
     }
   }
 
+  public setDarkModeBodyClass() {
+    this.isDarkMode.subscribe((isDarkMode) => {
+      if (isDarkMode) {
+        window.document.body.classList.add('dark');
+      } else {
+        window.document.body.classList.remove('dark');
+      }
+    });
+  }
+
   private setDefaultSelectedDate() {
     const now = new Date();
     const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 12);
@@ -200,15 +213,5 @@ export class HelperService {
       }
     };
 
-  }
-
-  public setDarkModeBodyClass() {
-    this.isDarkMode.subscribe((isDarkMode) => {
-      if (isDarkMode) {
-        window.document.body.classList.add('dark');
-      } else {
-        window.document.body.classList.remove('dark');
-      }
-    });
   }
 }
