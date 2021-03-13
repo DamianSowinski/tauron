@@ -2,8 +2,10 @@
   <div class="l-grid__header">
     <h2 class="o-title ">Month usage</h2>
     <div class="h-spacer"></div>
-    <label for="inputDate">Month</label>
-    <input class="u-ml-sm" id="inputDate" type="month" name="inputDate" [formControl]="inputMonth" (change)="changeMonth()" max="{{ today | date:'YYYY-MM'}}">
+    <div class="o-field l-field">
+      <label class="o-field__label h-sr-only" for="inputDate">Month</label>
+      <input class="o-field__input l-field__input" id="inputDate" type="month" name="inputDate" [formControl]="inputMonth" (change)="changeMonth()" max="{{ today | date:'YYYY-MM'}}">
+    </div>
   </div>
 
   <app-card class="l-grid__intake" [cardData]="intakeData"></app-card>

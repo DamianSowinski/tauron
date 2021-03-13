@@ -1,4 +1,17 @@
 @use './core/variables' as *;
+$white: hsl(0, 0%, 100%);
+$white--90: hsl(0, 0%, 90%);
+$white--80: hsl(0, 0%, 80%);
+
+$gray: hsl(0, 0%, 50%);
+
+$black--60: hsl(0, 0%, 40%);
+$black--70: hsl(0, 0%, 30%);
+$black--80: hsl(0, 0%, 20%);
+$black--90: hsl(0, 0%, 10%);
+$black: hsl(0, 0%, 0%);
+
+$bgrColor: #f0f0f7;
 
 :root {
   --bgr-color: #{$bgrColor};
@@ -15,8 +28,8 @@
 
   --top-bar-bgr: #{$white};
 
-  --sidenav-txt: #f0f0f7;
-  --sidenav-bgr: #43425D;
+  --sidenav-txt: #{$bgrColor};
+  --sidenav-bgr: #{$purpleDark};
   --sidenav-header-bgr: #{$dark--01};
   --sidenav-hover-bgr: #{$dark--01};
   --sidenav-active-bgr: #{$dark--01};
@@ -38,7 +51,12 @@
   --modal-bgr: #f0f0f7;
 
   --input-label: #{$gray};
-  --input-label-focused: #{$purple};
+  --input-label-focused: #{$gray};
+
+  --field-input-bgr: transparent;
+  --filed-input-border: #{$black--70};
+  --field-input-focus-border: #{$purple};
+
 
   --btn-primary: #{$purpleDark};
   --btn-primary-txt: #{$purpleDark};
@@ -52,6 +70,10 @@
   --btn-confirm-hover: #76cc5e;
   --btn-confirm-focus: #{rgba(#589946, 0.9)};
   --btn-confirm-hover-txt: #{ $white};
+
+  --logo-part-1: #9DBF15;
+  --logo-part-2: #{$bgrColor};
+  --logo-part-3: #{$purpleDark};
 }
 
 .dark {
@@ -63,7 +85,7 @@
 
   --top-bar-bgr: #{$black--90};
 
-  --sidenav-txt: #d2d2d9;
+  --sidenav-txt: #{$white--80};
   --sidenav-bgr: #2b2a3c;
   --sidenav-header-bgr: #{$dark--05};
   --sidenav-hover-bgr: #{$dark--05};
@@ -92,4 +114,8 @@
   --btn-confirm-hover: #37662c;
   --btn-confirm-focus: #{rgba(#589946, 0.9)};
   --btn-confirm-hover-txt: #{ $white--90};
+
+  --logo-part-1: #9DBF15;
+  --logo-part-2: #{$white--80};
+  --logo-part-3: #2b2a3c;
 }

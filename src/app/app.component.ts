@@ -20,10 +20,7 @@ export class AppComponent implements OnInit {
   isLogged: Observable<boolean>;
   pointId = LoginService.getPointId();
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches)
-    );
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 767.98px)').pipe(map(result => result.matches));
 
   constructor(private breakpointObserver: BreakpointObserver, private loginService: LoginService, private helperService: HelperService) {
     this.isOpenLoginModal = loginService.getModalState();

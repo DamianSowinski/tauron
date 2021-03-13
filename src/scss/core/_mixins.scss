@@ -1,13 +1,13 @@
 @use 'variables' as *;
 
-@mixin outline($color: $white) {
+@mixin outline($color: white) {
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px $color;
   }
 }
 
-@mixin icoStroke($color: $white, $width: 3) {
+@mixin icoStroke($color: white, $width: 3) {
   fill: none;
   stroke: $color;
   stroke-width: $width;
@@ -46,11 +46,13 @@
   @font-face {
     font-family: $name;
     font-display: swap;
-    src: url(#{$fontPath}#{$fileName}.woff2) format('woff2'),
-    url(#{$fontPath}#{$fileName}.woff) format('woff'),
-    url(#{$fontPath}#{$fileName}.ttf) format('truetype');
     font-weight: $weight;
     font-style: $style;
+    unicode-range: U+000-5FF;
+
+    src: local('Source Sans Pro'),
+    url(#{$fontPath}#{$fileName}.woff2) format('woff2'),
+    url(#{$fontPath}#{$fileName}.woff) format('woff');
   }
 }
 

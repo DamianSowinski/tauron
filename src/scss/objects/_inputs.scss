@@ -1,26 +1,36 @@
 @use '../core/variables' as *;
 @use '../core/mixins' as *;
+@use '../core/animations' as *;
 
-.o-input {
-  &:hover {
-    border-color: $blue;
+.o-field {
+  &__label {
+    display: flex;
+    align-items: center;
   }
 
-  &.mat-form-field-appearance-outline .mat-form-field-wrapper {
-    margin: 0;
-    padding: 0;
-  }
+  &__input {
+    box-sizing: border-box;
+    height: 42px;
+    padding: $sm;
+    cursor: pointer;
+    color: var(--txt-color);
+    border: 1px solid var(--filed-input-border);
+    border-radius: $radius--xs;
+    background-color: var(--field-input-bgr);
+    @include transition();
 
-  .mat-form-field-outline,
-  .mat-datepicker-toggle-default-icon,
-  .mat-icon,
-  .mat-date-range-input-separator,
-  .mat-form-field-label {
-    color: var(--input-label);
-  }
+    &:hover {
+      border-color: var(--field-input-focus-border);
+    }
 
-  &.mat-focused .mat-form-field-label,
-  &.mat-focused .mat-form-field-outline {
-    color: var(--input-label-focused);
+    &:focus {
+      border-color: var(--field-input-focus-border);
+      outline: unset;
+      box-shadow: 0 0 0 3px var(--btn-primary-focus);
+    }
+
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(0.6);
+    }
   }
 }

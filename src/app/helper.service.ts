@@ -22,7 +22,7 @@ export class HelperService {
 
   constructor() {
     this.setDefaultSelectedDate();
-    this.isDarkMode.next(!!(+localStorage.getItem('darkMode')));
+    this.isDarkMode.next(!!(+(localStorage.getItem('darkMode') || 0)));
     this.setDarkModeBodyClass();
   }
 
@@ -153,6 +153,17 @@ export class HelperService {
 
   }
 
+  public setDarkModeBodyClass(): void {
+    this.isDarkMode.subscribe((isDarkMode) => {
+      if (isDarkMode) {
+        window.document.body.classList.add('dark');
+      } else {
+        window.document.body.classList.remove('dark');
+      }
+    });
+  }
+
+
   public getSelectedDate(mode: TimeRange, isEndDate = false): Date {
     switch (mode) {
       case 'day':
@@ -187,17 +198,9 @@ export class HelperService {
     }
   }
 
-  public setDarkModeBodyClass() {
-    this.isDarkMode.subscribe((isDarkMode) => {
-      if (isDarkMode) {
-        window.document.body.classList.add('dark');
-      } else {
-        window.document.body.classList.remove('dark');
-      }
-    });
-  }
 
-  private setDefaultSelectedDate() {
+
+  private setDefaultSelectedDate(): void {
     const now = new Date();
     const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 12);
     const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1, 12);

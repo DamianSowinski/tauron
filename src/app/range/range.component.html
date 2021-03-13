@@ -1,13 +1,14 @@
 <section class="l-grid">
   <div class="l-grid__header">
-    <h2 class="o-title ">Range usage</h2>
+    <h2 class="o-title">Range usage</h2>
     <div class="h-spacer"></div>
+    <div class="o-field l-field">
+      <label class="o-field__label h-sr-only" for="inputStartDate">Start</label>
+      <input class="o-field__input l-field__input" id="inputStartDate" type="month" name="inputStartDate" [formControl]="inputStartDate" (change)="changeStartDate()" max="{{ endDate | date:'YYYY-MM'}}">
 
-    <label for="inputStartDate">Start</label>
-    <input class="u-ml-sm" id="inputStartDate" type="month" name="inputStartDate" [formControl]="inputStartDate" (change)="changeStartDate()" max="{{ endDate | date:'YYYY-MM'}}">
-
-    <label for="inputEndDate">End</label>
-    <input class="u-ml-sm" id="inputEndDate" type="month" name="inputEndDate" [formControl]="inputEndDate" (change)="changeEndDate()" min="{{ startDate | date:'YYYY-MM'}}" max="{{ today | date:'YYYY-MM'}}">
+      <label class="o-field__label h-sr-only" for="inputEndDate">End</label>
+      <input class="o-field__input l-field__input" id="inputEndDate" type="month" name="inputEndDate" [formControl]="inputEndDate" (change)="changeEndDate()" min="{{ startDate | date:'YYYY-MM'}}" max="{{ today | date:'YYYY-MM'}}">
+    </div>
   </div>
 
   <app-card class="l-grid__intake" [cardData]="intakeData"></app-card>

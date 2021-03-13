@@ -2,29 +2,30 @@
   <section class="login">
     <h2 class="login__title">Login</h2>
 
-    <form class="login__form u-mb-lg" id="loginForm" [formGroup]="form" (ngSubmit)="handleSubmit()">
-      <div class="o-input">
-        <label for="formId">Collection point id</label>
-        <input id="formId" type="text" formControlName="id">
+    <form class="l-form" id="loginForm" [formGroup]="form" (ngSubmit)="handleSubmit()">
+      <div class="o-field l-form__field">
+        <label class="o-field__label" for="formId">Collection point id</label>
+        <input class="o-field__input" id="formId" type="text" formControlName="id">
       </div>
 
-      <div class="o-input">
-        <label for="formUsername">Username</label>
-        <input id="formUsername" type="text" formControlName="username" autocomplete="username">
+      <div class="o-field l-form__field">
+        <label class="o-field__label" for="formUsername">Username</label>
+        <input class="o-field__input" id="formUsername" type="text" formControlName="username" autocomplete="username">
       </div>
 
-      <div class="o-input">
-        <label for="formPassword">Password</label>
-        <input id="formPassword" type="password" formControlName="password" autocomplete="current-password">
+      <div class="o-field l-form__field">
+        <label class="o-field__label" for="formPassword">Password</label>
+        <input class="o-field__input" id="formPassword" type="password" formControlName="password" autocomplete="current-password">
+      </div>
+
+      <div class="login__buttons">
+        <div class="h-spacer"></div>
+        <button class="o-btn-confirm login__submit" type="submit" [disabled]="!form.valid || isLogging">
+          <svg-ico class="o-ico-rotate" *ngIf="isLogging" name="spinner"></svg-ico>
+          <span class="submit__title" [class.u-ml-sm]="isLogging">Login</span>
+        </button>
       </div>
     </form>
 
-    <div class="login__buttons">
-      <div class="h-spacer"></div>
-      <button class="o-btn-confirm login__submit" form="loginForm" type="submit" [disabled]="!form.valid || isLogging">
-        <svg-ico class="o-ico-rotate" *ngIf="isLogging" name="spinner"></svg-ico>
-        <span class="submit__title" [class.u-ml-sm]="isLogging">Login</span>
-      </button>
-    </div>
   </section>
 </app-modal>

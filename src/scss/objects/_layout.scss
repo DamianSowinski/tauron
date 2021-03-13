@@ -1,0 +1,52 @@
+@use '../core/variables' as *;
+@use '../core/mixins' as *;
+@use '../core/animations' as *;
+
+.l-grid {
+  display: grid;
+  max-width: 1400px;
+  margin: 0 auto;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'header'
+    'intake'
+    'generate'
+    'total'
+    'graph';
+  grid-gap: 32px;
+  @include breakpoint-up(lg) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+    'header   header    header'
+    'intake   generate  total'
+    'graph    graph     graph';
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    grid-area: header;
+  }
+
+  &__intake {
+    grid-area: intake;
+  }
+
+  &__generate {
+    grid-area: generate;
+  }
+
+  &__total {
+    grid-area: total;
+  }
+
+  &__graph {
+    grid-area: graph;
+  }
+}
+
+.l-field {
+  &__input {
+    width: 150px;
+  }
+}

@@ -12,7 +12,6 @@
   box-sizing: border-box;
   width: 0;
   height: 100%;
-
   background-color: var(--sidenav-bgr);
 
   &__header {
@@ -41,8 +40,8 @@
 
       &__title {
         font-family: 'Source Sans Pro', sans-serif;
-        font-weight: 300;
         font-size: $t2;
+        font-weight: 300;
         letter-spacing: 2px;
         color: var(--sidenav-header-txt);
       }
@@ -61,10 +60,10 @@
   }
 
   &__menu {
+    overflow-x: hidden;
+    overflow-y: auto;
     margin: 8px 0;
     padding: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
     list-style-type: none;
 
     .item {
@@ -145,5 +144,20 @@
     bottom: 0;
     left: 0;
     opacity: 0.8;
+  }
+}
+
+::ng-deep .logo {
+  .path-1 {
+    //fill: var(--green);
+    fill: var(--logo-part-1);
+  }
+
+  .path-2 {
+    fill: var(--logo-part-2);
+  }
+
+  .path-3 {
+    fill: var(--logo-part-3);
   }
 }

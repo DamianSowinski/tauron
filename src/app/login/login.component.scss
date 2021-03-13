@@ -1,4 +1,5 @@
 @use '../../scss/core/variables' as *;
+@use '../../scss/core/mixins' as *;
 @use '../../scss/core/animations' as *;
 
 .login {
@@ -13,14 +14,9 @@
     border-bottom: 1px solid var(--separate-line);
   }
 
-  &__form {
-    display: grid;
-    grid-template-columns: 1fr;
-    row-gap: $md;
-  }
-
   &__buttons {
     display: flex;
+    margin-top: $md;
   }
 
   &__submit {
@@ -28,6 +24,26 @@
 
     .submit__title {
       @include transition(margin);
+    }
+  }
+}
+
+.l-form {
+  display: grid;
+  grid-row-gap: $md;
+
+  &__field {
+    display: grid;
+    grid-gap: $md;
+  }
+
+  @include breakpoint-up(sm) {
+    &__field {
+      grid-template-columns: 144px 1fr;
+
+      .o-field__label {
+        justify-self: flex-end;
+      }
     }
   }
 }

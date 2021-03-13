@@ -1,6 +1,6 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 import { HelperService } from '../helper.service';
 
@@ -25,10 +25,8 @@ export class SidenavComponent implements OnInit {
   animate = false;
   sidenavItems: SidenavItem[];
   isDarkMode: Observable<boolean>;
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches)
-    );
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 767.98px)').pipe(map(result => result.matches));
 
   constructor(private breakpointObserver: BreakpointObserver, private helperService: HelperService) {
     this.isDarkMode = helperService.getDarkModeState();

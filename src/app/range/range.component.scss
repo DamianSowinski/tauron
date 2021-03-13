@@ -2,44 +2,54 @@
 @use '../../scss/core/mixins' as *;
 
 .l-grid {
-  display: grid;
-  grid-template-rows: auto;
-  max-width: 1400px;
-  margin: 0 auto;
-  grid-template-areas:
-    'header'
-    'intake'
-    'generate'
-    'total'
-    'graph';
-  grid-gap: 32px;
-  @include breakpoint-up(lg) {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-areas:
-    'header   header    header'
-    'intake   generate  total'
-    'graph    graph     graph';
-  }
-
   &__header {
+    @media (max-width: 500px) {
+      align-items: flex-start;
+      flex-flow: column;
+    }
+  }
+}
+
+.l-field {
+  &__input {
+    &:nth-child(2) {
+      border-right-style: dashed;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &:nth-child(4) {
+      border-left-width: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  @media (max-width: 500px) {
+    width: 100%;
+    margin-top: $md;
+    &__input {
+      width: 50%;
+    }
+  }
+  @media (max-width: 384px) {
     display: flex;
-    align-items: center;
-    grid-area: header;
-  }
+    flex-flow: column;
+    width: 100%;
+    &__input {
+      width: 100%;
 
-  &__intake {
-    grid-area: intake;
-  }
+      &:nth-child(2) {
+        border-right-style: solid;
+        border-bottom-style: dashed;
+        border-radius: $xs $xs 0 0;
+      }
 
-  &__generate {
-    grid-area: generate;
-  }
-
-  &__total {
-    grid-area: total;
-  }
-
-  &__graph {
-    grid-area: graph;
+      &:nth-child(4) {
+        border-top-width: 0;
+        border-left-width: 1px;
+        border-radius: 0 0 $xs $xs;
+      }
+    }
   }
 }
