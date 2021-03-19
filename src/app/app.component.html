@@ -18,10 +18,27 @@
     <span>Point id: {{pointId}}</span>
   </div>
   <div class="h-spacer"></div>
-  <button class="o-btn-primary--outline" (click)="handleLoginClick()" [disabled]="isOpenLoginModal | async">
-    <svg-ico name="{{(isLogged | async) ? 'logout' : 'user'}}"></svg-ico>
-    <span class="u-ml-xs">{{ (isLogged | async) ? 'Logout' : 'Login'}}</span>
-  </button>
+  <div class="h-d-center-x">
+    <button class="o-btn-dark-mode is-night u-mr-sm" (click)="handleDarkModeToggle()" [class.is-night]="isDarkMode | async" title="Switch to dark mode">
+      <svg viewBox="0 0 512 512">
+        <circle class="line--1 day" cx="256" cy="256" r="128"/>
+        <path class="line--2 day" d="M256 128V32"/>
+        <path class="line--2 day" d="M384 256h96"/>
+        <path class="line--2 day" d="M256 384v96"/>
+        <path class="line--2 day" d="M128 256H32"/>
+        <path class="line--2 day" d="M346.51 165.49l67.88-67.88"/>
+        <path class="line--2 day" d="M346.51 346.51l67.88 67.88"/>
+        <path class="line--2 day" d="M165.49 346.51l-67.88 67.88"/>
+        <path class="line--2 day" d="M165.49 165.49L97.61 97.61"/>
+        <path class="line--1 night" d="M437.63 387.08a221.05 221.05 0 01-23.24 27.31c-87.42 87.42-229.36 87.42-316.78 0-87.42-87.42-87.42-229.36 0-316.78 45.77-45.77 106.5-67.58 166.5-65.37a198.62 198.62 0 00-31.68 25.78c-77.68 77.68-77.68 203.81 0 281.5 55.47 55.46 135.63 71.32 205.2 47.56z"/>
+      </svg>
+    </button>
+    <button class="o-btn-primary--outline" (click)="handleLoginClick()" [disabled]="isOpenLoginModal | async">
+      <svg-ico name="{{(isLogged | async) ? 'logout' : 'user'}}"></svg-ico>
+      <span class="u-ml-xs">{{ (isLogged | async) ? 'Logout' : 'Login'}}</span>
+    </button>
+  </div>
+
 </header>
 
 <app-sidenav class="l-sidenav" appTitle="{{title}}"></app-sidenav>

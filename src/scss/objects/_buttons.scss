@@ -2,16 +2,45 @@
 @use '../core/mixins' as *;
 @use '../core/animations' as *;
 
+@mixin btn() {
+  padding: 12px $md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: $shadow--l1;
+  border: {
+    style: solid;
+    width: 1px;
+    radius: $radius--xs;
+  }
+  @include transition();
+  &:hover {
+  }
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    cursor: default;
+    color: var(--btn-disabled-txt);
+    border-color: var(--btn-disabled-border);
+    background-color: var(--btn-disabled-bgr);
+
+    .o-ico {
+      fill: var(--btn-disabled-txt);
+    }
+  }
+  &:disabled:hover {
+    cursor: not-allowed;
+    background-color: var(--btn-disabled-bgr) !important;
+  }
+}
+
 .o-btn-primary {
   &--outline {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: $sm;
-    cursor: pointer;
+    @include btn;
     color: var(--btn-primary-txt);
-    border: 1px solid var(--btn-primary);
-    border-radius: $radius--xs;
+    border-color: var(--btn-primary);
     background-color: transparent;
     @include transition();
 
@@ -31,35 +60,101 @@
     }
 
     &:focus {
-      outline: unset;
       box-shadow: 0 0 0 3px var(--btn-primary-focus);
     }
   }
 }
 
-.o-btn-confirm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: $sm;
-  cursor: pointer;
-  color: var(--btn-confirm-txt);
-  border: 1px solid var(--btn-confirm-border);
-  border-radius: $radius--xs;
-  background-color: var(--btn-confirm);
-  @include transition();
+.o-btn-success {
+  @include btn;
+  color: var(--btn-success-txt);
+  border-color: var(--btn-success-border);
+  background-color: var(--btn-success-bgr);
 
   .o-ico {
-    @include transition(fill);
-    fill: var(--btn-confirm-txt);
+    fill: var(--btn-success-txt);
   }
 
   &:hover {
-    background-color: var(--btn-confirm-hover);;
+    background-color: var(--btn-success-hover-bgr);
   }
 
   &:focus {
-    outline: unset;
-    box-shadow: 0 0 0 3px var(--btn-confirm-focus);
+    box-shadow: 0 0 0 3px var(--btn-success-focus);
+  }
+}
+
+@mixin btnTopBarStroke($width: 3) {
+  fill: none;
+  stroke: var(--dark-mode-btn-txt);
+  stroke-width: $width;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.o-btn-dark-mode {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 12px;
+  cursor: pointer;
+  transition: opacity 250ms ease-in-out;
+  opacity: 0.6;
+  border: unset;
+  border-radius: $radius--sm;
+  background-color: transparent;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--dark-mode-btn-focus);
+  }
+
+  .day {
+    &.line--1 {
+      @include btnTopBarStroke(48);
+      @include animate($name: dayIcoAnimPart1, $duration: 200ms, $delay: 500ms);
+      stroke-dasharray: 810;
+      stroke-dashoffset: 810;
+    }
+
+    &.line--2 {
+      @include btnTopBarStroke(48);
+      @include animate($name: dayIcoAnimPart2, $duration: 100ms, $delay: 700ms);
+      stroke-dasharray: 100, 120;
+      stroke-dashoffset: 100;
+    }
+  }
+
+  .night {
+    visibility: hidden;
+
+    &.line--1 {
+      @include btnTopBarStroke(48);
+      @include animate($name: nightIcoAnim, $duration: 300ms, $delay: 500ms);
+      stroke-dasharray: 1500;
+      stroke-dashoffset: 1500;
+    }
+  }
+
+  &.is-night {
+    .day {
+      visibility: hidden;
+    }
+
+    .night {
+      visibility: visible;
+    }
   }
 }

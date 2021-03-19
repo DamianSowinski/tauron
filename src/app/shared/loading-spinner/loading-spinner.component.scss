@@ -14,7 +14,7 @@
     width: 33%;
     height: 33%;
     animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
-    background-color: var(--txt-color);
+    background-color: var(--txt);
 
     &:nth-child(1), &:nth-child(5), &:nth-child(9) {
       animation-delay: 0.2s;

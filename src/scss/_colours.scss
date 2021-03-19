@@ -1,21 +1,67 @@
 @use './core/variables' as *;
+// solid
 $white: hsl(0, 0%, 100%);
 $white--90: hsl(0, 0%, 90%);
 $white--80: hsl(0, 0%, 80%);
-
+$white--70: hsl(0, 0%, 70%);
 $gray: hsl(0, 0%, 50%);
-
 $black--60: hsl(0, 0%, 40%);
 $black--70: hsl(0, 0%, 30%);
+$black--75: hsl(0, 0%, 25%);
 $black--80: hsl(0, 0%, 20%);
 $black--90: hsl(0, 0%, 10%);
 $black: hsl(0, 0%, 0%);
 
+// transparent
+$dark--09: rgba(0, 0, 0, 0.9);
+$dark--08: rgba(0, 0, 0, 0.8);
+$dark--05: rgba(0, 0, 0, 0.5);
+$dark--04: rgba(0, 0, 0, 0.4);
+$dark--02: rgba(0, 0, 0, 0.2);
+$dark--01: rgba(0, 0, 0, 0.1);
+
+$light--01: rgba(255, 255, 255, 0.1);
+$light--02: rgba(255, 255, 255, 0.2);
+$light--05: rgba(255, 255, 255, 0.5);
+$light--08: rgba(255, 255, 255, 0.8);
+
+
+// base
+$txtColor: $black--80;
+$txtColorPurple: #43425D;
+$txtColorGray: #787A8D;
 $bgrColor: #f0f0f7;
 
+
+$txtColorDM: $white--80;
+$txtColorPurpleDM: #e7e6f2;
+$txtColorGrayDM: #e6e8f2;
+$bgrColorDM: $black--80;
+
+
+$primary: #43425D;
+$secondary: #A3A0FB;
+
+$blue: #3B86FF;
+$blueLight: #55D8FE;
+
+$green: rgb(74, 217, 145);
+$greenLight: #5FE3A1;
+$greenDark: scale-color($green, $lightness: 20%);
+
+$orange: #FFCA83;
+$orangeLight: #FFDA83;
+
+$red: #FF6565;
+$redDark: scale-color($red, $lightness: -50%);
+
+$redDM: #ff8080;
+
+$purpleGrayLight: #BCBCCB;
+
 :root {
-  --bgr-color: #{$bgrColor};
-  --txt-color: #{$black--70};
+  --bgr: #{$bgrColor};
+  --txt: #{$txtColor};
   --backdrop: #{$black};
 
   --bgr-error: #{$light--02};
@@ -29,56 +75,67 @@ $bgrColor: #f0f0f7;
   --top-bar-bgr: #{$white};
 
   --sidenav-txt: #{$bgrColor};
-  --sidenav-bgr: #{$purpleDark};
+  --sidenav-bgr: #{$primary};
   --sidenav-header-bgr: #{$dark--01};
   --sidenav-hover-bgr: #{$dark--01};
   --sidenav-active-bgr: #{$dark--01};
-  --sidenav-active-border: #A3A0FB;
-  --sidenav-active-ico: #A3A0FB;
-  --sidenav-header-txt: #fff;
-  --sidenav-ico: #bcbccb;
+  --sidenav-active-border: #{$secondary};
+  --sidenav-active-ico: #{$secondary};
+  --sidenav-header-txt: #{$white};
+  --sidenav-ico: #{$purpleGrayLight};
 
   --card-bgr: #{$white};
-  --card-primary-txt: #4d4f5c;
-  --card-txt: #787A8D;
+  --card-primary-txt: #{$txtColor};
+  --card-txt: #{$txtColorGray};
 
   --graph-bgr: #{$white};
-  --graph-primary-txt: #4d4f5c;
-  --graph-txt: #787A8D;
-  --graph-axis: #E9E9F0;
-  --graph-scale-lines: #E9E9F0;
+  --graph-primary-txt: #{$txtColor};
+  --graph-txt: #{$txtColorGray};
+  --graph-axis: #{$white--90};
+  --graph-scale-lines: #{$white--90};
 
-  --modal-bgr: #f0f0f7;
+  --modal-bgr: #{$white};
+
+  --toast-bgr: #{$dark--09};
+  --toast-txt: #{$white--90};
+  --toast-separator: #{$light--01};
+
 
   --input-label: #{$gray};
   --input-label-focused: #{$gray};
 
   --field-input-bgr: transparent;
   --filed-input-border: #{$black--70};
-  --field-input-focus-border: #{$purple};
+  --field-input-focus-border: #{$secondary};
 
+  --menu-btn-focus: #{$secondary};
+  --dark-mode-btn-txt: #{$txtColor};
+  --dark-mode-btn-focus: #{$secondary};
 
-  --btn-primary: #{$purpleDark};
-  --btn-primary-txt: #{$purpleDark};
-  --btn-primary-hover: #{$purpleDark};
-  --btn-primary-focus: #{rgba($purpleDark, 0.5)};
+  --btn-primary: #{$primary};
+  --btn-primary-txt: #{$primary};
+  --btn-primary-hover: #{$primary};
+  --btn-primary-focus: #{rgba($primary, 0.5)};
   --btn-primary-hover-txt: #{ $white};
 
-  --btn-confirm: #69b553;
-  --btn-confirm-border: #589946;
-  --btn-confirm-txt: #{$white};
-  --btn-confirm-hover: #76cc5e;
-  --btn-confirm-focus: #{rgba(#589946, 0.9)};
-  --btn-confirm-hover-txt: #{ $white};
+  --btn-success-txt: #{$black};
+  --btn-success-bgr: #7eab4f;
+  --btn-success-border: hsl(96, 42%, 42%);
+  --btn-success-hover-bgr: hsl(89, 37%, 60%);
+  --btn-success-focus: #{rgba(#7eab4f, 0.3)};
+
+  --btn-disabled-txt: #{$gray};
+  --btn-disabled-bgr: #{rgba($gray, 0.1)};
+  --btn-disabled-border: #{$black--70};
 
   --logo-part-1: #9DBF15;
   --logo-part-2: #{$bgrColor};
-  --logo-part-3: #{$purpleDark};
+  --logo-part-3: #{$primary};
 }
 
 .dark {
-  --bgr-color: #{$black--80};
-  --txt-color: #{$white--80};
+  --bgr: #{$bgrColorDM};
+  --txt: #{$txtColorDM};
 
   --bgr-error: #{$dark--08};
   --separate-line: #{$light--02};
@@ -86,34 +143,32 @@ $bgrColor: #f0f0f7;
   --top-bar-bgr: #{$black--90};
 
   --sidenav-txt: #{$white--80};
-  --sidenav-bgr: #2b2a3c;
+  --sidenav-bgr: #{$black--90};
   --sidenav-header-bgr: #{$dark--05};
   --sidenav-hover-bgr: #{$dark--05};
   --sidenav-active-bgr: #{$dark--05};
 
+  --card-bgr: #{$black--75};
+  --card-primary-txt: #{$txtColorDM};
+  --card-txt: #{$txtColorGrayDM};
 
-  --card-bgr: #454545;
-  --card-primary-txt: #efefef;
-  --card-txt: #d0d0d0;
+  --graph-bgr: #{$black--75};
+  --graph-primary-txt: #{$txtColorDM};
+  --graph-txt: #{$txtColorGrayDM};
+  --graph-axis: #{$black--90};
+  --graph-scale-lines: #{$black--90};
 
-  --graph-bgr: #454545;
-  --graph-primary-txt: #efefef;
-  --graph-txt: #d0d0d0;
+  --modal-bgr: #{$bgrColorDM};
 
-  --modal-bgr: #000;
 
-  --btn-primary: #{$purple};
-  --btn-primary-txt: #{$purple};
-  --btn-primary-hover: #{$purple};
-  --btn-primary-focus: #{rgba($purple, 0.5)};
+  --dark-mode-btn-txt: #{$txtColorDM};
+
+
+  --btn-primary: #{$secondary};
+  --btn-primary-txt: #{$secondary};
+  --btn-primary-hover: #{$secondary};
+  --btn-primary-focus: #{rgba($secondary, 0.5)};
   --btn-primary-hover-txt: #{ $white};
-
-  --btn-confirm: #2b4f22;
-  --btn-confirm-border: #305926;
-  --btn-confirm-txt: #{$white--80};
-  --btn-confirm-hover: #37662c;
-  --btn-confirm-focus: #{rgba(#589946, 0.9)};
-  --btn-confirm-hover-txt: #{ $white--90};
 
   --logo-part-1: #9DBF15;
   --logo-part-2: #{$white--80};

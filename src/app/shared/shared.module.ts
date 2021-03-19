@@ -20,23 +20,23 @@ import { ModalComponent } from './modal/modal.component';
     CardComponent,
     GraphComponent,
     TippyDirective,
-    ModalComponent
+    ModalComponent,
   ],
   imports: [
     CommonModule,
     HttpClientModule,
   ],
-  exports: [
-    ToastComponent,
-    LoadingSpinnerComponent,
-    HttpClientModule,
-    SvgComponent,
-    SvgDefinitionComponent,
-    CardComponent,
-    GraphComponent,
-    TippyDirective,
-    ModalComponent
-  ],
+    exports: [
+        ToastComponent,
+        LoadingSpinnerComponent,
+        HttpClientModule,
+        SvgComponent,
+        SvgDefinitionComponent,
+        CardComponent,
+        GraphComponent,
+        TippyDirective,
+        ModalComponent,
+    ],
   providers: [
     ToastService
   ]

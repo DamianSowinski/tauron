@@ -25,23 +25,6 @@
       </a>
     </li>
   </ul>
-  <div class="h-spacer"></div>
-  <div class="sidenav__dark-mode-btn" *ngIf="isOpen">
-    <div class="o-dark-mode-toggle-container u-mb-sm">
-      <label class="o-dark-mode-toggle js-dark-mode" for="nightToggle" aria-label="">
-        <input class="o-dark-mode-toggle__input" id="nightToggle" type="checkbox"  [checked]="isDarkMode | async" aria-label="" (click)="handleDarkModeClick()">
-        <span class="o-dark-mode-toggle__slider" aria-hidden="true"></span>
-        <!--      <span class="h-sr-only">{{ 'content.nightToggle'|trans }}</span>-->
-        <svg-ico class="o-dark-mode-toggle__ico-night" aria-hidden="true" name="moon"></svg-ico>
-        <svg-ico class="o-dark-mode-toggle__ico-day" aria-hidden="true" name="sun"></svg-ico>
-
-      </label>
-    </div>
-  </div>
-
-
 </nav>
 
 <div class="sidenav-backdrop js-backdrop" [class.is-open]="isOpen" *ngIf="!isDesktop"></div>
-
-

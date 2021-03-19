@@ -1,7 +1,7 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { Observable } from 'rxjs';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 import { LoginService } from './login/login.service';
 import { HelperService } from './helper.service';
@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
   }
 
   handleLoginClick(): void {
-    this.isLogged.subscribe( (isLogged) => {
+    this.isLogged.subscribe((isLogged) => {
       if (isLogged) {
         this.loginService.logout();
         return;
@@ -49,5 +49,10 @@ export class AppComponent implements OnInit {
     });
 
 
+  }
+
+  handleDarkModeToggle() {
+    this.helperService.toggleDarkModeState();
+    this.helperService.setDarkModeBodyClass();
   }
 }

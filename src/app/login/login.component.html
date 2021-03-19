@@ -5,7 +5,7 @@
     <form class="l-form" id="loginForm" [formGroup]="form" (ngSubmit)="handleSubmit()">
       <div class="o-field l-form__field">
         <label class="o-field__label" for="formId">Collection point id</label>
-        <input class="o-field__input" id="formId" type="text" formControlName="id">
+        <input class="o-field__input" id="formId" type="text" formControlName="id" autocomplete="id">
       </div>
 
       <div class="o-field l-form__field">
@@ -20,7 +20,7 @@
 
       <div class="login__buttons">
         <div class="h-spacer"></div>
-        <button class="o-btn-confirm login__submit" type="submit" [disabled]="!form.valid || isLogging">
+        <button class="o-btn-success login__submit" type="submit" [disabled]="!form.valid || isLogging">
           <svg-ico class="o-ico-rotate" *ngIf="isLogging" name="spinner"></svg-ico>
           <span class="submit__title" [class.u-ml-sm]="isLogging">Login</span>
         </button>

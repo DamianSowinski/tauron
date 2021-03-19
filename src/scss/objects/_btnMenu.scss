@@ -50,6 +50,12 @@
       }
     }
   }
+
+  &:focus {
+    path {
+      stroke: var(--menu-btn-focus);
+    }
+  }
 }
 
 .o-btn-menu {
@@ -64,11 +70,13 @@
       .line--1,
       .line--2,
       .line--3 {
-        @include icoStroke(var(--txt-color));
+        @include icoStroke(var(--txt));
 
       }
     }
   }
+
+
 }
 
 .o-btn-menu--align-left {

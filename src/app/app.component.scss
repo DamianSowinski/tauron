@@ -42,7 +42,7 @@
       width: 24px;
       margin-right: $xs;
       margin-bottom: -2px;
-      fill: var(--txt-color);
+      fill: var(--txt);
 
       ::ng-deep .o-ico {
         width: 20px;
@@ -54,7 +54,7 @@
       font-family: 'Source Sans Pro', sans-serif;
       font-weight: 300;
       font-size: $t2;
-      color: var(--txt-color);
+      color: var(--txt);
     }
   }
 }
