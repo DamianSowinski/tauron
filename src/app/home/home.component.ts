@@ -6,6 +6,7 @@ import { HelperService } from '../helper.service';
 import { Card } from '../shared/card/Card';
 import { Graph } from '../shared/graph/Graph';
 import { LoginService } from '../login/login.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,8 @@ export class HomeComponent implements AfterViewInit {
   monthData: Card;
   graphData: Graph;
 
-  constructor(private apiService: ApiService, private loginService: LoginService) {
+  constructor(private apiService: ApiService, private loginService: LoginService, private titleService: Title) {
+    titleService.setTitle('Energy');
     this.graphSettings();
   }
 

@@ -131,6 +131,10 @@ $purpleGrayLight: #BCBCCB;
   --logo-part-1: #9DBF15;
   --logo-part-2: #{$bgrColor};
   --logo-part-3: #{$primary};
+
+  --logo-header-part-1: hsl(72, 80%, 32%);
+  --logo-header-part-2: #{$dark--05};
+  --logo-header-part-3: #{$white};
 }
 
 .dark {
@@ -173,4 +177,8 @@ $purpleGrayLight: #BCBCCB;
   --logo-part-1: #9DBF15;
   --logo-part-2: #{$white--80};
   --logo-part-3: #2b2a3c;
+
+  --logo-header-part-1: #9DBF15;
+  --logo-header-part-2: #{$white--80};
+  --logo-header-part-3: #{$black--90};
 }

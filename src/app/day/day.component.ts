@@ -7,6 +7,7 @@ import { HelperService } from '../helper.service';
 import { Graph } from '../shared/graph/Graph';
 import { LoginService } from '../login/login.service';
 import { FormControl } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-day',
@@ -24,7 +25,9 @@ export class DayComponent implements OnInit, AfterViewInit {
   inputDay: FormControl;
   yesterday: Date;
 
-  constructor(private apiService: ApiService, private helperService: HelperService, private loginService: LoginService) {
+  constructor(private apiService: ApiService, private helperService: HelperService, private loginService: LoginService,
+              private titleService: Title) {
+    titleService.setTitle('Day usage | Energy');
   }
 
   ngOnInit(): void {

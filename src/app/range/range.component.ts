@@ -7,6 +7,7 @@ import { ApiService, EnergyRangeUsage } from '../api.service';
 import { HelperService } from '../helper.service';
 import { FormControl } from '@angular/forms';
 import { LoginService } from '../login/login.service';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -31,7 +32,9 @@ export class RangeComponent implements OnInit, AfterViewInit {
   today = new Date();
 
 
-  constructor(private apiService: ApiService, private helperService: HelperService, private loginService: LoginService) {
+  constructor(private apiService: ApiService, private helperService: HelperService, private loginService: LoginService,
+              private titleService: Title) {
+    titleService.setTitle('Range usage | Energy');
   }
 
   ngOnInit(): void {

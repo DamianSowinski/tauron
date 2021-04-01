@@ -22,8 +22,7 @@ export class HelperService {
 
   constructor() {
     this.setDefaultSelectedDate();
-    this.isDarkMode.next(!!(+(localStorage.getItem('darkMode') || 0)));
-    this.setDarkModeBodyClass();
+    this.setColourPreference();
   }
 
   static isTheSameDate(date1: Date, date2: Date, range: TimeRange): boolean {
@@ -163,7 +162,6 @@ export class HelperService {
     });
   }
 
-
   public getSelectedDate(mode: TimeRange, isEndDate = false): Date {
     switch (mode) {
       case 'day':
@@ -198,7 +196,21 @@ export class HelperService {
     }
   }
 
+  private setColourPreference(): void {
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const isLocalStorageSet = localStorage.getItem('darkMode') as string;
 
+    let isDarkMode: boolean;
+
+    if (isLocalStorageSet === null) {
+      isDarkMode = prefersDarkScheme.matches;
+    } else {
+      isDarkMode = !!(+isLocalStorageSet);
+    }
+
+    this.isDarkMode.next(isDarkMode);
+    this.setDarkModeBodyClass();
+  }
 
   private setDefaultSelectedDate(): void {
     const now = new Date();

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ENERGY_API_URL_LOGIN } from '../../global';
+import { ENERGY_API_URL_LOGIN } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
 export interface LoginData {

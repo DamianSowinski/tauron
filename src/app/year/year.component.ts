@@ -7,6 +7,7 @@ import { HelperService } from '../helper.service';
 import { Graph } from '../shared/graph/Graph';
 import { LoginService } from '../login/login.service';
 import { FormControl } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-year',
@@ -24,7 +25,9 @@ export class YearComponent implements OnInit, AfterViewInit {
   selectedDate: FormControl;
   currentYear = new Date().getFullYear();
 
-  constructor(private apiService: ApiService, private helperService: HelperService, private loginService: LoginService) {
+  constructor(private apiService: ApiService, private helperService: HelperService, private loginService: LoginService,
+              private titleService: Title) {
+    titleService.setTitle('Year usage | Energy');
   }
 
   ngOnInit(): void {

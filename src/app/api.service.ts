@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ENERGY_API_URL, ENERGY_API_URL_PRELOAD } from '../global';
 import { HelperService, TimeRange } from './helper.service';
 import { LoginService } from './login/login.service';
 import { ToastService } from './shared/toast/toast.service';
+import { ENERGY_API_URL, ENERGY_API_URL_PRELOAD } from '../environments/environment';
 
 export interface Energy {
   year: number;

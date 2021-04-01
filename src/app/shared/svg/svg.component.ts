@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
   // tslint:disable-next-line:component-selector
   selector: 'svg-ico',
   template: `
-    <svg class="o-ico" xmlns="http://www.w3.org/2000/svg">
+    <svg class="o-ico" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <use [attr.xlink:href]="absUrl + '#' + name + '-ico'"></use>
     </svg>
   `,

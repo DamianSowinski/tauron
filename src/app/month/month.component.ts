@@ -7,6 +7,7 @@ import { HelperService } from '../helper.service';
 import { Graph } from '../shared/graph/Graph';
 import { LoginService } from '../login/login.service';
 import { FormControl } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-month',
@@ -24,7 +25,9 @@ export class MonthComponent implements OnInit, AfterViewInit {
   inputMonth: FormControl;
   today = new Date();
 
-  constructor(private apiService: ApiService, private helperService: HelperService, private loginService: LoginService) {
+  constructor(private apiService: ApiService, private helperService: HelperService, private loginService: LoginService,
+              private titleService: Title) {
+    titleService.setTitle('Month usage | Energy');
   }
 
   ngOnInit(): void {

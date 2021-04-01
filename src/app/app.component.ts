@@ -47,8 +47,6 @@ export class AppComponent implements OnInit {
 
       this.loginService.openLoginModal();
     });
-
-
   }
 
   handleDarkModeToggle() {
