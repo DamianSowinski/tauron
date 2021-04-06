@@ -1,7 +1,7 @@
 <section class="graph" [class.is-loading]="!isLoaded">
   <h2 class="graph__title">{{graphData.title}}</h2>
 
-  <div class="graph__chart" [class.is-horizontal]="orientation === 'horizontal'" *ngIf="isLoaded">
+  <div class="graph__chart" [class.is-horizontal]="orientation === 'horizontal'">
     <div class="y-label" *ngFor="let item of graphData.yAxis" style="{{ yAxisOrientation(item.position) }}">
       <div class="y-label__value">{{item.value}}</div>
     </div>

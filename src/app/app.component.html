@@ -19,9 +19,7 @@
     <span class="title__txt">{{title}}</span>
   </div>
 
-  <div class="l-top-bar__left" *ngIf="!(isHandset$ | async)">
-    <span>Point id: {{pointId}}</span>
-  </div>
+
   <div class="h-spacer"></div>
   <div class="h-d-center-x">
     <button class="o-btn-dark-mode is-night u-mr-sm" (click)="handleDarkModeToggle()" [class.is-night]="isDarkMode | async" title="Switch to dark mode">

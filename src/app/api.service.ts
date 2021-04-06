@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { HelperService, TimeRange } from './helper.service';
 import { LoginService } from './login/login.service';
 import { ToastService } from './shared/toast/toast.service';
-import { ENERGY_API_URL, ENERGY_API_URL_PRELOAD } from '../environments/environment';
+import { ENERGY_API_URL, ENERGY_API_URL_COLLECTION } from '../environments/environment';
 
 export interface Energy {
   year: number;
@@ -94,7 +94,7 @@ export interface EnergyRangeUsage {
   }[];
 }
 
-export interface EnergyPreloadData {
+export interface EnergyCollection {
   days: EnergyDayUsage[];
   months: EnergyMonthUsage[];
   years: EnergyYearUsage[];
@@ -120,14 +120,15 @@ export class ApiService {
   private static createHeader(): object {
     return {
       headers: {
-        authorization: LoginService.getSessionId(),
-        pointId: LoginService.getPointId()
+        Authorization: LoginService.getTokenFromLocalStorage(),
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
       },
     };
   }
 
-  getHomeData(): Promise<EnergyPreloadData> {
-    return new Promise<EnergyPreloadData>((resolve, reject) => {
+  getHomeData(): Promise<EnergyCollection> {
+    return new Promise<EnergyCollection>((resolve, reject) => {
 
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
@@ -143,7 +144,7 @@ export class ApiService {
         });
       }
 
-      this.getPreloadData([yesterday], [yesterday], [yesterday]).then(
+      this.getCollection([yesterday], [yesterday], [yesterday]).then(
         (data) => resolve(data),
         (errors) => {
           this.toast.error(`${errors.error.title} - ${errors.error.detail}`);
@@ -162,16 +163,20 @@ export class ApiService {
         return resolve(cache);
       }
 
-      const url = `${ENERGY_API_URL}?year=${date.getFullYear()}&month=${date.getMonth() + 1}&day=${date.getDate()}`;
+      const dateString = HelperService.getStringFromDate(date, 'day', true);
+      const url = `${ENERGY_API_URL}/days/${dateString}`;
       const header = ApiService.createHeader();
 
       this.http.get<EnergyDayUsage>(url, header)
         .subscribe(
           (data) => {
+
             this.cache.push({range: 'day', date, cache: data});
             return resolve(data);
           },
           errors => {
+            console.log(errors);
+
             this.toast.error(`${errors.error.title} - ${errors.error.detail}`);
             reject(errors);
           }
@@ -187,7 +192,8 @@ export class ApiService {
         return resolve(cache);
       }
 
-      const url = `${ENERGY_API_URL}?year=${date.getFullYear()}&month=${date.getMonth() + 1}`;
+      const dateString = HelperService.getStringFromDate(date, 'month', true);
+      const url = `${ENERGY_API_URL}/months/${dateString}`;
       const header = ApiService.createHeader();
 
       this.http.get<EnergyMonthUsage>(url, header)
@@ -212,7 +218,8 @@ export class ApiService {
         return resolve(cache);
       }
 
-      const url = `${ENERGY_API_URL}?year=${date.getFullYear()}`;
+      const dateString = HelperService.getStringFromDate(date, 'year');
+      const url = `${ENERGY_API_URL}/years/${dateString}`;
       const header = ApiService.createHeader();
 
       this.http.get<EnergyYearUsage>(url, header)
@@ -237,10 +244,10 @@ export class ApiService {
         return resolve(cache);
       }
 
-      const startDateStr = HelperService.getStringFromDate(startDate, 'month');
-      const endDateStr = HelperService.getStringFromDate(endDate, 'month');
+      const startDateStr = HelperService.getStringFromDate(startDate, 'month', true);
+      const endDateStr = HelperService.getStringFromDate(endDate, 'month', true);
 
-      const url = `${ENERGY_API_URL}?range[]=${startDateStr}&range[]=${endDateStr}`;
+      const url = `${ENERGY_API_URL}/range?startDate=${startDateStr}&endDate=${endDateStr}`;
       const header = ApiService.createHeader();
 
       this.http.get<EnergyRangeUsage>(url, header)
@@ -257,22 +264,18 @@ export class ApiService {
     });
   }
 
-  getPreloadData(days: Date[] = [], months: Date[] = [], years: Date[] = []): Promise<EnergyPreloadData> {
-    return new Promise<EnergyPreloadData>((resolve, reject) => {
+  getCollection(days: Date[] = [], months: Date[] = [], years: Date[] = []): Promise<EnergyCollection> {
+    return new Promise<EnergyCollection>((resolve, reject) => {
 
       days = days.filter((day) => !this.checkCache(day, 'day'));
       months = months.filter((month) => !this.checkCache(month, 'month'));
       years = years.filter((year) => !this.checkCache(year, 'year'));
 
-      const url = ENERGY_API_URL_PRELOAD;
-      const requestContent = {
-        days: days.map((item) => HelperService.getStringFromDate(item, 'day')),
-        months: months.map((item) => HelperService.getStringFromDate(item, 'month')),
-        years,
-      };
+      const queryString = this.createCollectionQueryString(days, months, years);
+      const url = ENERGY_API_URL_COLLECTION + queryString;
       const header = ApiService.createHeader();
 
-      this.http.post<EnergyPreloadData>(url, requestContent, header)
+      this.http.get<EnergyCollection>(url, header)
         .subscribe(
           (data) => {
 
@@ -322,5 +325,26 @@ export class ApiService {
     }
 
     return cache ? cache.cache : null;
+  }
+
+  private createCollectionQueryString(days: Date[] = [], months: Date[] = [], years: Date[] = []): string {
+    const items = [];
+
+    items.push(days
+      .map((day) => 'days[]=' + HelperService.getStringFromDate(day, 'day', true))
+      .join('&')
+    );
+
+    items.push(months
+      .map((month) => 'months[]=' + HelperService.getStringFromDate(month, 'month', true))
+      .join('&')
+    );
+
+    items.push(years
+      .map((year) => 'years[]=' + HelperService.getStringFromDate(year, 'year'))
+      .join('&')
+    );
+
+    return items.length > 0 ? `?${items.join('&')}` : '';
   }
 }

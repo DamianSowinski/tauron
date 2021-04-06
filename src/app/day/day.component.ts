@@ -28,21 +28,18 @@ export class DayComponent implements OnInit, AfterViewInit {
   constructor(private apiService: ApiService, private helperService: HelperService, private loginService: LoginService,
               private titleService: Title) {
     titleService.setTitle('Day usage | Energy');
+    this.yesterday = HelperService.getYesterdayDate();
   }
 
   ngOnInit(): void {
-    const date = this.helperService.getSelectedDate('day');
-
-    this.yesterday = HelperService.getYesterdayDate();
-
-    this.inputDay = new FormControl(HelperService.getStringFromDate(date, 'day'));
+    this.setInputDay();
     this.graphSettings();
   }
 
   ngAfterViewInit() {
     this.loginService.getLoginState().subscribe((isLogged) => {
       if (isLogged) {
-        setTimeout(() => this.reloadData());
+        setTimeout(() => this.loadData());
       }
     });
   }
@@ -51,7 +48,12 @@ export class DayComponent implements OnInit, AfterViewInit {
     const date = HelperService.getDateFromString(this.inputDay.value);
 
     this.helperService.setSelectedDate(date, 'day');
-    this.reloadData();
+    this.loadData();
+  }
+
+  private setInputDay() {
+    const date = this.helperService.getSelectedDate('day');
+    this.inputDay = new FormControl(HelperService.getStringFromDate(date, 'day'));
   }
 
   private graphSettings() {
@@ -74,7 +76,7 @@ export class DayComponent implements OnInit, AfterViewInit {
     ]);
   }
 
-  private reloadData() {
+  private loadData() {
     const date = this.helperService.getSelectedDate('day');
 
     this.cards.forEach((card) => card.isLoaded = false);

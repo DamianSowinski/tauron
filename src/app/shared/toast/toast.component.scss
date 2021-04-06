@@ -4,6 +4,30 @@
 
 $size: 60px;
 $toastDuration: 5s;
+@mixin ico() {
+  width: $lg;
+  height: $lg;
+}
+
+@mixin icoAnimElement($animationName, $durationAnim, $animationDelay, $stroke: 70) {
+  animation: $animationName $durationAnim linear $animationDelay forwards;
+  stroke-width: $stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@mixin icoAnimKeyframes($name, $offsetStart, $offsetEnd) {
+  @keyframes #{$name} {
+    from {
+      --offset: $offsetStart;
+    }
+    to {
+      --offset: $offsetEnd;
+      stroke-dashoffset: var(--offset);
+    }
+  }
+}
+
 .l-toast {
   position: fixed;
   z-index: 100;
@@ -41,9 +65,142 @@ $toastDuration: 5s;
     border-right: 1px solid var(--toast-separator);
   }
 
-  .toast__ico {
-    width: $lg;
-    height: $lg;
+  &__ico {
+    $animationDelay: 200ms;
+
+    &--success {
+      $durationAnim: 250ms;
+      @include ico();
+
+      .line {
+        @include icoAnimElement(checkAnimation, $durationAnim, $animationDelay);
+        --total-length: 620;
+        --length: 590;
+        --offset: 592;
+        stroke: var(--toast-success);
+        stroke-dasharray: var(--length) var(--total-length);
+        stroke-dashoffset: var(--offset);
+      }
+
+      @include icoAnimKeyframes(checkAnimation, 592, -20);
+    }
+
+    &--info {
+      @include ico();
+      $durationAnim1: 300ms;
+      $durationAnim2: 100ms;
+      $durationAnim3: 100ms;
+
+      .path-1, .path-2, .path-3 {
+        stroke: var(--toast-info);
+      }
+
+      .path-1 {
+        @include icoAnimElement(infoAnimPath1, $durationAnim1, $animationDelay, 50);
+        --total-length: 2680;
+        --length: 1330;
+        --offset: 1360;
+        stroke-dasharray: var(--length) var(--total-length);
+        stroke-dashoffset: var(--offset);
+      }
+
+      .path-2 {
+        @include icoAnimElement(infoAnimPath2, $durationAnim2, ($animationDelay + $durationAnim1), 50);
+        --total-length: 280;
+        --length: 110;
+        --offset: 120;
+        stroke-dasharray: var(--length) var(--total-length);
+        stroke-dashoffset: var(--offset);
+      }
+
+      .path-3 {
+        @include icoAnimElement(infoAnimPath3, $durationAnim3, ($animationDelay + $durationAnim1 + $durationAnim2), 50);
+        --total-length: 120;
+        --length: 10;
+        --offset: 30;
+        stroke-dasharray: var(--length) var(--total-length);
+        stroke-dashoffset: var(--offset);
+      }
+
+      @include icoAnimKeyframes(infoAnimPath1, 1560, 0);
+      @include icoAnimKeyframes(infoAnimPath2, 120, -100);
+      @include icoAnimKeyframes(infoAnimPath3, 30, -80);
+    }
+
+    &--warning {
+      @include ico();
+      $durationAnim1: 300ms;
+      $durationAnim2: 100ms;
+      $durationAnim3: 100ms;
+
+      .path-1, .path-2, .path-3 {
+        stroke: var(--toast-warning);
+      }
+
+      .path-1 {
+        @include icoAnimElement(warningAnimPath1, $durationAnim1, $animationDelay, 50);
+        --total-length: 2600;
+        --length: 1280;
+        --offset: 1300;
+        stroke-dasharray: var(--length) var(--total-length);
+        stroke-dashoffset: var(--offset);
+      }
+
+      .path-2 {
+        @include icoAnimElement(warningAnimPath2, $durationAnim2, ($animationDelay + $durationAnim1), 50);
+        --total-length: 150;
+        --length: 50;
+        --offset: -120;
+        stroke-dasharray: var(--length) var(--total-length);
+        stroke-dashoffset: var(--offset);
+      }
+
+      .path-3 {
+        @include icoAnimElement(warningAnimPath3, $durationAnim3, ($animationDelay + $durationAnim1 + $durationAnim2), 50);
+        --total-length: 110;
+        --length: 10;
+        --offset: 140;
+        stroke-dasharray: var(--length) var(--total-length);
+        stroke-dashoffset: var(--offset);
+      }
+
+      @include icoAnimKeyframes(warningAnimPath1, 1300, 0);
+      @include icoAnimKeyframes(warningAnimPath2, -120, 0);
+      @keyframes warningAnimPath3 {
+        from {
+          --offset: 140;
+        }
+        to {
+          --offset: 40;
+          stroke-dashoffset: var(--offset);
+        }
+      }
+    }
+
+    &--error {
+      $durationAnim: 145ms;
+      @include ico();
+
+      .path-1, .path-2 {
+        @include icoAnimElement(timesAnim, $durationAnim, $animationDelay);
+        --total-length: 520;
+        --length: 510;
+        --offset: -510;
+        stroke: var(--toast-error);
+        stroke-dasharray: var(--length) var(--total-length);
+        stroke-dashoffset: var(--offset);
+      }
+
+      .path-1 {
+        animation-delay: $animationDelay;
+      }
+
+      .path-2 {
+        animation-delay: $animationDelay + $durationAnim + 10ms;
+      }
+
+      @include icoAnimKeyframes(timesAnim, -510, 0);
+    }
   }
 
   &__content {

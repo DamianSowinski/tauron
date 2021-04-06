@@ -29,8 +29,8 @@ export class LoginComponent implements OnInit {
   }
 
   handleSubmit() {
-    const {id, username, password} = this.form.value;
-    const loginData = {id, username, password} as LoginData;
+    const {pointId, username, password} = this.form.value;
+    const loginData = {pointId, username, password} as LoginData;
     this.isLogging = true;
 
     this.loginService.login(loginData).then(
@@ -44,10 +44,8 @@ export class LoginComponent implements OnInit {
   }
 
   private createForm() {
-    const id = LoginService.getPointId();
-
     this.form = new FormGroup({
-      id: new FormControl(id, {validators: [Validators.required, Validators.minLength(1)]}),
+      pointId: new FormControl('', {validators: [Validators.required, Validators.minLength(1)]}),
       username: new FormControl('', {validators: [Validators.required, Validators.minLength(3)]}),
       password: new FormControl('', {validators: [Validators.required, Validators.minLength(3)]}),
     });

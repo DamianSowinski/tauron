@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ENERGY_API_URL_LOGIN } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { ToastService } from '../shared/toast/toast.service';
 
 export interface LoginData {
-  id: string;
+  pointId: string;
   username: string;
   password: string;
 }
@@ -16,22 +17,21 @@ export class LoginService {
   private loginModalState = new BehaviorSubject<boolean>(true);
   private isLogged = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toast: ToastService) {
     this.loginModalState.next(false);
-    this.isLogged.next(!!LoginService.getSessionId());
+    this.isLogged.next(!!LoginService.getTokenFromLocalStorage());
   }
 
-  static getSessionId(): string {
-    return localStorage.getItem('sessionId') || '';
+  static getTokenFromLocalStorage(): string {
+    return localStorage.getItem('token');
   }
 
-  static getPointId(): string {
-    return localStorage.getItem('pointId');
+  private static saveTokenInLocalStorage(token: string): void {
+    localStorage.setItem('token', token);
   }
 
-  private static setLocalStorage(id: string, sessionId: string) {
-    localStorage.setItem('pointId', id);
-    localStorage.setItem('sessionId', sessionId);
+  private static deleteTokenInLocalStorage(): void {
+    localStorage.setItem('token', '');
   }
 
   getModalState(): BehaviorSubject<boolean> {
@@ -50,7 +50,6 @@ export class LoginService {
     this.loginModalState.next(false);
   }
 
-
   reLogin() {
     this.isLogged.next(false);
     this.loginModalState.next(true);
@@ -59,22 +58,25 @@ export class LoginService {
   login(loginData: LoginData): Promise<null> {
 
     return new Promise((resolve) => {
-      const {username, password, id} = loginData;
-      const requestContent = {username, password};
+      const {username, password, pointId} = loginData;
+      const requestContent = {pointId, username, password};
 
-      this.http.post<any>(ENERGY_API_URL_LOGIN, requestContent).subscribe(
-        (sessionId) => {
+      this.http.post<{ token: string }>(ENERGY_API_URL_LOGIN, requestContent).subscribe(
+        (data) => {
           this.closeLoginModal();
-          LoginService.setLocalStorage(id, sessionId);
+          this.toast.success('Login successfully');
+          LoginService.saveTokenInLocalStorage(data.token);
           resolve();
         },
-        (errors) => console.log(`%c ⚠ Warning: ${errors.details}`, `color: orange; font-weight: bold;`));
+        (errors) => {
+          this.toast.error(errors.error.title);
+          console.log(`%c ⚠ Warning: ${errors.details}`, `color: orange; font-weight: bold;`);
+        });
     });
   }
 
   logout() {
-    LoginService.setLocalStorage('', '');
+    LoginService.deleteTokenInLocalStorage();
     window.location.reload();
-
   }
 }

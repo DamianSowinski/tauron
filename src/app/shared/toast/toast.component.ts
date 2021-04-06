@@ -1,23 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ToastService } from './toast.service';
+import { ToastList } from './toast.model';
 
 @Component({
   selector: 'app-toast',
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.scss']
 })
-export class ToastComponent implements OnInit {
-  toastList;
+export class ToastComponent {
+  toastList: ToastList;
 
   constructor(private toastService: ToastService) {
-  }
-
-  ngOnInit() {
     this.toastList = this.toastService.getList();
   }
 
-  onHide(event) {
-    const toast = event.currentTarget;
-    toast.classList.add('is-hidden');
+  onHide($event: MouseEvent): void {
+    const toast = $event.currentTarget as HTMLElement;
+
+    if (toast) {
+      toast.classList.add('is-hidden');
+    }
   }
 }

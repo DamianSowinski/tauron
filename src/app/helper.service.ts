@@ -112,16 +112,17 @@ export class HelperService {
     return labels;
   }
 
-  static getStringFromDate(date: Date, format: TimeRange): string {
+  static getStringFromDate(date: Date, format: TimeRange, reverse: boolean = false): string {
     date.setHours(12);
     const dateString = date.toJSON().split('T')[0];
 
     switch (format) {
       case 'day':
-        return dateString;
+        return reverse ? dateString.split('-').reverse().join('-') : dateString;
       case 'month':
       case 'range':
-        return dateString.substr(0, dateString.length - 3);
+        const $monthString = dateString.substr(0, dateString.length - 3);
+        return reverse ? $monthString.split('-').reverse().join('-') : $monthString;
       case 'year':
         return dateString.substr(0, dateString.length - 6);
     }
@@ -227,6 +228,5 @@ export class HelperService {
         end: thisMonth
       }
     };
-
   }
 }

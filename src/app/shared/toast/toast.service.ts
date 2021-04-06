@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Operation, Status, ToastList, ToastModel, Type } from './toast.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ToastService {
   toastList = new ToastList();
 
@@ -12,7 +14,7 @@ export class ToastService {
     return this.toastList;
   }
 
-  public show(name: string, operation: Operation, status: Status) {
+  public show(name: string, operation: Operation, status: Status): void {
     const message = `${name} ${operation}`;
 
     switch (status) {
@@ -25,22 +27,22 @@ export class ToastService {
     }
   }
 
-  public success(message: string) {
+  public success(message: string): void {
     const toast: ToastModel = {message, type: Type.SUCCESS};
     this.toastList.set(toast);
   }
 
-  public info(message: string) {
+  public info(message: string): void {
     const toast: ToastModel = {message, type: Type.INFO};
     this.toastList.set(toast);
   }
 
-  public warning(message: string) {
+  public warning(message: string): void {
     const toast: ToastModel = {message, type: Type.WARNING};
     this.toastList.set(toast);
   }
 
-  public error(message: string) {
+  public error(message: string): void {
     const toast: ToastModel = {message, type: Type.ERROR};
     this.toastList.set(toast);
   }

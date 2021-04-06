@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   isOpenLoginModal: Observable<boolean>;
   isDarkMode: Observable<boolean>;
   isLogged: Observable<boolean>;
-  pointId = LoginService.getPointId();
+  pointId = LoginService.getTokenFromLocalStorage();
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 767.98px)').pipe(map(result => result.matches));
 
