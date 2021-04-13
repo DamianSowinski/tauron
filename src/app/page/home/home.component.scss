@@ -1,0 +1,44 @@
+@use '../../../scss/core/variables' as *;
+@use '../../../scss/core/mixins' as *;
+
+.l-grid {
+  display: grid;
+  max-width: 1400px;
+  margin: 0 auto;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'title'
+    'intake'
+    'generate'
+    'month'
+    'year';
+  grid-gap: 32px;
+  @include breakpoint-up(lg) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+    'title    title'
+    'intake   generate'
+    'month    year';
+  }
+
+  &__title {
+    grid-area: title;
+  }
+
+  &__intake {
+    grid-area: intake;
+  }
+
+  &__generate {
+    grid-area: generate;
+  }
+
+  &__month-total {
+    grid-area: month;
+  }
+
+  &__graph {
+    grid-area: year;
+  }
+}
+

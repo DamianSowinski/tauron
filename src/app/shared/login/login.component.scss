@@ -1,0 +1,49 @@
+@use '../../../scss/core/variables' as *;
+@use '../../../scss/core/mixins' as *;
+@use '../../../scss/core/animations' as *;
+
+.login {
+  padding: $xl;
+
+  &__title {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+    margin-bottom: $lg;
+    padding-bottom: $md;
+    text-align: center;
+    border-bottom: 1px solid var(--separate-line);
+  }
+
+  &__buttons {
+    display: flex;
+    margin-top: $md;
+  }
+
+  &__submit {
+    min-width: 200px;
+
+    .submit__title {
+      @include transition(margin);
+    }
+  }
+}
+
+.l-form {
+  display: grid;
+  grid-row-gap: $md;
+
+  &__field {
+    display: grid;
+    grid-gap: $md;
+  }
+
+  @include breakpoint-up(sm) {
+    &__field {
+      grid-template-columns: 144px 1fr;
+
+      .o-field__label {
+        justify-self: flex-end;
+      }
+    }
+  }
+}

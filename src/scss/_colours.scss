@@ -108,7 +108,7 @@ $purpleGrayLight: #BCBCCB;
   --input-label: #{$gray};
   --input-label-focused: #{$gray};
 
-  --field-input-bgr: transparent;
+  --field-input-bgr: #{$white};
   --filed-input-border: #{$black--70};
   --field-input-focus-border: #{$secondary};
 
@@ -159,6 +159,8 @@ $purpleGrayLight: #BCBCCB;
   --card-bgr: #{$black--75};
   --card-primary-txt: #{$txtColorDM};
   --card-txt: #{$txtColorGrayDM};
+
+  --field-input-bgr: #{$black--80};
 
   --graph-bgr: #{$black--75};
   --graph-primary-txt: #{$txtColorDM};

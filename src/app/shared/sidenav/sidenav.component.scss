@@ -1,0 +1,163 @@
+@use '../../../scss/core/variables' as *;
+@use '../../../scss/core/animations' as *;
+
+.sidenav {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  overflow: hidden;
+  flex-flow: column;
+  box-sizing: border-box;
+  width: 0;
+  height: 100%;
+  background-color: var(--sidenav-bgr);
+
+  &__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: $headerHeight;
+    background-color: var(--sidenav-header-bgr);
+
+    .header {
+      &__ico {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $sideNavWidthCollapsed;
+        min-width: $headerHeight;
+        height: $headerHeight;
+        fill: var(--sidenav-header-txt);
+
+        ::ng-deep .o-ico {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      &__title {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: $t2;
+        font-weight: 300;
+        letter-spacing: 2px;
+        color: var(--sidenav-header-txt);
+      }
+
+      &__ico, &__title {
+        opacity: 0;
+        @include transition(opacity);
+      }
+
+      &__btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+  }
+
+  &__menu {
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: 8px 0;
+    padding: 0;
+    list-style-type: none;
+
+    .item {
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      height: 50px;
+      margin-bottom: 8px;
+      padding-right: $sm;
+      color: var(--sidenav-txt);
+      border: 0 transparent;
+      @include transition(all, 100ms);
+
+      &__ico {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: $sideNavWidthCollapsed;
+        height: 100%;
+        fill: var(--sidenav-ico);
+
+        ::ng-deep .o-ico {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      &:hover {
+        background-color: var(--sidenav-hover-bgr);
+      }
+
+      &:focus {
+        outline: none;
+        border-left: 4px solid transparent;
+        background-color: var(--sidenav-active-bgr);
+      }
+
+      &.is-active {
+        border-left: 4px solid var(--sidenav-active-border);
+        background-color: var(--sidenav-active-bgr);
+
+        .item__ico {
+          fill: var(--sidenav-active-ico);
+        }
+      }
+    }
+  }
+
+  &.is-desktop {
+    position: relative;
+    width: $sideNavWidthCollapsed;
+  }
+
+  &.is-open {
+    width: $sideNavWidth;
+
+    .header__ico, .header__title {
+      opacity: 1;
+    }
+  }
+
+  &.animate {
+    @include transition(width);
+  }
+}
+
+.sidenav-backdrop {
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  background-color: var(--backdrop);
+  @include transition(opacity);
+
+  &.is-open {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.8;
+  }
+}
+
+::ng-deep .logo {
+  .path-1 {
+    fill: var(--logo-part-1);
+  }
+
+  .path-2 {
+    fill: var(--logo-part-2);
+  }
+
+  .path-3 {
+    fill: var(--logo-part-3);
+  }
+}

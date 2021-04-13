@@ -1,10 +1,10 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { SidenavComponent } from './sidenav/sidenav.component';
+import { SidenavComponent } from './shared/sidenav/sidenav.component';
 import { Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
-import { LoginService } from './login/login.service';
-import { HelperService } from './helper.service';
+import { LoginService } from './shared/login/login.service';
+import { HelperService } from './service/helper.service';
 
 @Component({
   selector: 'app-root',

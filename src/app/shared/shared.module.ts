@@ -10,6 +10,10 @@ import { CardComponent } from './card/card.component';
 import { GraphComponent } from './graph/graph.component';
 import { TippyDirective } from './directives/tippy.directive';
 import { ModalComponent } from './modal/modal.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from '../app.routing';
 
 @NgModule({
   declarations: [
@@ -21,22 +25,28 @@ import { ModalComponent } from './modal/modal.component';
     GraphComponent,
     TippyDirective,
     ModalComponent,
+    SidenavComponent,
+    LoginComponent,
   ],
   imports: [
     CommonModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
   ],
-    exports: [
-        ToastComponent,
-        LoadingSpinnerComponent,
-        HttpClientModule,
-        SvgComponent,
-        SvgDefinitionComponent,
-        CardComponent,
-        GraphComponent,
-        TippyDirective,
-        ModalComponent,
-    ],
+  exports: [
+    ToastComponent,
+    LoadingSpinnerComponent,
+    HttpClientModule,
+    SvgComponent,
+    SvgDefinitionComponent,
+    CardComponent,
+    GraphComponent,
+    TippyDirective,
+    ModalComponent,
+    SidenavComponent,
+    LoginComponent
+  ],
   providers: [
     ToastService
   ]

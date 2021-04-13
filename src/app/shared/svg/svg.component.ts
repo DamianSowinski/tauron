@@ -16,6 +16,5 @@ export class SvgComponent {
   get absUrl() {
     return window.location.href.split('#')[0];
   }
-
 }
 

@@ -19,7 +19,6 @@ export class Card {
     trend?: number;
   };
 
-
   constructor(title: string, details1Title: string, details2Title: string) {
     this.title = title;
     this.total = {value: 0, trend: null};
