@@ -85,11 +85,11 @@ export class RangeComponent implements OnInit, AfterViewInit {
     );
     this.graphData.addSets([{
       title: 'Intake',
-      values: HelperService.generateDefaultValues(2),
+      values: HelperService.generateEmptyArray(2),
       colour: '#55D8FE'
     }, {
       title: 'Generate',
-      values: HelperService.generateDefaultValues(2),
+      values: HelperService.generateEmptyArray(2),
       colour: '#4AD991'
     }
     ]);

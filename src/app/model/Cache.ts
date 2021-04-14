@@ -25,8 +25,8 @@ export class Cache {
   }
 
   private static generateRangeKey(startDate: Date, endDate: Date): string {
-    const key1 = HelperService.getStringFromDate(startDate, 'range');
-    const key2 = HelperService.getStringFromDate(endDate, 'range');
+    const key1 = HelperService.getStringFromDate(startDate, 'month');
+    const key2 = HelperService.getStringFromDate(endDate, 'month');
 
     return `${key1}-${key2}`;
   }

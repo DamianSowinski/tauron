@@ -68,11 +68,11 @@ export class DayComponent implements OnInit, AfterViewInit {
     this.graphData.setXAxis(HelperService.generateHoursLabel());
     this.graphData.addSets([{
       title: 'Intake',
-      values: HelperService.generateDefaultValues(24),
+      values: HelperService.generateEmptyArray(24),
       colour: '#55D8FE'
     }, {
       title: 'Generate',
-      values: HelperService.generateDefaultValues(24),
+      values: HelperService.generateEmptyArray(24),
       colour: '#4AD991'
     }
     ]);

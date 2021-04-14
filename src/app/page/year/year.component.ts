@@ -72,11 +72,11 @@ export class YearComponent implements OnInit, AfterViewInit {
     this.graphData.setXAxis(HelperService.generateDaysLabel());
     this.graphData.addSets([{
       title: 'Intake',
-      values: HelperService.generateDefaultValues(12),
+      values: HelperService.generateEmptyArray(12),
       colour: '#55D8FE'
     }, {
       title: 'Generate',
-      values: HelperService.generateDefaultValues(12),
+      values: HelperService.generateEmptyArray(12),
       colour: '#4AD991'
     }
     ]);

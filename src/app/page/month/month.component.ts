@@ -66,11 +66,11 @@ export class MonthComponent implements OnInit, AfterViewInit {
     this.graphData.setXAxis(HelperService.generateDaysLabel());
     this.graphData.addSets([{
       title: 'Intake',
-      values: HelperService.generateDefaultValues(HelperService.daysInMonth(new Date())),
+      values: HelperService.generateEmptyArray(HelperService.daysInMonth(new Date())),
       colour: '#55D8FE'
     }, {
       title: 'Generate',
-      values: HelperService.generateDefaultValues(HelperService.daysInMonth(new Date())),
+      values: HelperService.generateEmptyArray(HelperService.daysInMonth(new Date())),
       colour: '#4AD991'
     }
     ]);
