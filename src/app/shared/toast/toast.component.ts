@@ -18,6 +18,7 @@ export class ToastComponent {
     const toast = $event.currentTarget as HTMLElement;
 
     if (toast) {
+      toast.classList.remove('no-hide-anim');
       toast.classList.add('is-hidden');
     }
   }

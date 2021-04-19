@@ -1,0 +1,14 @@
+<div class="field" [class.is-invalid]="isInvalid()" [attr.aria-invalid]="isInvalid() ? 'true' : null" [attr.aria-describedby]="feedbackId ? feedbackId : null">
+  <ng-content select="label"></ng-content>
+  <ng-content select="input"></ng-content>
+  <ng-content select="textarea"></ng-content>
+
+  <p class="field__error" *ngIf="(form?.hasError('minlength') || form?.hasError('required')) && form?.touched" [id]="feedbackId ? feedbackId : null">
+    <svg-ico name="exclamation" aria-hidden="true"></svg-ico>
+    <span class="u-ml-xs" *ngIf="form?.hasError('required')">To pole nie może być puste</span>
+    <span class="u-ml-xs" *ngIf="form?.hasError('minlength')">Musisz podać przynajmniej {{form?.errors.minlength.requiredLength}} znaki</span>
+  </p>
+</div>
+
+
+

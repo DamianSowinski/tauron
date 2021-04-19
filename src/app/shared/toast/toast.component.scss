@@ -207,8 +207,20 @@ $toastDuration: 5s;
     padding: $xs $sm;
   }
 
+  &__message {
+
+    &--desc {
+      margin: $sm 0 0 0;
+      font-size: $s1;
+    }
+  }
+
   &.is-hidden {
     animation: toastHide 200ms ease-in forwards;
+  }
+
+  &.no-hide-anim {
+    animation: toastEnter 250ms ease-out forwards;
   }
 }
 

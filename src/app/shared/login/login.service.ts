@@ -57,7 +57,7 @@ export class LoginService {
 
   login(loginData: LoginData): Promise<null> {
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const {username, password, pointId} = loginData;
       const requestContent = {pointId, username, password};
 
@@ -68,10 +68,7 @@ export class LoginService {
           LoginService.saveTokenInLocalStorage(data.token);
           resolve();
         },
-        (errors) => {
-          this.toast.error(errors.error.title);
-          console.log(`%c ⚠ Warning: ${errors.details}`, `color: orange; font-weight: bold;`);
-        });
+        (errors) => reject(errors));
     });
   }
 

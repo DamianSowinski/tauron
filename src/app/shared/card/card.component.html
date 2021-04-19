@@ -1,4 +1,7 @@
-<section class="card" [class.is-loading]="!isLoaded">
+<section class="card" [class.is-loading]="!isLoaded" [ngClass]="{
+'is-loading': !isLoaded,
+'has-error': isError
+}" >
   <h2 class="card__title">{{cardData.title}}</h2>
 
   <div class="card__total">
@@ -30,11 +33,6 @@
   <div class="card__graph">
     <div class="bar--1" style="{{barsStyle[0]}}" title="{{cardData.detail1.title + ': ' + cardData.detail1.value}}" appTippy></div>
     <div class="bar--2" style="{{barsStyle[1]}}" title="{{cardData.detail2.title + ': ' + cardData.detail2.value}}" appTippy></div>
-  </div>
-
-  <div class="h-error" *ngIf="isError">
-    <span class="u-mb-md">Download data unsuccessfully</span>
-    <span>Refresh to try again</span>
   </div>
 
   <app-loading-spinner class="card__loading" size="sm" *ngIf="!isLoaded"></app-loading-spinner>

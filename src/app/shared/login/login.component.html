@@ -3,20 +3,20 @@
     <h2 class="login__title">Login</h2>
 
     <form class="l-form" id="loginForm" [formGroup]="form" (ngSubmit)="handleSubmit()">
-      <div class="o-field l-form__field">
-        <label class="o-field__label" for="formId">Collection point id</label>
-        <input class="o-field__input" id="formId" type="text" formControlName="pointId" autocomplete="id">
-      </div>
+      <app-form-field [form]="form.get('pointId')" feedbackId="pointIdFeedback">
+        <label class="field__label" for="formId">Collection point id</label>
+        <input class="field__input" id="formId" type="text" formControlName="pointId" autocomplete="id">
+      </app-form-field>
 
-      <div class="o-field l-form__field">
-        <label class="o-field__label" for="formUsername">Username</label>
-        <input class="o-field__input" id="formUsername" type="text" formControlName="username" autocomplete="username">
-      </div>
+      <app-form-field [form]="form.get('username')" feedbackId="usernameFeedback">
+        <label class="field__label" for="formUsername">Username</label>
+        <input class="field__input" id="formUsername" type="text" formControlName="username" autocomplete="username" placeholder="Use 'test' to get mock data">
+      </app-form-field>
 
-      <div class="o-field l-form__field">
-        <label class="o-field__label" for="formPassword">Password</label>
-        <input class="o-field__input" id="formPassword" type="password" formControlName="password" autocomplete="current-password">
-      </div>
+      <app-form-field [form]="form.get('password')" feedbackId="passwordFeedback">
+        <label class="field__label" for="formPassword">Password</label>
+        <input class="field__input" id="formPassword" type="password" formControlName="password" autocomplete="current-password" placeholder="Use any to get mock data">
+      </app-form-field>
 
       <div class="login__buttons">
         <div class="h-spacer"></div>

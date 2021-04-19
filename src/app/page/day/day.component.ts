@@ -45,7 +45,6 @@ export class DayComponent implements OnInit, AfterViewInit {
     });
   }
 
-
   changeDay() {
     const date = HelperService.getDateFromString(this.inputDay.value);
 

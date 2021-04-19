@@ -105,12 +105,15 @@ $purpleGrayLight: #BCBCCB;
   --toast-error: #{$red};
 
 
-  --input-label: #{$gray};
-  --input-label-focused: #{$gray};
+  --form-input-border: #{$black--70};
+  --form-input-bgr: #{$white};
+  --form-input-txt: #{$txtColor};
+  --form-input-hover-border: #{$secondary};
+  --form-input-hover-bgr: #{$light--05};
+  --form-input-focus: #{rgba($secondary, 0.5)};
+  --form-error: #{$redDark};
+  --form-error-focus: #{rgba($redDark, 0.3)};
 
-  --field-input-bgr: #{$white};
-  --filed-input-border: #{$black--70};
-  --field-input-focus-border: #{$secondary};
 
   --menu-btn-focus: #{$secondary};
   --dark-mode-btn-txt: #{$txtColor};
@@ -160,7 +163,10 @@ $purpleGrayLight: #BCBCCB;
   --card-primary-txt: #{$txtColorDM};
   --card-txt: #{$txtColorGrayDM};
 
-  --field-input-bgr: #{$black--80};
+  --form-input-bgr: #{$black--80};
+  --form-input-txt: #{$txtColorDM};
+  --form-input-hover-bgr: #{$dark--04};
+  --form-error: #{$redDM};
 
   --graph-bgr: #{$black--75};
   --graph-primary-txt: #{$txtColorDM};
@@ -170,9 +176,7 @@ $purpleGrayLight: #BCBCCB;
 
   --modal-bgr: #{$bgrColorDM};
 
-
   --dark-mode-btn-txt: #{$txtColorDM};
-
 
   --btn-primary: #{$secondary};
   --btn-primary-txt: #{$secondary};

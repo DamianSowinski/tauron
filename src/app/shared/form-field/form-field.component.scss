@@ -1,0 +1,74 @@
+@use '../../../scss/core/variables' as *;
+@use '../../../scss/core/mixins' as *;
+@use '../../../scss/core/animations' as *;
+
+::ng-deep.field {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: $sm;
+
+  &__label {
+    @include fluid-txt($max-font: 20px);
+  }
+
+  &__input, &__textarea {
+    padding: 12px;
+    color: var(--form-input-txt);
+    border: 1px solid var(--form-input-border);
+    border-radius: $radius--sm;
+    background-color: var(--form-input-bgr);
+    @include transition();
+
+    &:hover {
+      border-color: var(--form-input-hover-border);
+      background-color: var(--form-input-hover-bgr);
+    }
+
+    &:focus {
+      border-color: var(--form-input-hover-border);
+      outline: none;
+      background-color: var(--form-input-hover-bgr);
+      box-shadow: 0 0 0 2px var(--form-input-focus);
+    }
+  }
+
+  &__textarea {
+    resize: vertical;
+  }
+
+  &__info {
+  }
+
+  &__error {
+    font-size: $s1;
+    position: absolute;
+    bottom: -22px;
+    left: $xs;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    color: var(--form-error);
+
+    .o-ico {
+      height: 12px;
+      fill: var(--form-error);
+    }
+  }
+
+  &.is-invalid {
+    .field__input, .field__textarea {
+      border-color: var(--form-error);
+
+      &:focus {
+        box-shadow: 0 0 0 2px var(--form-error-focus);
+      }
+    }
+  }
+}
+
+::ng-deep.field-checkbox {
+  display: flex;
+  justify-content: center;
+}
+

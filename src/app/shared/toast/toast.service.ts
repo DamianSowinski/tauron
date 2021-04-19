@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Operation, Status, ToastList, ToastModel, Type } from './toast.model';
+import { ToastList, ToastModel, Type } from './toast.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,36 +14,27 @@ export class ToastService {
     return this.toastList;
   }
 
-  public show(name: string, operation: Operation, status: Status): void {
-    const message = `${name} ${operation}`;
-
-    switch (status) {
-      case Status.SUCCESS:
-        this.success(`${message} successfully`);
-        break;
-      case Status.ERROR:
-        this.error(`${message} unsuccessfully`);
-        break;
-    }
-  }
-
-  public success(message: string): void {
-    const toast: ToastModel = {message, type: Type.SUCCESS};
+  public success(title: string, desc: string = ''): void {
+    const toast: ToastModel = {title, desc, type: Type.SUCCESS};
     this.toastList.set(toast);
   }
 
-  public info(message: string): void {
-    const toast: ToastModel = {message, type: Type.INFO};
+  public info(title: string, desc: string = ''): void {
+    const toast: ToastModel = {title, desc, type: Type.INFO};
     this.toastList.set(toast);
   }
 
-  public warning(message: string): void {
-    const toast: ToastModel = {message, type: Type.WARNING};
+  public warning(title: string, desc: string = ''): void {
+    const toast: ToastModel = {title, desc, type: Type.WARNING};
     this.toastList.set(toast);
   }
 
-  public error(message: string): void {
-    const toast: ToastModel = {message, type: Type.ERROR};
+  public error(title: string, desc: string = ''): void {
+    const toast: ToastModel = {title, desc, type: Type.ERROR};
     this.toastList.set(toast);
+  }
+
+  public clear(): void {
+    this.toastList.clear();
   }
 }

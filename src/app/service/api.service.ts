@@ -20,7 +20,7 @@ import { ToastService } from '../shared/toast/toast.service';
 export class ApiService {
   private cache = new Cache();
 
-  constructor(private http: HttpClient, private toast: ToastService) {
+  constructor(private http: HttpClient, private toast: ToastService, private loginService: LoginService) {
   }
 
   private static createHeader(): object {
@@ -193,6 +193,10 @@ export class ApiService {
   }
 
   private handleError(errors) {
-    this.toast.error(`${errors.error.title} - ${errors.error.detail}`);
+    if (errors.status === 401) {
+      this.loginService.reLogin();
+    }
+
+    this.toast.error(errors.error.title, errors.error.detail);
   }
 }

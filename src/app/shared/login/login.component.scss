@@ -30,20 +30,5 @@
 
 .l-form {
   display: grid;
-  grid-row-gap: $md;
-
-  &__field {
-    display: grid;
-    grid-gap: $md;
-  }
-
-  @include breakpoint-up(sm) {
-    &__field {
-      grid-template-columns: 144px 1fr;
-
-      .o-field__label {
-        justify-self: flex-end;
-      }
-    }
-  }
+  grid-row-gap: $lg;
 }

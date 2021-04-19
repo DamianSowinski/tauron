@@ -1,6 +1,8 @@
 <div class="l-toast">
-  <div class="toast" *ngFor="let toast of toastList" (click)="onHide($event)">
-    <div class="toast__ico-container" [ngSwitch]="toast.type">
+  <ng-container *ngFor="let toast of toastList">
+    <div class="toast" [class.no-hide-anim]="toast.type === 3" (click)="onHide($event)">
+      <div class="toast__ico-container" [ngSwitch]="toast.type">
+
 
       <span *ngSwitchCase="0">
         <svg class="toast__ico--success" viewBox="0 0 512 512">
@@ -8,7 +10,7 @@
         </svg>
       </span>
 
-      <span *ngSwitchCase="1">
+        <span *ngSwitchCase="1">
         <svg class="toast__ico--info" viewBox="0 0 512 512">
           <path class="path-1" d="M256 471c120 0 215-95 215-215S376 41 256 41 41 136 41 256s95 215 215 215"/>
           <path class="path-2" d="M256 460V240"/>
@@ -16,7 +18,7 @@
         </svg>
       </span>
 
-      <span *ngSwitchCase="2">
+        <span *ngSwitchCase="2">
         <svg class="toast__ico--warning" viewBox="0 0 512 512">
           <path class="path-1" d="M256.5 448.5h176c40 0 44.82-32.2 35.76-47.94L284.17 80.46s-8.3-15.96-27.67-15.96-27.69 15.99-27.69 15.99S54.11 384.1 44.31 400.3 40.5 448.5 80.5 448.5h184"/>
           <path class="path-2" d="M256 264.5v-112"/>
@@ -24,16 +26,19 @@
         </svg>
       </span>
 
-      <span *ngSwitchCase="3">
+        <span *ngSwitchCase="3">
         <svg class="toast__ico--error" viewBox="0 0 512 512">
           <path class="path-1" d="M417.37 417.75C310.04 312.72 202.34 202.72 94.63 94.25"/>
           <path class="path-2" d="M94.25 417.37c105.03-107.33 215.03-215.03 323.5-322.74"/>
         </svg>
       </span>
-    </div>
+      </div>
 
-    <div class="toast__content">
-      <div class="toast__message">{{toast.message}}</div>
+      <div class="toast__content">
+        <div class="toast__message">{{toast.title}}</div>
+        <p class="toast__message--desc" *ngIf="toast.desc">{{toast.desc}}</p>
+      </div>
     </div>
-  </div>
+  </ng-container>
+
 </div>

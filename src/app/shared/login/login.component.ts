@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { LoginData, LoginService } from './login.service';
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastService } from '../toast/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   hide = true;
   isLogging = false;
 
-  constructor(private loginService: LoginService) {
+  constructor(private loginService: LoginService, private toast: ToastService) {
     this.isOpenLoginModal = loginService.getModalState();
   }
 
@@ -33,21 +34,30 @@ export class LoginComponent implements OnInit {
     const loginData = {pointId, username, password} as LoginData;
     this.isLogging = true;
 
+    this.toast.clear();
     this.loginService.login(loginData).then(
       () => {
-        this.isLogging = false;
-        this.form.reset();
+        this.resetForm();
         window.location.reload();
       },
-      (errors) => console.log(`%c ⚠ Warning: ${errors.errors}`, `color: orange; font-weight: bold;`)
+      (errors) => {
+        this.toast.error(errors.error.title, errors.error.detail);
+        this.resetForm();
+      }
     );
   }
 
-  private createForm() {
+  private createForm(): void {
     this.form = new FormGroup({
-      pointId: new FormControl('', {validators: [Validators.required, Validators.minLength(1)]}),
+      pointId: new FormControl('0', {validators: [Validators.required, Validators.minLength(1)]}),
       username: new FormControl('', {validators: [Validators.required, Validators.minLength(3)]}),
       password: new FormControl('', {validators: [Validators.required, Validators.minLength(3)]}),
     });
+  }
+
+  private resetForm(): void {
+    this.isLogging = false;
+    this.form.reset();
+    this.createForm();
   }
 }

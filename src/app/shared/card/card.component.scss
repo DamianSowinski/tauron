@@ -134,4 +134,8 @@
   &.is-loading {
     opacity: 0.5;
   }
+
+  &.has-error {
+    opacity: 0.5;
+  }
 }

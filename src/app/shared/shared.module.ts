@@ -14,6 +14,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app.routing';
+import { FormFieldComponent } from './form-field/form-field.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AppRoutingModule } from '../app.routing';
     ModalComponent,
     SidenavComponent,
     LoginComponent,
+    FormFieldComponent,
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,8 @@ import { AppRoutingModule } from '../app.routing';
     TippyDirective,
     ModalComponent,
     SidenavComponent,
-    LoginComponent
+    LoginComponent,
+    FormFieldComponent,
   ],
   providers: [
     ToastService

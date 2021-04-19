@@ -1,7 +1,8 @@
 const TOAST_DURATION = 8000; // 3s longer than css setting
 
 export interface ToastModel {
-  message: string;
+  title: string;
+  desc: string;
   type: Type;
 }
 
@@ -27,6 +28,9 @@ export enum Status {
 export class ToastList extends Set {
   set(item: ToastModel): void {
     super.add(item);
-    setTimeout(() => super.delete(item), TOAST_DURATION);
+
+    if (item.type !== Type.ERROR) {
+      setTimeout(() => super.delete(item), TOAST_DURATION);
+    }
   }
 }
