@@ -1,15 +1,12 @@
-<nav class="sidenav" [ngClass]="{
-  'is-open': isOpen,
-  'is-desktop': isDesktop,
-  'animate': animate}">
-
+<nav class="sidenav" [ngClass]="{ 'is-open': isOpen, 'is-desktop': isDesktop, 'animate': animate}"
+     aria-labelledby="menu" itemscope itemtype="https://schema.org/SiteNavigationElement">
   <div class="sidenav__header">
     <svg-ico class="header__ico" name="power" aria-hidden="true"></svg-ico>
     <h1 class="header__title">{{appTitle}}</h1>
     <div class="h-spacer"></div>
 
-    <button class="header__btn o-btn-menu" (click)="sideNavToggle()" *ngIf="isDesktop">
-      <svg viewBox="0 0 48 48">
+    <button class="header__btn o-btn-menu" (click)="sideNavToggle()" *ngIf="isDesktop" title="{{isOpen ? 'Collapse menu' : 'Expand menu'}}">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
         <path class="line--1" d="M0 12h46.61c.9 0 1.74.35 2.37.98L72 36"/>
         <path class="line--2" d="M0 24h72"/>
         <path class="line--3" d="M0 36h46.61c.9 0 1.74-.35 2.37-.98L72 12"/>
@@ -19,12 +16,13 @@
 
   <ul class="sidenav__menu h-clear-list">
     <li *ngFor="let item of sidenavItems">
-      <a class="item" routerLink="{{item.route}}" routerLinkActive="is-active" (click)="isOpen = isDesktop ? isOpen : false">
-        <svg-ico class="item__ico" name="{{item.ico}}"></svg-ico>
-        <span class="item__title">{{item.title}}</span>
+      <a class="item" routerLink="{{item.route}}" routerLinkActive="is-active" (click)="isOpen = isDesktop ? isOpen : false" appAriaCurrent itemprop="url">
+        <svg-ico class="item__ico" name="{{item.ico}}" aria-hidden="true"></svg-ico>
+        <span class="item__title" itemprop="name">{{item.title}}</span>
       </a>
     </li>
   </ul>
+
 </nav>
 
 <div class="sidenav-backdrop js-backdrop" [class.is-open]="isOpen" *ngIf="!isDesktop"></div>

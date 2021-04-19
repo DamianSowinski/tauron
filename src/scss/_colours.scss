@@ -4,6 +4,7 @@ $white: hsl(0, 0%, 100%);
 $white--90: hsl(0, 0%, 90%);
 $white--80: hsl(0, 0%, 80%);
 $white--70: hsl(0, 0%, 70%);
+$white--60: hsl(0, 0%, 70%);
 $gray: hsl(0, 0%, 50%);
 $black--60: hsl(0, 0%, 40%);
 $black--70: hsl(0, 0%, 30%);
@@ -29,39 +30,38 @@ $light--08: rgba(255, 255, 255, 0.8);
 // base
 $txtColor: $black--80;
 $txtColorPurple: #43425D;
-$txtColorGray: #787A8D;
+$txtColorGray: #575866;
 $bgrColor: #f0f0f7;
-
 
 $txtColorDM: $white--80;
 $txtColorPurpleDM: #e7e6f2;
 $txtColorGrayDM: #e6e8f2;
 $bgrColorDM: $black--80;
 
-
 $primary: #43425D;
 $secondary: #A3A0FB;
 
 $blue: #3B86FF;
+$blueDM: #3B86FF;
 $blueLight: #55D8FE;
 
-$green: rgb(74, 217, 145);
-$greenLight: #5FE3A1;
-$greenDark: scale-color($green, $lightness: 20%);
-
+$green: rgb(18, 154, 99);;
+$greenDM: #95e698;
+$red: #d32f2f;
+$redDM: #fd9191;
 $orange: #FFCA83;
-$orangeLight: #FFDA83;
+$orangeDM: #FFCA83;
 
-$red: #FF6565;
 $redDark: scale-color($red, $lightness: -50%);
 
-$redDM: #ff8080;
 
 $purpleGrayLight: #BCBCCB;
 
 :root {
   --bgr: #{$bgrColor};
   --txt: #{$txtColor};
+  --txt-footer: #{$black--60};
+
   --backdrop: #{$black};
 
   --bgr-error: #{$light--02};
@@ -131,7 +131,7 @@ $purpleGrayLight: #BCBCCB;
   --btn-success-hover-bgr: hsl(89, 37%, 60%);
   --btn-success-focus: #{rgba(#7eab4f, 0.3)};
 
-  --btn-disabled-txt: #{$gray};
+  --btn-disabled-txt: #{$black--70};
   --btn-disabled-bgr: #{rgba($gray, 0.1)};
   --btn-disabled-border: #{$black--70};
 
@@ -147,9 +147,15 @@ $purpleGrayLight: #BCBCCB;
 .dark {
   --bgr: #{$bgrColorDM};
   --txt: #{$txtColorDM};
+  --txt-footer: #{$white--60};
 
   --bgr-error: #{$dark--08};
   --separate-line: #{$light--02};
+
+  --green: #{$greenDM};
+  --red: #{$redDM};
+  --orange: #{$orangeDM};
+  --blue-light: #{$blueDM};
 
   --top-bar-bgr: #{$black--90};
 
@@ -183,6 +189,8 @@ $purpleGrayLight: #BCBCCB;
   --btn-primary-hover: #{$secondary};
   --btn-primary-focus: #{rgba($secondary, 0.5)};
   --btn-primary-hover-txt: #{ $white};
+
+  --btn-disabled-txt: #{$white--60};
 
   --logo-part-1: #9DBF15;
   --logo-part-2: #{$white--80};

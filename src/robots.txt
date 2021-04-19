@@ -1,2 +1,3 @@
-User-agent: Googlebot
-Disallow: /bundles/
+User-Agent: *
+Disallow:
+Sitemap: http://tauron.es3d.pl/sitemap.xml

@@ -44,6 +44,7 @@ export class SidenavComponent implements OnInit {
   onKeydownHandler(event: KeyboardEvent) {
     if (event.key === 'Escape') {
       this.isOpen = false;
+      this.closeSidebar.emit(this.isOpen);
     }
   }
 
@@ -55,6 +56,7 @@ export class SidenavComponent implements OnInit {
 
       if (isBackdropClick) {
         this.isOpen = false;
+        this.closeSidebar.emit(this.isOpen);
       }
     }
   }
@@ -69,6 +71,8 @@ export class SidenavComponent implements OnInit {
         this.isOpen = !!(+localStorage.getItem('SidenavIsOpen'));
       }
     });
+
+    this.closeSidebar.emit(this.isOpen);
   }
 
   createMenu() {

@@ -1,8 +1,6 @@
-<div class="l-toast">
-  <ng-container *ngFor="let toast of toastList">
-    <div class="toast" [class.no-hide-anim]="toast.type === 3" (click)="onHide($event)">
+<div class="l-toast" role="alert">
+    <div class="toast" *ngFor="let toast of toastList" [class.no-hide-anim]="toast.type === 3" (click)="onHide($event)">
       <div class="toast__ico-container" [ngSwitch]="toast.type">
-
 
       <span *ngSwitchCase="0">
         <svg class="toast__ico--success" viewBox="0 0 512 512">
@@ -39,6 +37,4 @@
         <p class="toast__message--desc" *ngIf="toast.desc">{{toast.desc}}</p>
       </div>
     </div>
-  </ng-container>
-
 </div>

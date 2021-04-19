@@ -6,10 +6,11 @@
   min-height: 100vh;
   grid-gap: 0;
   grid-template-columns: auto 1fr;
-  grid-template-rows: $headerHeight 1fr;
+  grid-template-rows: $headerHeight 1fr auto;
   grid-template-areas:
     'sidenav header'
-    'sidenav content';
+    'sidenav content'
+    'sidenav footer';
 }
 
 .l-top-bar {
@@ -28,6 +29,13 @@
 .l-content {
   padding: $xl;
   grid-area: content;
+}
+
+.l-footer {
+  grid-area: footer;
+  text-align: right;
+  padding: $md;
+  color: var(--txt-footer);
 }
 
 .top-bar {

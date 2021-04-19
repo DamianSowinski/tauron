@@ -1,6 +1,11 @@
-<app-modal [isOpen]="isOpenLoginModal|async" (closeEvent)="closeLoginModal()">
+<app-modal [isOpen]="isOpenLoginModal|async" (closeEvent)="closeLoginModal()"
+           role="dialog"
+           id="loginModal"
+           aria-labelledby="loginModalTitle"
+           aria-modal="true">
+
   <section class="login">
-    <h2 class="login__title">Login</h2>
+    <h2 class="login__title" id="loginModalTitle">Login</h2>
 
     <form class="l-form" id="loginForm" [formGroup]="form" (ngSubmit)="handleSubmit()">
       <app-form-field [form]="form.get('pointId')" feedbackId="pointIdFeedback">

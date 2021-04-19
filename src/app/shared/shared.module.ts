@@ -13,8 +13,9 @@ import { ModalComponent } from './modal/modal.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AppRoutingModule } from '../app.routing';
 import { FormFieldComponent } from './form-field/form-field.component';
+import { AriaCurrentDirective } from './directives/aria-current.directive';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -29,12 +30,13 @@ import { FormFieldComponent } from './form-field/form-field.component';
     SidenavComponent,
     LoginComponent,
     FormFieldComponent,
+    AriaCurrentDirective
   ],
   imports: [
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AppRoutingModule,
+    RouterModule,
   ],
   exports: [
     ToastComponent,

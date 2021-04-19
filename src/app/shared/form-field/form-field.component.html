@@ -5,8 +5,8 @@
 
   <p class="field__error" *ngIf="(form?.hasError('minlength') || form?.hasError('required')) && form?.touched" [id]="feedbackId ? feedbackId : null">
     <svg-ico name="exclamation" aria-hidden="true"></svg-ico>
-    <span class="u-ml-xs" *ngIf="form?.hasError('required')">To pole nie może być puste</span>
-    <span class="u-ml-xs" *ngIf="form?.hasError('minlength')">Musisz podać przynajmniej {{form?.errors.minlength.requiredLength}} znaki</span>
+    <span class="u-ml-xs" *ngIf="form?.hasError('required')">The field is required</span>
+    <span class="u-ml-xs" *ngIf="form?.hasError('minlength')">It required at least {{form?.errors.minlength.requiredLength}} characters</span>
   </p>
 </div>
 
