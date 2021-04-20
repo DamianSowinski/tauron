@@ -102,10 +102,15 @@ export class RangeComponent implements OnInit, AfterViewInit {
     this.cards.forEach((card) => card.isLoaded = false);
     this.graph.first.isLoaded = false;
 
-    this.apiService.getRangeUsage(startDate, endDate).then((data) => {
-      this.fillCards(data);
-      this.fillGraph(data);
-    });
+    this.apiService.getRangeUsage(startDate, endDate).then(
+      (data) => {
+        this.fillCards(data);
+        this.fillGraph(data);
+      },
+      () => {
+        this.cards.forEach((card) => card.error());
+        this.graph.forEach((graph) => graph.error());
+      });
   }
 
   private fillCards(data: RangeUsage) {

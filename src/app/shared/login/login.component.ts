@@ -41,7 +41,9 @@ export class LoginComponent implements OnInit {
         window.location.reload();
       },
       (errors) => {
-        this.toast.error(errors.error.title, errors.error.detail);
+        const title = errors.error.title ?? 'Connection API error';
+        const detail = errors.error.detail ?? 'Check CORS settings';
+        this.toast.error(title, detail);
         this.resetForm();
       }
     );

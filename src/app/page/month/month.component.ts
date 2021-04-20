@@ -86,6 +86,10 @@ export class MonthComponent implements OnInit, AfterViewInit {
       (data) => {
         this.fillCards(data);
         this.fillGraph(data);
+      },
+      () => {
+        this.cards.forEach((card) => card.error());
+        this.graph.forEach((graph) => graph.error());
       });
   }
 

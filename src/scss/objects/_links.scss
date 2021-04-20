@@ -1,0 +1,31 @@
+@use '../core/variables' as *;
+@use '../core/mixins' as *;
+@use '../core/animations' as *;
+
+.o-link {
+  position: relative;
+  margin: -$xs;
+  padding: $xs;
+  opacity: 0.8;
+  color: var(--txt);
+  @include transition;
+
+  &:after {
+    position: absolute;
+    bottom: -2px;
+    left: -2px;
+    width: 0;
+    height: 1px;
+    content: '';
+    background-color: var(--txt);
+    @include transition;
+  }
+
+  &:hover {
+    opacity: 1;
+
+    &:after {
+      width: calc(100% + 4px);
+    }
+  }
+}

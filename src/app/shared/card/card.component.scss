@@ -12,8 +12,8 @@
 
   &__title {
     font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 400;
     font-size: $t1;
+    font-weight: 400;
     color: var(--card-txt);
   }
 
@@ -24,8 +24,8 @@
 
     .total__value {
       font-family: 'Source Sans Pro', sans-serif;
-      font-weight: 700;
       font-size: 24px;
+      font-weight: 700;
       min-width: 100px;
       margin-right: $sm;
       color: var(--card-primary-txt);
@@ -77,8 +77,8 @@
 
     .zone__trend {
       font-family: 'Source Sans Pro', sans-serif;
-      font-weight: 600;
       font-size: $s1;
+      font-weight: 600;
       display: flex;
       align-items: center;
       color: var(--green);
@@ -131,10 +131,7 @@
     left: calc(50% - 12px);
   }
 
-  &.is-loading {
-    opacity: 0.5;
-  }
-
+  &.is-loading,
   &.has-error {
     opacity: 0.5;
   }

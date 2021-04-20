@@ -59,10 +59,7 @@ export class HomeComponent implements AfterViewInit {
         this.fillMonthCard(data.months[0]);
         this.fillYearCard(data.years[0]);
       },
-      () => {
-        // this.loginService.reLogin();
-        this.cards.forEach((card) => card.error());
-      }
+      () => this.cards.forEach((card) => card.error())
     );
   }
 
