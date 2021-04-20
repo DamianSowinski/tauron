@@ -16,12 +16,9 @@ Username: test
 Password: test
 ```
 
-Screenshots
+Screenshot
 -----
-
-![phone](screenshots/desktop.png)
-
-![phone](screenshots/night-mode.png)
+![phone](screenshots/mock.jpg)
 
 
 License
