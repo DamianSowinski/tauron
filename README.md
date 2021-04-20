@@ -16,9 +16,8 @@ Username: test
 Password: test
 ```
 
-Screenshots
+Examle
 -----
-
 ![phone](screenshots/desktop.png)
 
 ![phone](screenshots/night-mode.png)
