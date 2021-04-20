@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormFieldComponent } from './form-field/form-field.component';
 import { AriaCurrentDirective } from './directives/aria-current.directive';
 import { RouterModule } from '@angular/router';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { RouterModule } from '@angular/router';
     SidenavComponent,
     LoginComponent,
     FormFieldComponent,
-    AriaCurrentDirective
+    AriaCurrentDirective,
+    PageNotFoundComponent
   ],
   imports: [
     CommonModule,

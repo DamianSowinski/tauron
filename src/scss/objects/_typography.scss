@@ -3,8 +3,8 @@
 
 .o-title {
   font-family: 'Source Sans Pro', sans-serif;
-  font-weight: 300;
   font-size: $t2;
+  font-weight: 300;
   flex-shrink: 0;
   @include breakpoint-up(lg) {
     font-size: $t3;

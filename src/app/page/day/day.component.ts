@@ -89,8 +89,6 @@ export class DayComponent implements OnInit, AfterViewInit {
         this.fillGraph(data);
       },
       () => {
-        // this.loginService.reLogin();
-
         this.cards.forEach((card) => card.error());
         this.graph.forEach((graph) => graph.error());
       });

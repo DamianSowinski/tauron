@@ -1,7 +1,4 @@
-<section class="card" [class.is-loading]="!isLoaded" [ngClass]="{
-'is-loading': !isLoaded,
-'has-error': isError
-}" >
+<section class="card" [ngClass]="{'is-loading': !isLoaded, 'has-error': isError }">
   <h2 class="card__title">{{cardData.title}}</h2>
 
   <div class="card__total">

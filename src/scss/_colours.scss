@@ -54,6 +54,7 @@ $orangeDM: #FFCA83;
 
 $redDark: scale-color($red, $lightness: -50%);
 
+$greenLogo: #9DBF15;
 
 $purpleGrayLight: #BCBCCB;
 
@@ -71,6 +72,7 @@ $purpleGrayLight: #BCBCCB;
   --red: #{$red};
   --orange: #{$orange};
   --blue-light: #{$blueLight};
+  --green-tree: #a6bb51;
 
   --top-bar-bgr: #{$white};
 
@@ -135,7 +137,7 @@ $purpleGrayLight: #BCBCCB;
   --btn-disabled-bgr: #{rgba($gray, 0.1)};
   --btn-disabled-border: #{$black--70};
 
-  --logo-part-1: #9DBF15;
+  --logo-part-1: #{$greenLogo};
   --logo-part-2: #{$bgrColor};
   --logo-part-3: #{$primary};
 
@@ -156,6 +158,7 @@ $purpleGrayLight: #BCBCCB;
   --red: #{$redDM};
   --orange: #{$orangeDM};
   --blue-light: #{$blueDM};
+  --green-tree: #94a258;
 
   --top-bar-bgr: #{$black--90};
 

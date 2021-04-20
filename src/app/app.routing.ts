@@ -5,6 +5,7 @@ import { MonthComponent } from './page/month/month.component';
 import { YearComponent } from './page/year/year.component';
 import { RangeComponent } from './page/range/range.component';
 import { NgModule } from '@angular/core';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -14,7 +15,7 @@ const routes: Routes = [
   {path: 'year', component: YearComponent},
   {path: 'range', component: RangeComponent},
 
-  // {path: '**', component: PageNotFoundComponent},
+  {path: '**', component: PageNotFoundComponent},
 ];
 
 

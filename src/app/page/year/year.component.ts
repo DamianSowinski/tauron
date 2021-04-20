@@ -88,10 +88,15 @@ export class YearComponent implements OnInit, AfterViewInit {
     this.cards.forEach((card) => card.isLoaded = false);
     this.graph.first.isLoaded = false;
 
-    this.apiService.getYearUsage(year).then((data) => {
+    this.apiService.getYearUsage(year).then(
+      (data) => {
       this.fillCards(data);
       this.fillGraph(data);
-    });
+    },
+      () => {
+        this.cards.forEach((card) => card.error());
+        this.graph.forEach((graph) => graph.error());
+      });
   }
 
   private fillCards(data: YearUsage) {

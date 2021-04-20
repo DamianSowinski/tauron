@@ -1,4 +1,4 @@
-<section class="graph" [class.is-loading]="!isLoaded">
+<section class="graph" [ngClass]="{'is-loading': !isLoaded, 'has-error': isError }">
   <h2 class="graph__title">{{graphData.title}}</h2>
 
   <div class="graph__chart" [class.is-horizontal]="orientation === 'horizontal'">
@@ -17,11 +17,6 @@
       <div class="item__mark" style="{{ 'background-color:'+set.colour}}"></div>
       <div class="item__title">{{set.title}}</div>
     </div>
-  </div>
-
-  <div class="h-error" *ngIf="isError">
-    <span class="u-mb-md">Download data unsuccessfully</span>
-    <span>Refresh to try again</span>
   </div>
 
   <app-loading-spinner size="sm" class="graph__loading" *ngIf="!isLoaded"></app-loading-spinner>
